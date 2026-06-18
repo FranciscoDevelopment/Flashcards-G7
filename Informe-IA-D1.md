@@ -120,3 +120,8 @@ A continuación se detallan los módulos creados en el código y la lógica detr
 *   **Compilación de Producción:** El comando `npm run build` compila de manera exitosa sin errores de TypeScript ni de bundler, generando la carpeta optimizada de distribución `dist/`.
 *   **Servidor de Desarrollo Local:** Ejecutándose en segundo plano y accesible en el puerto local predeterminado de Vite:
     👉 **[http://localhost:5173/](http://localhost:5173/)**
+
+
+## Nota
+* se eligio usar Tailwind CSS v3 y aqui solo se instalaron las dependencias  react-router-dom,
+zustand, tailwindcss, lucide-react, clsx, tailwind-merge.  los archivos de postcss.config.js y tailwind.config.js se generaron automaticamente al instalar Tailwind CSS v3. los archivostsconfig.json, tsconfig.app.json y tsconfig.node.json se generaron automaticamente al inicializar el proyecto con Vite. 
