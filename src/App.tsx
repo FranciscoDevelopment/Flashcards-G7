@@ -1,10 +1,6 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
-import Dashboard from './pages/Dashboard';
-import DeckDetails from './pages/DeckDetails';
-import StudySession from './pages/StudySession';
-import LeitnerStats from './pages/LeitnerStats';
-import Settings from './pages/Settings';
+import AppRouter from './app/router';
 
 function App() {
   return (
@@ -15,13 +11,7 @@ function App() {
 
         {/* Core Content Area */}
         <main className="flex-1 flex flex-col min-w-0 min-h-screen">
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/deck/:deckId" element={<DeckDetails />} />
-            <Route path="/study/:deckId" element={<StudySession />} />
-            <Route path="/leitner" element={<LeitnerStats />} />
-            <Route path="/settings" element={<Settings />} />
-          </Routes>
+          <AppRouter />
         </main>
       </div>
     </Router>
@@ -29,3 +19,4 @@ function App() {
 }
 
 export default App;
+
