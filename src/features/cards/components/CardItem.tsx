@@ -1,0 +1,87 @@
+import { Link } from 'react-router-dom';
+import { Edit2, Trash2, Tag, CheckCircle2, AlertCircle } from 'lucide-react';
+import type { Card } from '../types';
+
+interface CardItemProps {
+  card: Card;
+  onDelete: (id: string) => void;
+}
+
+export default function CardItem({ card, onDelete }: CardItemProps) {
+  // Determine color for difficulty badges
+  const difficultyColors = {
+    easy: 'bg-emerald-500/10 text-emerald-450 border-emerald-500/20',
+    medium: 'bg-amber-500/10 text-amber-450 border-amber-500/20',
+    hard: 'bg-rose-500/10 text-rose-450 border-rose-500/20',
+  };
+
+  return (
+    <div className="group relative rounded-2xl border border-slate-900 bg-slate-900/10 p-5 md:p-6 space-y-4 hover:border-slate-800/80 hover:bg-slate-900/20 transition-all duration-300">
+      {/* Background glow animation on hover */}
+      <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-tr from-violet-600/0 via-indigo-600/0 to-violet-600/0 group-hover:from-violet-600/2 group-hover:to-indigo-600/2 opacity-0 group-hover:opacity-100 transition-all duration-300" />
+
+      {/* Header Info: Topic, Difficulty, Stats */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-900/40 pb-3">
+        <div className="flex items-center gap-2">
+          <span className="flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-900 text-slate-450 border border-slate-850">
+            <Tag size={10} />
+            {card.topic}
+          </span>
+          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border uppercase tracking-wider ${difficultyColors[card.difficulty]}`}>
+            {card.difficulty}
+          </span>
+        </div>
+
+        {/* Hits and Misses stats */}
+        <div className="flex items-center gap-3 text-xs text-slate-500 font-semibold font-mono">
+          <span className="flex items-center gap-1 text-emerald-500/90" title="Aciertos en Quiz">
+            <CheckCircle2 size={12} />
+            {card.hits}
+          </span>
+          <span className="flex items-center gap-1 text-rose-500/90" title="Errores en Quiz">
+            <AlertCircle size={12} />
+            {card.misses}
+          </span>
+        </div>
+      </div>
+
+      {/* Main Text Content: Question & Answer side-by-side or stacked */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+        <div className="space-y-1">
+          <div className="text-[10px] text-slate-550 font-bold uppercase tracking-wider">Pregunta</div>
+          <p className="text-sm text-slate-200 font-medium leading-relaxed">{card.question}</p>
+        </div>
+        <div className="space-y-1 border-t md:border-t-0 md:border-l border-slate-900/60 pt-3 md:pt-0 md:pl-4">
+          <div className="text-[10px] text-slate-550 font-bold uppercase tracking-wider">Respuesta</div>
+          <p className="text-sm text-slate-450 leading-relaxed font-normal">{card.answer}</p>
+        </div>
+      </div>
+
+      {/* Footer Row: Modification date + Action Buttons */}
+      <div className="flex items-center justify-between pt-2 border-t border-slate-900/30">
+        <span className="text-[10px] font-mono text-slate-650" title={`Creada el: ${new Date(card.createdAt).toLocaleString()}`}>
+          Creada: {new Date(card.createdAt).toLocaleDateString()}
+        </span>
+
+        <div className="flex items-center gap-2">
+          <Link
+            to={`/edit/${card.id}`}
+            className="flex items-center justify-center gap-1 border border-slate-850 text-slate-400 hover:text-white hover:bg-slate-900/80 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all"
+            title="Editar tarjeta"
+          >
+            <Edit2 size={12} />
+            <span>Editar</span>
+          </Link>
+          <button
+            onClick={() => onDelete(card.id)}
+            className="flex items-center justify-center gap-1 border border-slate-850 text-slate-500 hover:text-rose-450 hover:bg-rose-500/5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all"
+            title="Eliminar tarjeta"
+          >
+            <Trash2 size={12} />
+            <span>Eliminar</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

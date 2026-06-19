@@ -95,29 +95,14 @@ A continuación se detallan los módulos creados en el código y la lógica detr
 *   **[src/app/router.tsx](file:///C:/Users/brand/Desktop/Flashcards-2.1/src/app/router.tsx) (Sistema de Enrutamiento)**
     *   *Qué:* Centraliza todas las rutas de la aplicación de forma limpia usando React Router.
     *   *Por qué:* Aísla la configuración de rutas fuera del archivo raíz `App.tsx` para mejorar la mantenibilidad y organización del proyecto.
-*   **[src/components/Sidebar.tsx](file:///C:/Users/brand/Desktop/Flashcards-2.1/src/components/Sidebar.tsx) (Navegación e Indicadores)**
-    *   *Qué:* Barra lateral de navegación con contador dinámico de tarjetas que requieren revisión.
-    *   *Por qué:* Mantiene al usuario informado sobre su volumen de estudio pendiente y sincroniza el menú lateral con las pestañas internas de la aplicación.
-*   **[src/pages/HomePage.tsx](file:///C:/Users/brand/Desktop/Flashcards-2.1/src/pages/HomePage.tsx) (Panel Unificado / Home)**
-    *   *Qué:* Consolida en una sola interfaz dinámica el listado de mazos (Dashboard), el gráfico y desglose de progreso (Leitner Progress), y las utilidades de respaldo/reinicios (Settings) mediante pestañas fluidas sincronizadas con la ruta actual.
-    *   *Por qué:* Simplifica la navegación general uniendo tres pantallas antes independientes bajo una misma experiencia integrada y coherente.
-*   **[src/pages/FlashcardsPage.tsx](file:///C:/Users/brand/Desktop/Flashcards-2.1/src/pages/FlashcardsPage.tsx) (Mazo y Sesión de Estudio)**
-    *   *Qué:* Muestra la lista de tarjetas y estadísticas del mazo (antiguo `DeckDetails`) e integra directamente la sesión de estudio interactiva en 3D (antiguo `StudySession`).
-    *   *Por qué:* Permite cambiar instantáneamente entre la administración de tarjetas de un mazo y el inicio del repaso del mismo sin forzar saltos de página ni pérdida de contexto.
-*   **[src/pages/NewCardPage.tsx](file:///C:/Users/brand/Desktop/Flashcards-2.1/src/pages/NewCardPage.tsx) (Creación Dedicada)**
-    *   *Qué:* Página y formulario dedicado para crear nuevas tarjetas dentro de un mazo, con vista previa.
-    *   *Por qué:* Reemplaza los molestos e incómodos modales en favor de un espacio de entrada enfocado y sin distracciones.
-*   **[src/pages/EditCardPage.tsx](file:///C:/Users/brand/Desktop/Flashcards-2.1/src/pages/EditCardPage.tsx) (Edición Dedicada)**
-    *   *Qué:* Página y formulario dedicado para modificar el frente y reverso de tarjetas ya creadas.
-    *   *Por qué:* Ofrece una ruta y espacio limpio para corregir o refinar preguntas y respuestas rápidamente.
+*   **[src/components/Navbar.tsx](file:///C:/Users/brand/Desktop/Flashcards-2.1/src/components/Navbar.tsx) (Barra de Navegación)**
+    *   *Qué:* Barra superior horizontal con diseño glassmorphic y enlaces de navegación (`NavLink`) hacia Tarjetas (`/`), Nueva Tarjeta (`/new`), y placeholders de Repaso y Quiz.
+    *   *Por qué:* Reemplaza la barra lateral por un menú superior centralizado que optimiza el espacio de lectura y mantiene siempre visible la sección activa.
 
 ### 3. Componentes y Modales Interactivos
 *   **[src/components/Flashcard.tsx](file:///C:/Users/brand/Desktop/Flashcards-2.1/src/components/Flashcard.tsx) (Tarjeta 3D)**
-    *   *Qué:* Tarjeta de estudio con animaciones realistas de volteo en 3D basadas en CSS de perspectiva.
-    *   *Por qué:* Brinda un impacto visual "premium" y gamificado que imita las tarjetas físicas reales.
-*   **[src/components/CreateDeckModal.tsx](file:///C:/Users/brand/Desktop/Flashcards-2.1/src/components/CreateDeckModal.tsx) (Formulario de Barajas)**
-    *   *Qué:* Ventana emergente para crear nuevas barajas permitiendo elegir gradientes de color visuales.
-    *   *Por qué:* Facilita la segmentación de temas con estilos personalizados de manera ágil.
+    *   *Qué:* Tarjeta de estudio con animaciones de volteo en 3D basadas en perspectiva CSS.
+    *   *Por qué:* Se preserva como componente reutilizable para que el desarrollador I2 pueda importarlo en los módulos interactivos de repaso y quiz.
 
 ### 4. Arquitectura Modular (Módulo de Características - Features)
 *   **[src/features/cards/](file:///C:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/) (Módulo de Tarjetas)**
@@ -126,31 +111,73 @@ A continuación se detallan los módulos creados en el código y la lógica detr
     *   *Módulos Internos Creados:*
         *   [types.ts](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/types.ts): Modelo de datos formal de la tarjeta (`Card` y `CardDifficulty`).
         *   [seed.ts](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/seed.ts): Datos iniciales pre-poblados organizados por temas (Programación, Redes, Hardware, Ciberseguridad).
-        *   [store.ts](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/store.ts): Almacén de estado persistente local (Zustand + middleware `persist`) que implementa las acciones CRUD principales y reserva el slot `recordResult` para la lógica de estadísticas.
+        *   [store.ts](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/store.ts): Almacén de estado de Zustand + middleware `persist` que implementa las acciones CRUD principales y reserva el slot `recordResult`.
+        *   [components/CardList.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardList.tsx): Tablero principal del dashboard que renderiza las tarjetas, calcula estadísticas generales, e implementa buscadores de texto y filtros dinámicos por tema.
+        *   [components/CardForm.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardForm.tsx): Formulario unificado de creación y edición que detecta parámetros de ruta de React Router y ofrece una vista previa interactiva del anverso y reverso.
+        *   [components/CardItem.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardItem.tsx): Componente ligero para visualizar una tarjeta individual, sus estadísticas de Quiz (hits/misses) y botones para editar o eliminar.
 
 ---
 
-## 🔄 Últimos Cambios Realizados (Reestructuración de Páginas)
+## 🔄 Últimos Cambios Realizados (Entrega D1 - Enrutamiento y CRUD de Tarjetas)
 
-Se llevó a cabo una importante refactorización de la arquitectura de la aplicación para simplificar la navegación, eliminar el exceso de modales y modularizar la lógica de negocio:
+Se llevó a cabo una importante refactorización de la arquitectura de la aplicación para simplificar la navegación, eliminar el exceso de modales y modularizar la lógica de negocio en torno al Módulo de Tarjetas:
 
-1. **Centralización de Rutas:** Se implementó [router.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/app/router.tsx) como el gestor único de enrutamiento y se limpió [App.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/App.tsx) para desacoplar las vistas de la raíz.
-2. **HomePage con Pestañas Dinámicas:** Se fusionaron las pantallas de Dashboard, LeitnerStats y Settings en una sola página [HomePage.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/pages/HomePage.tsx) mediante pestañas fluidas sincronizadas con la URL.
-3. **Modo de Estudio Integrado:** Se eliminó `StudySession.tsx` e integró la interfaz interactiva de repaso en 3D directamente dentro de [FlashcardsPage.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/pages/FlashcardsPage.tsx) como un estado mutable para evitar saltos innecesarios de ruta.
-4. **Formularios Dedicados y Vista Previa en Vivo:** Se retiró el modal `AddCardModal.tsx` de componentes y se crearon dos páginas completas ([NewCardPage.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/pages/NewCardPage.tsx) y [EditCardPage.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/pages/EditCardPage.tsx)) que integran un simulador de tarjetas 3D en tiempo real.
-5. **Corrección de Indicador Activo:** Se añadió la propiedad `end` a la ruta raíz en [Sidebar.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/components/Sidebar.tsx) para evitar resaltados incorrectos al navegar entre pestañas de la página de inicio.
-6. **Definición de Modelo Modular:** Se creó la definición unificada de la interfaz `Card` en el archivo [types.ts](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/types.ts) del nuevo módulo de tarjetas.
-7. **Store Persistente con Zustand:** Se implementaron [store.ts](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/store.ts) y [seed.ts](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/seed.ts), estableciendo el array global de tarjetas, acciones CRUD (`addCard`, `editCard`, `deleteCard`), restauración (`resetCards`) y sincronización automática con `localStorage`. Se reservó además el espacio para la función `recordResult` (estadísticas).
-   
-   La estructura de los archivos involucrados en este paso es:
-   ```text
-   src/
-   └── features/
-       └── cards/
-           ├── types.ts   <-- Interfaz Card y CardDifficulty (Modelo de Datos)
-           ├── seed.ts    <-- Datos semilla de prueba iniciales (INITIAL_SEED_CARDS)
-           └── store.ts   <-- Store global de Zustand (useCardStore)
-   ```
+1. **Centralización de Rutas con React Router v7:** Se implementó [router.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/app/router.tsx) como gestor único de enrutamiento y se limpió [App.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/App.tsx) para renderizar únicamente la configuración de rutas raíz.
+2. **Layout Base con Navbar Superior:** Se retiró el menú lateral `Sidebar` y se implementó un encabezado horizontal [Navbar.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/components/Navbar.tsx) que envuelve dinámicamente el contenido mediante `<Outlet />` con resaltado activo.
+3. **Tablero de Tarjetas (CRUD y Dashboard):** Se implementó [CardList.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardList.tsx) en el path `/` que calcula estadísticas, gestiona el listado y filtra por búsqueda de texto y temas.
+4. **Formulario Unificado con Vista Previa:** Se implementó [CardForm.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardForm.tsx) en los paths `/new` y `/edit/:id` para creación y edición, integrando un simulador interactivo de tarjetas.
+5. **Store Persistente con Zustand:** Se configuró el almacén global unificado en [store.ts](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/store.ts) que sincroniza datos de tarjetas automáticamente en `localStorage` usando el middleware `persist`.
+6. **Módulos Vacíos (Placeholders) para I2:** Se registraron las rutas `/review` (repaso) y `/quiz` (evaluación) con placeholders de carga limpia en el enrutador, y se dejó preparada la firma del método `recordResult(id, result)` en el store para asegurar la integración inmediata de I2.
+
+La estructura final de los archivos del módulo es:
+```text
+src/
+└── features/
+    └── cards/
+        ├── types.ts   <-- Interfaz Card y CardDifficulty (Modelo de Datos)
+        ├── seed.ts    <-- Datos semilla de prueba iniciales (INITIAL_SEED_CARDS)
+        ├── store.ts   <-- Store global de Zustand (useCardStore)
+        └── components/
+            ├── CardForm.tsx <-- Formulario de creación/edición con vista previa
+            ├── CardItem.tsx <-- Renderizado de tarjeta individual
+            └── CardList.tsx <-- Tablero principal y listado
+```
+
+**Archivos modificados en este paso (Enrutador, Layout y CRUD):**
+*   [src/app/router.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/app/router.tsx) — Configuración del enrutamiento y layout base.
+*   [src/App.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/App.tsx) — Punto de entrada simplificado que delega la vista al enrutador.
+*   [src/components/Navbar.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/components/Navbar.tsx) — Barra de navegación superior horizontal.
+*   [src/features/cards/components/CardList.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardList.tsx) — Dashboard principal y listado de tarjetas.
+*   [src/features/cards/components/CardForm.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardForm.tsx) — Formulario unificado de creación y edición.
+*   [src/features/cards/components/CardItem.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardItem.tsx) — Visualización de tarjeta individual dentro del listado.
+
+---
+
+## 🛠️ Detalle de Archivos Tocados en este Paso y Justificación
+
+A continuación se resume la lista de archivos que fueron creados, modificados o eliminados en esta última etapa, junto con la justificación técnica de cada cambio:
+
+### 1. Archivos Creados (Nuevos Módulos)
+*   **[src/components/Navbar.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/components/Navbar.tsx):**
+    *   *Por qué:* Crea una barra superior horizontal unificada para la navegación del sitio en reemplazo del menú lateral (`Sidebar`). Mantiene accesos rápidos a Tarjetas (`/`), Nueva Tarjeta (`/new`), y placeholders estáticos para Repaso (`/review`) y Quiz (`/quiz`).
+*   **[src/features/cards/components/CardList.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardList.tsx):**
+    *   *Por qué:* Implementa el listado principal de tarjetas en la ruta `/`, calculando estadísticas generales de aprendizaje (totales, dominadas, críticas), filtrando por texto y categorías dinámicas, y posibilitando el reinicio del almacén local.
+*   **[src/features/cards/components/CardForm.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardForm.tsx):**
+    *   *Por qué:* Formulario único reutilizado para crear y editar tarjetas por ID. Lee los parámetros de ruta de React Router y ofrece una vista previa interactiva en tiempo real del anverso y reverso de la tarjeta.
+*   **[src/features/cards/components/CardItem.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardItem.tsx):**
+    *   *Por qué:* Renders de tarjetas individuales dentro de la cuadrícula general de la app, mostrando etiquetas de tema/dificultad, contadores de hits/misses para D2 y botones de acción rápida.
+
+### 2. Archivos Modificados (Configuración Global)
+*   **[src/app/router.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/app/router.tsx):**
+    *   *Por qué:* Se reestructuró para montar la jerarquía de rutas raíz del entregable D1 y registrar las rutas vacías `/review` y `/quiz` de D2. Envuelve todas las vistas en un Layout que incluye el `Navbar` persistente y un `<Outlet />` de renderizado hijo.
+*   **[src/App.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/App.tsx):**
+    *   *Por qué:* Se simplificó para remover el menú lateral `Sidebar` y delegar todo el renderizado de la estructura visual y de enrutamiento al componente `<AppRouter />`.
+
+### 3. Archivos Eliminados (Código Obsoleto)
+*   **Carpeta `src/pages/` completa (`EditCardPage.tsx`, `FlashcardsPage.tsx`, `HomePage.tsx`, `NewCardPage.tsx`):**
+    *   *Por qué:* Estas páginas pertenecían al flujo anterior basado en mazos de estudio. Al pasar a una estructura plana por temas ("Topics"), estas vistas quedaron obsoletas y fueron depuradas de los directorios del proyecto.
+*   **`src/components/Sidebar.tsx`, `src/components/DeckCard.tsx` y `src/components/CreateDeckModal.tsx`:**
+    *   *Por qué:* Removidos de la carpeta de componentes globales para evitar código muerto, ya que la navegación lateral y el flujo de barajas fueron sustituidos por la barra superior horizontal (`Navbar`) y la gestión plana de categorías.
 
 ---
 
