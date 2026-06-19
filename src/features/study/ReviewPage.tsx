@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useCardStore } from '../cards/store';
 
 export default function ReviewPage() {
@@ -7,6 +8,7 @@ export default function ReviewPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+  const [isSessionFinished, setIsSessionFinished] = useState(false);
   
   const topics = Array.from(
     new Set(cards.map((card) => card.topic))
@@ -39,6 +41,8 @@ export default function ReviewPage() {
     if (currentIndex < reviewCards.length - 1) {
       setCurrentIndex(currentIndex + 1);
       setShowAnswer(false);
+    } else {
+    setIsSessionFinished(true);
     }
   };
 
@@ -53,6 +57,13 @@ export default function ReviewPage() {
   return (
     <div className="flex-1 flex items-center justify-center p-8">
       <div className="w-full max-w-4xl rounded-2xl border border-slate-900 bg-slate-900/20 p-8">
+        <Link
+            to="/"
+            className="mb-6 inline-block text-sm text-slate-400 hover:text-violet-300 transition-colors"
+        >
+            ← Volver al Inicio
+        </Link>
+        
         <h1 className="text-2xl font-bold text-white mb-2">
           Modo Repaso
         </h1>
@@ -69,6 +80,7 @@ export default function ReviewPage() {
                 setSelectedTopic(deck.id);
                 setCurrentIndex(0);
                 setShowAnswer(false);
+                setIsSessionFinished(false);
               }}
               className="group rounded-2xl border border-slate-800 bg-slate-950/60 p-5 text-left hover:border-violet-500/50 hover:bg-slate-900 transition-all"
             >
@@ -102,9 +114,57 @@ export default function ReviewPage() {
     );
   }
 
+  if (isSessionFinished) {
+  return (
+    <div className="flex-1 flex items-center justify-center p-8">
+      <div className="w-full max-w-2xl rounded-2xl border border-slate-900 bg-slate-900/20 p-8 text-center">
+        <h1 className="text-2xl font-bold text-white mb-4">
+          🎉 Terminaste el mazo
+        </h1>
+
+        <p className="text-slate-400 mb-8">
+          Repasaste {reviewCards.length} {reviewCards.length === 1 ? 'tarjeta' : 'tarjetas'}.
+        </p>
+
+        <div className="flex flex-col sm:flex-row justify-center gap-3">
+          <button
+            onClick={() => {
+              setCurrentIndex(0);
+              setShowAnswer(false);
+              setIsSessionFinished(false);
+            }}
+            className="rounded-xl bg-violet-600 px-4 py-2 font-semibold text-white hover:bg-violet-500 transition-colors"
+          >
+            Repasar nuevamente
+          </button>
+
+          <button
+            onClick={() => {
+              setSelectedTopic(null);
+              setCurrentIndex(0);
+              setShowAnswer(false);
+              setIsSessionFinished(false);
+            }}
+            className="rounded-xl border border-slate-700 px-4 py-2 font-semibold text-slate-300 hover:text-white hover:border-violet-500 transition-colors"
+          >
+            Volver a mazos
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
   return (
     <div className="flex-1 flex items-center justify-center p-8">
       <div className="w-full max-w-2xl rounded-2xl border border-slate-900 bg-slate-900/20 p-8">
+        <Link
+            to="/"
+            className="mb-6 inline-block text-sm text-slate-400 hover:text-violet-300 transition-colors"
+        >
+            ← Volver al Inicio
+        </Link>
+        
         <h1 className="text-2xl font-bold text-white mb-6">
           Modo Repaso
         </h1>
@@ -127,6 +187,7 @@ export default function ReviewPage() {
                 setSelectedTopic(null);
                 setCurrentIndex(0);
                 setShowAnswer(false);
+                setIsSessionFinished(false);
               }}
             className="mb-6 text-sm text-slate-400 hover:text-violet-300 transition-colors"
             >
@@ -181,10 +242,9 @@ export default function ReviewPage() {
 
           <button
             onClick={handleNextCard}
-            disabled={currentIndex === reviewCards.length - 1}
             className="rounded-xl border border-slate-700 px-4 py-2 text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            Siguiente
+            {currentIndex === reviewCards.length - 1 ? 'Finalizar' : 'Siguiente'}
           </button>
         </div>
       </div>
