@@ -123,6 +123,10 @@ A continuación se detallan los módulos creados en el código y la lógica detr
 *   **[src/features/cards/](file:///C:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/) (Módulo de Tarjetas)**
     *   *Qué:* Estructura modular independiente diseñada para encapsular toda la lógica de negocio, tipos, semillas y componentes visuales relacionados exclusivamente con la entidad de las tarjetas (`CardForm.tsx`, `CardItem.tsx`, `CardList.tsx`).
     *   *Por qué:* Prepara la base de código para escalar de manera organizada, aislando el dominio de tarjetas para que sea altamente reutilizable, fácil de testear y modular.
+    *   *Módulos Internos Creados:*
+        *   [types.ts](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/types.ts): Modelo de datos formal de la tarjeta (`Card` y `CardDifficulty`).
+        *   [seed.ts](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/seed.ts): Datos iniciales pre-poblados organizados por temas (Programación, Redes, Hardware, Ciberseguridad).
+        *   [store.ts](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/store.ts): Almacén de estado persistente local (Zustand + middleware `persist`) que implementa las acciones CRUD principales y reserva el slot `recordResult` para la lógica de estadísticas.
 
 ---
 
@@ -136,6 +140,17 @@ Se llevó a cabo una importante refactorización de la arquitectura de la aplica
 4. **Formularios Dedicados y Vista Previa en Vivo:** Se retiró el modal `AddCardModal.tsx` de componentes y se crearon dos páginas completas ([NewCardPage.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/pages/NewCardPage.tsx) y [EditCardPage.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/pages/EditCardPage.tsx)) que integran un simulador de tarjetas 3D en tiempo real.
 5. **Corrección de Indicador Activo:** Se añadió la propiedad `end` a la ruta raíz en [Sidebar.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/components/Sidebar.tsx) para evitar resaltados incorrectos al navegar entre pestañas de la página de inicio.
 6. **Definición de Modelo Modular:** Se creó la definición unificada de la interfaz `Card` en el archivo [types.ts](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/types.ts) del nuevo módulo de tarjetas.
+7. **Store Persistente con Zustand:** Se implementaron [store.ts](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/store.ts) y [seed.ts](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/seed.ts), estableciendo el array global de tarjetas, acciones CRUD (`addCard`, `editCard`, `deleteCard`), restauración (`resetCards`) y sincronización automática con `localStorage`. Se reservó además el espacio para la función `recordResult` (estadísticas).
+   
+   La estructura de los archivos involucrados en este paso es:
+   ```text
+   src/
+   └── features/
+       └── cards/
+           ├── types.ts   <-- Interfaz Card y CardDifficulty (Modelo de Datos)
+           ├── seed.ts    <-- Datos semilla de prueba iniciales (INITIAL_SEED_CARDS)
+           └── store.ts   <-- Store global de Zustand (useCardStore)
+   ```
 
 ---
 

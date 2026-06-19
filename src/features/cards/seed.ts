@@ -1,0 +1,65 @@
+import type { Card } from './types';
+
+// Seed data to populate cards initially
+export const INITIAL_SEED_CARDS: Card[] = [
+  {
+    id: 'seed-1',
+    question: '¿Qué es un "closure" en JavaScript?',
+    answer: 'Es una función que recuerda y accede a las variables de su entorno léxico exterior, incluso cuando se ejecuta fuera de él.',
+    topic: 'Programación',
+    difficulty: 'medium',
+    hits: 5,
+    misses: 2, // Moderately mastered card
+    createdAt: new Date('2026-06-01').toISOString(),
+  },
+  {
+    id: 'seed-2',
+    question: '¿Para qué sirve la máscara de subred en redes IPv4?',
+    answer: 'Se utiliza para delimitar la porción de red y la porción de host de una dirección IP, permitiendo identificar a qué subred pertenece un dispositivo.',
+    topic: 'Redes',
+    difficulty: 'hard',
+    hits: 1,
+    misses: 6, // 🔴 Critical card (I4 should prioritize it due to high miss count)
+    createdAt: new Date('2026-06-02').toISOString(),
+  },
+  {
+    id: 'seed-3',
+    question: '¿Cuál es la función principal de los reguladores de voltaje (VRM) en una tarjeta gráfica (GPU)?',
+    answer: 'Transformar el voltaje de 12V proveniente de la fuente de alimentación a los valores bajos y ultra precisos (usualmente entre 0.8V y 1.2V) que el núcleo de la GPU y las memorias necesitan.',
+    topic: 'Hardware',
+    difficulty: 'hard',
+    hits: 4,
+    misses: 0, // 🟢 Mastered card (no priority needed)
+    createdAt: new Date('2026-06-03').toISOString(),
+  },
+  {
+    id: 'seed-4',
+    question: '¿Qué diferencia hay entre una API REST y GraphQL?',
+    answer: 'REST expone un endpoint por cada recurso y devuelve estructuras fijas. GraphQL expone un único endpoint y permite al cliente pedir exactamente los datos que necesita.',
+    topic: 'Programación',
+    difficulty: 'medium',
+    hits: 2,
+    misses: 3,
+    createdAt: new Date('2026-06-04').toISOString(),
+  },
+  {
+    id: 'seed-5',
+    question: '¿Qué es un ataque de inyección SQL (SQLi)?',
+    answer: 'Una vulnerabilidad que permite a un atacante interferir en las consultas que una aplicación hace a su base de datos, logrando leer, modificar o borrar información sensible.',
+    topic: 'Ciberseguridad',
+    difficulty: 'medium',
+    hits: 8,
+    misses: 1, // Well-mastered card
+    createdAt: new Date('2026-06-05').toISOString(),
+  },
+  {
+    id: 'seed-6',
+    question: '¿Cuál es el protocolo por defecto para transferir archivos de forma segura usando SSH?',
+    answer: 'SFTP (SSH File Transfer Protocol).',
+    topic: 'Redes',
+    difficulty: 'easy',
+    hits: 0,
+    misses: 0, // New card, never reviewed
+    createdAt: new Date('2026-06-06').toISOString(),
+  }
+];
