@@ -6,7 +6,7 @@ export default function ReviewPage() {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
-
+  const progress = ((currentIndex + 1) / cards.length) * 100;
   const currentCard = cards[currentIndex];
 
   const handleNextCard = () => {
@@ -44,7 +44,12 @@ export default function ReviewPage() {
         <h1 className="text-2xl font-bold text-white mb-6">
           Modo Repaso
         </h1>
-
+        <div className="w-full h-2 rounded-full bg-slate-800 mb-4">
+            <div
+                className="h-2 rounded-full bg-violet-500 transition-all duration-300"
+                style={{ width: `${progress}%` }}
+            />
+        </div>
         <p className="text-slate-400">
           Tarjeta {currentIndex + 1} de {cards.length}
         </p>
