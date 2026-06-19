@@ -9,11 +9,9 @@ export default function CardForm() {
   const navigate = useNavigate();
   const isEditing = !!id;
 
-  const { cards, addCard, editCard } = useCardStore((state) => ({
-    cards: state.cards,
-    addCard: state.addCard,
-    editCard: state.editCard,
-  }));
+  const cards = useCardStore((state) => state.cards);
+  const addCard = useCardStore((state) => state.addCard);
+  const editCard = useCardStore((state) => state.editCard);
 
   const card = cards.find((c) => c.id === id);
 

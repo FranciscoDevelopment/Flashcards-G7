@@ -8,11 +8,9 @@ import { useCardStore } from '../store';
 import CardItem from './CardItem';
 
 export default function CardList() {
-  const { cards, deleteCard, resetCards } = useCardStore((state) => ({
-    cards: state.cards,
-    deleteCard: state.deleteCard,
-    resetCards: state.resetCards,
-  }));
+  const cards = useCardStore((state) => state.cards);
+  const deleteCard = useCardStore((state) => state.deleteCard);
+  const resetCards = useCardStore((state) => state.resetCards);
 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('all');

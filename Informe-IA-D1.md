@@ -191,4 +191,35 @@ A continuación se resume la lista de archivos que fueron creados, modificados o
 ## Nota
 * Se eligió usar Tailwind CSS v3 y aquí solo se instalaron las dependencias `react-router-dom`, `zustand`, `tailwindcss`, `lucide-react`, `clsx`, `tailwind-merge`. Los archivos de `postcss.config.js` y `tailwind.config.js` se generaron automáticamente al instalar Tailwind CSS v3. Los archivos `tsconfig.json`, `tsconfig.app.json` y `tsconfig.node.json` se generaron automáticamente al inicializar el proyecto con Vite.
 
-* Se definió e implementó la interfaz `Card` y el tipo `CardDifficulty` en [src/features/cards/types.ts](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/types.ts) con las propiedades requeridas (`id`, `question`, `answer`, `topic`, `difficulty`, `hits`, `misses`, `createdAt`, `lastReviewedAt`). Este archivo servirá como definición compartida estándar para el equipo de desarrollo para la gestión y evolución del módulo de tarjetas. 
+* Se definió e implementó la interfaz `Card` y el tipo `CardDifficulty` en [src/features/cards/types.ts](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/types.ts) con las propiedades requeridas (`id`, `question`, `answer`, `topic`, `difficulty`, `hits`, `misses`, `createdAt`, `lastReviewedAt`). Este archivo servirá como definición compartida estándar para el equipo de desarrollo para la gestión y evolución del módulo de tarjetas.
+
+---
+
+## 🐞 Corrección de Error en Tiempo de Ejecución (Infinite Loop en Zustand)
+
+Durante las pruebas en el navegador, se identificó un error crítico que impedía visualizar la página principal:
+> `Maximum update depth exceeded. This can happen when a component repeatedly calls setState inside...`
+
+### Causa del Problema
+En los componentes [CardList.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardList.tsx) y [CardForm.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardForm.tsx), la llamada al store de Zustand destructuraba el estado creando un objeto nuevo en cada evaluación de la función selectora:
+```typescript
+const { cards, deleteCard, resetCards } = useCardStore((state) => ({
+  cards: state.cards,
+  deleteCard: state.deleteCard,
+  resetCards: state.resetCards,
+}));
+```
+Al retornar una nueva referencia de objeto (`{ ... }`) en cada ciclo de render, la comparación por identidad de Zustand (`===`) consideraba siempre que el estado había cambiado. Esto gatillaba una actualización del estado de React (`setState`), que a su vez iniciaba un nuevo ciclo de renderizado, resultando en un bucle infinito ("Maximum update depth exceeded").
+
+### Solución Implementada
+Se reescribieron los selectores del hook `useCardStore` de forma atómica para retornar referencias directas y estables del estado:
+```typescript
+const cards = useCardStore((state) => state.cards);
+const deleteCard = useCardStore((state) => state.deleteCard);
+const resetCards = useCardStore((state) => state.resetCards);
+```
+Esta práctica estándar en Zustand asegura que la comparación de identidad de React/Zustand funcione correctamente y no dispare renders innecesarios. Se aplicó con éxito en ambos componentes y la aplicación ahora se renderiza perfectamente en el navegador.
+
+### Archivos Modificados por esta Corrección
+*   [src/features/cards/components/CardList.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardList.tsx) — Se reemplazó el selector de objeto destructurado por selectores individuales estables para evitar renders cíclicos al listar tarjetas y estadísticas.
+*   [src/features/cards/components/CardForm.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardForm.tsx) — Se implementaron selectores estables individuales en el formulario de creación y edición. 
