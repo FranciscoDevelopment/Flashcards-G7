@@ -31,7 +31,7 @@ export default function HomePage() {
               <Layers size={32} />
             </div>
             <h3 className="text-lg font-bold text-white mb-2">Mis tarjetas</h3>
-            <p className="text-sm text-slate-450 px-2">Crea, edita y organiza tus tarjetas de estudio.</p>
+            <p className="text-sm text-slate-400 px-2">Crea, edita y organiza tus tarjetas de estudio.</p>
           </div>
           <div className="flex justify-end mt-4">
             <div className="p-2 bg-slate-800 text-slate-300 rounded-full group-hover:bg-violet-600 group-hover:text-white transition-colors">
@@ -118,7 +118,7 @@ export default function HomePage() {
           <div className="flex items-center gap-3">
             <Flame className="text-slate-500" size={24} />
             <div>
-              <p className="text-xs text-slate-550 font-semibold uppercase tracking-wider">Racha actual</p>
+              <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Racha actual</p>
               <p className="text-sm font-bold text-slate-400">{stats.streak} días</p>
             </div>
           </div>

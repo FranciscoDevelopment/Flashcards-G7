@@ -38,7 +38,7 @@ export function ThemeToggle() {
 
         html.light .text-slate-400,
         html.light .text-slate-500,
-        html.light .text-slate-650,
+        html.light .text-slate-600,
         html.light p.text-slate-400 {
           color: #475569 !important; /* slate-600 */
         }
@@ -51,7 +51,7 @@ export function ThemeToggle() {
         }
 
         html.light .border-slate-900,
-        html.light .border-slate-850,
+        html.light .border-slate-800,
         html.light .border-slate-900\\/40,
         html.light .border-slate-900\\/30,
         html.light .border-b {
@@ -79,7 +79,7 @@ export function ThemeToggle() {
           color: #0f172a !important;
         }
 
-        html.light .text-slate-450 {
+        html.light .text-slate-400 {
           color: #475569 !important;
         }
 
@@ -114,7 +114,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-xl border border-slate-200 dark:border-slate-900 bg-white/50 dark:bg-slate-950/40 text-slate-700 dark:text-slate-350 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900/60 transition-all duration-200 flex items-center justify-center cursor-pointer shadow-sm ml-1"
+      className="p-2 rounded-xl border border-slate-200 dark:border-slate-900 bg-white/50 dark:bg-slate-950/40 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900/60 transition-all duration-200 flex items-center justify-center cursor-pointer shadow-sm ml-1"
       title={theme === 'dark' ? 'Cambiar a modo día' : 'Cambiar a modo noche'}
     >
       {theme === 'dark' ? (

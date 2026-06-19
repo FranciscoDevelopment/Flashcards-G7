@@ -51,7 +51,7 @@ export default function CardsPage() {
           <h2 className="text-3xl font-extrabold text-white tracking-tight">Mis Tarjetas</h2>
           <p className="text-slate-400 mt-2 flex flex-wrap items-center gap-2">
             <span>Administra tus tarjetas de estudio.</span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-0.5 text-[11px] font-bold font-mono rounded-full bg-slate-900 border border-slate-850 text-violet-400">
+            <span className="inline-flex items-center gap-1.5 px-3 py-0.5 text-[11px] font-bold font-mono rounded-full bg-slate-900 border border-slate-800 text-violet-400">
               <BookOpen size={12} />
               {totalCards} {totalCards === 1 ? 'tarjeta' : 'tarjetas'} • {topics.length} {topics.length === 1 ? 'tema' : 'temas'}
             </span>
@@ -61,7 +61,7 @@ export default function CardsPage() {
         <div className="flex gap-3 shrink-0 self-start md:self-auto">
           <button
             onClick={handleReset}
-            className="flex items-center justify-center gap-1.5 border border-slate-900 hover:bg-slate-900 text-slate-450 hover:text-slate-200 font-semibold text-xs px-4 py-2.5 rounded-xl transition-all"
+            className="flex items-center justify-center gap-1.5 border border-slate-900 hover:bg-slate-900 text-slate-400 hover:text-slate-200 font-semibold text-xs px-4 py-2.5 rounded-xl transition-all"
             title="Reiniciar base de datos a tarjetas semillas"
           >
             <RotateCcw size={14} />
@@ -103,7 +103,7 @@ export default function CardsPage() {
           <select
             value={selectedTopic}
             onChange={(e) => setSelectedTopic(e.target.value)}
-            className="rounded-xl border border-slate-900 bg-slate-950 text-xs sm:text-sm text-slate-350 px-4 py-2.5 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 transition-all font-semibold"
+            className="rounded-xl border border-slate-900 bg-slate-950 text-xs sm:text-sm text-slate-400 px-4 py-2.5 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 transition-all font-semibold"
           >
             <option value="all">Todos los temas</option>
             {topics.map((topic) => (

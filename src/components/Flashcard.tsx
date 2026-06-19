@@ -23,7 +23,7 @@ export default function Flashcard({ card, isFlipped, onFlip }: FlashcardProps) {
           {/* Header */}
           <div className="flex items-center justify-between text-slate-500">
             <span className="text-xs font-semibold uppercase tracking-wider">Front Side (Question)</span>
-            <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-slate-850 text-slate-400">
+            <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-slate-800 text-slate-400">
               Box {card.box}
             </span>
           </div>

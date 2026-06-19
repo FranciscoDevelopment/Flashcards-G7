@@ -59,6 +59,8 @@ Flashcards-2.1/
         └── features/              <-- Estructura modular para características (Features)
             ├── home/
             │   └── HomePage.tsx   <-- Dashboard de bienvenida y accesos rápidos
+            ├── night-or-day/      <-- Módulo de alternancia de tema visual (Modo Noche / Día)
+            │   └── night-or-day.tsx <-- Componente ThemeToggle con inyección dinámica de estilos CSS
             └── cards/             <-- Módulo específico de gestión de tarjetas
                 ├── CardsPage.tsx  <-- Página dedicada para administración, filtros y estadísticas
                 ├── seed.ts
@@ -130,16 +132,18 @@ La estructura final de los archivos del módulo es:
 src/
 └── features/
     ├── home/
-    │   └── HomePage.tsx   <-- Dashboard de bienvenida y accesos rápidos
+    │   └── HomePage.tsx       <-- Dashboard de bienvenida y accesos rápidos
+    ├── night-or-day/          <-- Módulo de alternancia de tema visual
+    │   └── night-or-day.tsx   <-- Componente ThemeToggle (Modo Noche / Día)
     └── cards/
-        ├── CardsPage.tsx  <-- Página dedicada para administración, filtros y estadísticas
-        ├── types.ts       <-- Interfaz Card y CardDifficulty (Modelo de Datos)
-        ├── seed.ts        <-- Datos semilla de prueba iniciales (INITIAL_SEED_CARDS)
-        ├── store.ts       <-- Store global de Zustand (useCardStore)
+        ├── CardsPage.tsx      <-- Página dedicada para administración, filtros y estadísticas
+        ├── types.ts           <-- Interfaz Card y CardDifficulty (Modelo de Datos)
+        ├── seed.ts            <-- Datos semilla de prueba iniciales (INITIAL_SEED_CARDS)
+        ├── store.ts           <-- Store global de Zustand (useCardStore)
         └── components/
-            ├── CardForm.tsx <-- Formulario de creación/edición con vista previa
-            ├── CardItem.tsx <-- Renderizado de tarjeta con placeholder de métricas para D3
-            └── CardList.tsx <-- Tablero de listado presentacional puro
+            ├── CardForm.tsx   <-- Formulario de creación/edición con vista previa
+            ├── CardItem.tsx   <-- Renderizado de tarjeta con placeholder de métricas para D3
+            └── CardList.tsx   <-- Tablero de listado presentacional puro
 ```
 
 **Archivos modificados en este paso (Enrutador, Layout y CRUD):**
@@ -261,3 +265,72 @@ Recientemente se reestructuró la aplicación para incorporar un Dashboard de Bi
 * **Base para Integración en D3:** Se agregó un botón inactivo de **"Métricas"** con el icono `BarChart2` en cada tarjeta, sirviendo como punto de anclaje para que el desarrollador de D3 integre el modal de visualización de estadísticas.
 * **Inicialización limpia de semillas en `seed.ts`:** Se configuraron todos los campos de `hits: 0` y `misses: 0` en las tarjetas semilla iniciales.
  
+
+---
+
+## 🌗 Módulo de Modo Noche / Día (ThemeToggle)
+
+Se implementó un sistema de alternancia de tema visual que permite al usuario cambiar entre **modo oscuro** (por defecto) y **modo claro** desde cualquier pantalla de la aplicación.
+
+### Componente Creado
+*   **[src/features/night-or-day/night-or-day.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/night-or-day/night-or-day.tsx) (ThemeToggle)**
+    *   *Qué:* Componente React que exporta un botón interactivo con iconos de sol (`Sun`) y luna (`Moon`) de Lucide. Al hacer clic, alterna entre los temas `light` y `dark`.
+    *   *Cómo funciona:*
+        1.  **Persistencia en `localStorage`:** El tema seleccionado se guarda bajo la clave `theme`, permitiendo que la preferencia del usuario sobreviva a recargas y sesiones.
+        2.  **Inyección dinámica de CSS:** En el primer montaje del componente, se inyecta un bloque `<style>` en el `<head>` del documento con ID `theme-override-styles`. Este bloque contiene reglas CSS con selectores `html.light` que sobreescriben los fondos oscuros (`bg-slate-950`, `bg-slate-900`), colores de texto (`text-slate-100`, `text-white`), bordes, inputs, y hovers para adaptarlos a una paleta clara.
+        3.  **Toggle de clase CSS:** Cuando el tema es `light`, se agrega la clase `light` al elemento `<html>`. Cuando es `dark`, se remueve. Esto activa o desactiva las reglas CSS inyectadas.
+    *   *Integración:* El componente `ThemeToggle` se importa y renderiza dentro del [Navbar.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/components/Navbar.tsx) (línea 47), a la derecha de los enlaces de navegación.
+    *   *Por qué:* Ofrece accesibilidad visual y personalización del entorno de estudio. El modo claro mejora la legibilidad en ambientes con luz ambiental intensa, mientras que el modo oscuro reduce la fatiga visual en sesiones nocturnas.
+
+### Archivos Modificados para la Integración del ThemeToggle
+*   **[src/components/Navbar.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/components/Navbar.tsx):** Se importó el componente `ThemeToggle` desde `../features/night-or-day/night-or-day` y se colocó dentro del `<nav>` junto a los enlaces de navegación.
+
+---
+
+## 🐛 Corrección de Errores y Limpieza de Clases CSS Inválidas
+
+Se realizó una auditoría exhaustiva del código fuente que identificó y corrigió múltiples errores que no impedían la compilación pero afectaban el comportamiento y la renderización visual de la aplicación.
+
+### 1. Error de Navegación Post-Guardado en CardForm
+*   **Problema:** Después de crear o editar una tarjeta, el formulario redirigía al usuario a `/` (HomePage - Dashboard de bienvenida) en lugar de `/cards` (CardsPage - Listado de tarjetas donde se pueden ver las tarjetas creadas).
+*   **Causa:** En [CardForm.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardForm.tsx), la función `handleSubmit` ejecutaba `navigate('/')` y los enlaces "Volver al Listado" apuntaban a `to="/"`.
+*   **Solución:** Se actualizaron las 3 referencias de navegación:
+    *   `navigate('/')` → `navigate('/cards')` (línea 64 — redirección post-guardado)
+    *   `<Link to="/">` → `<Link to="/cards">` (línea 40 — enlace en pantalla de "tarjeta no encontrada")
+    *   `<Link to="/">` → `<Link to="/cards">` (línea 78 — enlace "Volver al Listado" en cabecera del formulario)
+
+### 2. Clases de Tailwind CSS Inexistentes (Valores de Shade No Estándar)
+*   **Problema:** Se utilizaban ~15 clases de Tailwind CSS con valores de shade intermedios que **no existen** en la paleta estándar de Tailwind v3 (por ejemplo: `text-slate-350`, `text-slate-450`, `border-slate-850`). Tailwind solo genera clases para shades estándar: `50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950`. Las clases con shades personalizados como `350`, `355`, `450`, `550`, `650`, `850` no producen ningún CSS, por lo que los textos y bordes afectados heredaban colores incorrectos de sus contenedores padre.
+*   **Solución:** Se reemplazó cada clase inválida con el shade estándar válido más cercano:
+
+| Clase Inválida | Reemplazo Válido | Archivos Corregidos |
+|---|---|---|
+| `text-slate-350`, `dark:text-slate-350` | `text-slate-400` | CardForm.tsx, CardsPage.tsx, night-or-day.tsx |
+| `text-slate-355` | `text-slate-400` | CardForm.tsx |
+| `text-slate-450` | `text-slate-400` | CardsPage.tsx, HomePage.tsx, CardItem.tsx, night-or-day.tsx |
+| `text-slate-550` | `text-slate-500` | CardItem.tsx, HomePage.tsx |
+| `text-slate-650` | `text-slate-600` | CardForm.tsx, CardItem.tsx, night-or-day.tsx |
+| `border-slate-850`, `bg-slate-850` | `border-slate-800`, `bg-slate-800` | CardForm.tsx, CardItem.tsx, CardsPage.tsx, Flashcard.tsx, night-or-day.tsx |
+| `text-amber-450` | `text-amber-400` | CardForm.tsx, CardItem.tsx |
+| `text-rose-450` | `text-rose-400` | CardForm.tsx, CardItem.tsx |
+| `text-emerald-450` | `text-emerald-400` | CardItem.tsx |
+
+### 3. Actualización de Selectores CSS en ThemeToggle
+*   **Problema:** El bloque de CSS inyectado dinámicamente por el componente `ThemeToggle` en [night-or-day.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/night-or-day/night-or-day.tsx) contenía selectores que apuntaban a las clases de Tailwind inválidas (`.text-slate-650`, `.border-slate-850`, `.text-slate-450`). Al corregir las clases en los componentes, estos selectores CSS dejaban de coincidir.
+*   **Solución:** Se actualizaron los selectores CSS del ThemeToggle para apuntar a las clases corregidas:
+    *   `html.light .text-slate-650` → `html.light .text-slate-600`
+    *   `html.light .border-slate-850` → `html.light .border-slate-800`
+    *   `html.light .text-slate-450` → `html.light .text-slate-400`
+
+### Archivos Modificados en esta Corrección
+*   [src/features/cards/components/CardForm.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardForm.tsx) — Navegación corregida + 11 clases CSS reemplazadas.
+*   [src/features/cards/components/CardItem.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardItem.tsx) — 9 clases CSS reemplazadas.
+*   [src/features/cards/CardsPage.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/CardsPage.tsx) — 3 clases CSS reemplazadas.
+*   [src/features/home/HomePage.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/home/HomePage.tsx) — 2 clases CSS reemplazadas.
+*   [src/features/night-or-day/night-or-day.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/night-or-day/night-or-day.tsx) — 3 selectores CSS + 1 clase en className del botón corregidos.
+*   [src/components/Flashcard.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/components/Flashcard.tsx) — 1 clase CSS reemplazada.
+
+### Estado Final de la Compilación
+*   **TypeScript (`tsc -b --noEmit`):** ✅ Compilación exitosa sin errores.
+*   **Vite Build (`npx vite build`):** ✅ Build de producción exitoso.
+*   **Grep de clases inválidas:** ✅ Cero ocurrencias de shades no estándar en todo el código fuente.

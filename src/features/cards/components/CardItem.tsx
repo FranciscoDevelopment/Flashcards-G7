@@ -10,9 +10,9 @@ interface CardItemProps {
 export default function CardItem({ card, onDelete }: CardItemProps) {
   // Determine color for difficulty badges
   const difficultyColors = {
-    easy: 'bg-emerald-500/10 text-emerald-450 border-emerald-500/20',
-    medium: 'bg-amber-500/10 text-amber-450 border-amber-500/20',
-    hard: 'bg-rose-500/10 text-rose-450 border-rose-500/20',
+    easy: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+    medium: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+    hard: 'bg-rose-500/10 text-rose-400 border-rose-500/20',
   };
 
   return (
@@ -23,7 +23,7 @@ export default function CardItem({ card, onDelete }: CardItemProps) {
       {/* Header Info: Topic, Difficulty, Stats */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-900/40 pb-3">
         <div className="flex items-center gap-2">
-          <span className="flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-900 text-slate-450 border border-slate-850">
+          <span className="flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-900 text-slate-400 border border-slate-800">
             <Tag size={10} />
             {card.topic}
           </span>
@@ -36,19 +36,19 @@ export default function CardItem({ card, onDelete }: CardItemProps) {
       {/* Main Text Content: Question & Answer side-by-side or stacked */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
         <div className="space-y-1">
-          <div className="text-[10px] text-slate-550 font-bold uppercase tracking-wider">Pregunta</div>
+          <div className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Pregunta</div>
           <p className="text-sm text-slate-200 font-medium leading-relaxed">{card.question}</p>
         </div>
         <div className="space-y-1 border-t md:border-t-0 md:border-l border-slate-900/60 pt-3 md:pt-0 md:pl-4">
-          <div className="text-[10px] text-slate-550 font-bold uppercase tracking-wider">Respuesta</div>
-          <p className="text-sm text-slate-450 leading-relaxed font-normal">{card.answer}</p>
+          <div className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Respuesta</div>
+          <p className="text-sm text-slate-400 leading-relaxed font-normal">{card.answer}</p>
         </div>
       </div>
 
       {/* Footer Row: Modification date + Action Buttons */}
       <div className="flex items-center justify-between pt-2 border-t border-slate-900/30">
         <span 
-          className="text-[10px] font-mono text-slate-650" 
+          className="text-[10px] font-mono text-slate-600" 
           title={card.createdAt ? `Creada el: ${new Date(card.createdAt).toLocaleString()}` : 'Sin fecha'}
         >
           Creada: {card.createdAt ? new Date(card.createdAt).toLocaleDateString() : 'N/A'}
@@ -58,7 +58,7 @@ export default function CardItem({ card, onDelete }: CardItemProps) {
           {/* Base/Placeholder para D3: Botón para abrir modal de métricas */}
           <button
             disabled
-            className="flex items-center justify-center gap-1 border border-slate-850 text-slate-650 dark:text-slate-500 cursor-not-allowed px-3 py-1.5 rounded-xl text-xs font-semibold"
+            className="flex items-center justify-center gap-1 border border-slate-800 text-slate-600 dark:text-slate-500 cursor-not-allowed px-3 py-1.5 rounded-xl text-xs font-semibold"
             title="Estadísticas (Próximamente en D3)"
           >
             <BarChart2 size={12} />
@@ -67,7 +67,7 @@ export default function CardItem({ card, onDelete }: CardItemProps) {
 
           <Link
             to={`/edit/${card.id}`}
-            className="flex items-center justify-center gap-1 border border-slate-850 text-slate-400 hover:text-white hover:bg-slate-900/80 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all"
+            className="flex items-center justify-center gap-1 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-900/80 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all"
             title="Editar tarjeta"
           >
             <Edit2 size={12} />
@@ -75,7 +75,7 @@ export default function CardItem({ card, onDelete }: CardItemProps) {
           </Link>
           <button
             onClick={() => onDelete(card.id)}
-            className="flex items-center justify-center gap-1 border border-slate-850 text-slate-500 hover:text-rose-450 hover:bg-rose-500/5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all"
+            className="flex items-center justify-center gap-1 border border-slate-800 text-slate-500 hover:text-rose-400 hover:bg-rose-500/5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all"
             title="Eliminar tarjeta"
           >
             <Trash2 size={12} />

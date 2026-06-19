@@ -37,7 +37,7 @@ export default function CardForm() {
         <ShieldAlert className="text-rose-500 h-12 w-12 mb-4" />
         <h3 className="text-xl font-bold">Tarjeta no encontrada</h3>
         <p className="text-slate-400 mt-2">La tarjeta con ID "{id}" no existe en el store.</p>
-        <Link to="/" className="text-violet-400 hover:underline mt-4 flex items-center gap-1.5 font-semibold">
+        <Link to="/cards" className="text-violet-400 hover:underline mt-4 flex items-center gap-1.5 font-semibold">
           <ArrowLeft size={16} /> Volver al Listado
         </Link>
       </div>
@@ -61,13 +61,13 @@ export default function CardForm() {
       addCard(cardData);
     }
 
-    navigate('/');
+    navigate('/cards');
   };
 
   const difficultyColors = {
     easy: 'text-emerald-400 border-emerald-500/30 bg-emerald-500/5',
-    medium: 'text-amber-450 border-amber-500/30 bg-amber-500/5',
-    hard: 'text-rose-450 border-rose-500/30 bg-rose-500/5',
+    medium: 'text-amber-400 border-amber-500/30 bg-amber-500/5',
+    hard: 'text-rose-400 border-rose-500/30 bg-rose-500/5',
   };
 
   return (
@@ -75,7 +75,7 @@ export default function CardForm() {
       {/* Navigation Header */}
       <div className="space-y-4 shrink-0">
         <Link 
-          to="/" 
+          to="/cards" 
           className="text-slate-400 hover:text-white inline-flex items-center gap-2 text-sm font-semibold transition-colors"
         >
           <ArrowLeft size={16} /> Volver al Listado
@@ -97,7 +97,7 @@ export default function CardForm() {
         <form onSubmit={handleSubmit} className="space-y-6 lg:col-span-7 bg-slate-900/10 border border-slate-900 p-6 md:p-8 rounded-3xl">
           {/* Question text */}
           <div className="space-y-2">
-            <label className="block text-sm font-bold text-slate-350">
+            <label className="block text-sm font-bold text-slate-400">
               Anverso (Pregunta o Concepto)
             </label>
             <textarea
@@ -112,7 +112,7 @@ export default function CardForm() {
 
           {/* Answer text */}
           <div className="space-y-2">
-            <label className="block text-sm font-bold text-slate-350">
+            <label className="block text-sm font-bold text-slate-400">
               Reverso (Respuesta o Detalles)
             </label>
             <textarea
@@ -128,7 +128,7 @@ export default function CardForm() {
           {/* Category/Topic Input */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="block text-sm font-bold text-slate-355">
+              <label className="block text-sm font-bold text-slate-400">
                 Tema / Categoría
               </label>
               <input
@@ -143,7 +143,7 @@ export default function CardForm() {
 
             {/* Difficulty selection */}
             <div className="space-y-2">
-              <label className="block text-sm font-bold text-slate-355">
+              <label className="block text-sm font-bold text-slate-400">
                 Dificultad
               </label>
               <div className="grid grid-cols-3 bg-slate-950 p-1 rounded-xl border border-slate-900">
@@ -191,7 +191,7 @@ export default function CardForm() {
         <div className="lg:col-span-5 space-y-4">
           <div className="flex items-center justify-between text-xs text-slate-500 font-semibold uppercase tracking-wider">
             <span className="flex items-center gap-1.5"><Eye size={14} /> Vista Previa de Tarjeta</span>
-            <div className="flex bg-slate-900 rounded-lg p-0.5 border border-slate-850">
+            <div className="flex bg-slate-900 rounded-lg p-0.5 border border-slate-800">
               <button
                 type="button"
                 onClick={() => setPreviewSide('front')}
@@ -231,11 +231,11 @@ export default function CardForm() {
 
             <div className="flex-1 flex items-center justify-center py-4 text-center z-10">
               {previewSide === 'front' ? (
-                <p className={`text-base font-bold leading-relaxed transition-all ${question ? 'text-slate-200' : 'text-slate-650 italic'}`}>
+                <p className={`text-base font-bold leading-relaxed transition-all ${question ? 'text-slate-200' : 'text-slate-600 italic'}`}>
                   {question || 'Escribe la pregunta en el formulario para previsualizar...'}
                 </p>
               ) : (
-                <p className={`text-sm leading-relaxed transition-all ${answer ? 'text-slate-350' : 'text-slate-650 italic'}`}>
+                <p className={`text-sm leading-relaxed transition-all ${answer ? 'text-slate-400' : 'text-slate-600 italic'}`}>
                   {answer || 'Escribe la respuesta en el formulario para previsualizar...'}
                 </p>
               )}
