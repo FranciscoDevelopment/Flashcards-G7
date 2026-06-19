@@ -129,14 +129,17 @@ La estructura final de los archivos del módulo es:
 ```text
 src/
 └── features/
+    ├── home/
+    │   └── HomePage.tsx   <-- Dashboard de bienvenida y accesos rápidos
     └── cards/
-        ├── types.ts   <-- Interfaz Card y CardDifficulty (Modelo de Datos)
-        ├── seed.ts    <-- Datos semilla de prueba iniciales (INITIAL_SEED_CARDS)
-        ├── store.ts   <-- Store global de Zustand (useCardStore)
+        ├── CardsPage.tsx  <-- Página dedicada para administración, filtros y estadísticas
+        ├── types.ts       <-- Interfaz Card y CardDifficulty (Modelo de Datos)
+        ├── seed.ts        <-- Datos semilla de prueba iniciales (INITIAL_SEED_CARDS)
+        ├── store.ts       <-- Store global de Zustand (useCardStore)
         └── components/
             ├── CardForm.tsx <-- Formulario de creación/edición con vista previa
-            ├── CardItem.tsx <-- Renderizado de tarjeta individual
-            └── CardList.tsx <-- Tablero principal y listado
+            ├── CardItem.tsx <-- Renderizado de tarjeta con placeholder de métricas para D3
+            └── CardList.tsx <-- Tablero de listado presentacional puro
 ```
 
 **Archivos modificados en este paso (Enrutador, Layout y CRUD):**
@@ -157,9 +160,11 @@ A continuación se resume la lista de archivos que fueron creados, modificados o
 *   **[src/components/Navbar.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/components/Navbar.tsx):**
     *   *Por qué:* Crea una barra superior horizontal unificada para la navegación del sitio en reemplazo del menú lateral (`Sidebar`). Mantiene accesos rápidos a Tarjetas (`/`), Nueva Tarjeta (`/new`), y placeholders estáticos para Repaso (`/review`) y Quiz (`/quiz`).
 *   **[src/features/home/HomePage.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/home/HomePage.tsx):**
-    *   *Por qué:* Página de inicio en el path `/` que sirve como contenedor y wrapper limpio del componente modular `CardList`, adaptándose a la arquitectura estándar de separación de vistas y características del proyecto.
+    *   *Por qué:* Dashboard de bienvenida en el path `/` que permite acceder a los distintos modos de estudio y muestra la racha activa de estudio.
+*   **[src/features/cards/CardsPage.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/CardsPage.tsx):**
+    *   *Por qué:* Página dedicada en `/cards` para la administración y listado de las tarjetas, manejando la lógica de filtrado y el contador de tarjetas/temas.
 *   **[src/features/cards/components/CardList.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardList.tsx):**
-    *   *Por qué:* Implementa el listado principal de tarjetas en la ruta `/`, calculando estadísticas generales de aprendizaje (totales, dominadas, críticas), filtrando por texto y categorías dinámicas, y posibilitando el reinicio del almacén local.
+    *   *Por qué:* Componente presentacional que renderiza la cuadrícula de tarjetas o la pantalla de estado vacío en base a las propiedades recibidas.
 *   **[src/features/cards/components/CardForm.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardForm.tsx):**
     *   *Por qué:* Formulario único reutilizado para crear y editar tarjetas por ID. Lee los parámetros de ruta de React Router y ofrece una vista previa interactiva en tiempo real del anverso y reverso de la tarjeta.
 *   **[src/features/cards/components/CardItem.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardItem.tsx):**

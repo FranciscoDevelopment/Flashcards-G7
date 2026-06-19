@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { BookOpen, PlusCircle, RefreshCw, HelpCircle, Home } from 'lucide-react';
+import { ThemeToggle } from '../features/night-or-day/night-or-day';
 
 export default function Navbar() {
   const navItems = [
@@ -43,6 +44,7 @@ export default function Navbar() {
               <span className="hidden xs:inline">{item.name}</span>
             </NavLink>
           ))}
+          <ThemeToggle />
         </nav>
       </div>
     </header>
