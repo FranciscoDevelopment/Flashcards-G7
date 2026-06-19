@@ -56,7 +56,7 @@ export default function ReviewPage() {
   if (selectedTopic === null) {
   return (
     <div className="flex-1 flex items-center justify-center p-8">
-      <div className="w-full max-w-4xl rounded-2xl border border-slate-900 bg-slate-900/20 p-8">
+      <div className="w-full max-w-4xl rounded-2xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-900 dark:bg-slate-900/20">
         <Link
             to="/"
             className="mb-6 inline-block text-sm text-slate-400 hover:text-violet-300 transition-colors"
@@ -64,11 +64,11 @@ export default function ReviewPage() {
             ← Volver al Inicio
         </Link>
         
-        <h1 className="text-2xl font-bold text-white mb-2">
+        <h1 className="text-2xl font-bold text-slate-950 dark:text-white mb-2">
           Modo Repaso
         </h1>
 
-        <p className="text-slate-400 mb-8">
+        <p className="text-slate-600 dark:text-slate-400 mb-8">
           Elegí qué mazo querés repasar.
         </p>
 
@@ -82,13 +82,13 @@ export default function ReviewPage() {
                 setShowAnswer(false);
                 setIsSessionFinished(false);
               }}
-              className="group rounded-2xl border border-slate-800 bg-slate-950/60 p-5 text-left hover:border-violet-500/50 hover:bg-slate-900 transition-all"
+              className="group rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:border-violet-400 hover:shadow-md dark:border-slate-800 dark:bg-slate-950/60 dark:hover:border-violet-500/50 dark:hover:bg-slate-900"
             >
-              <h2 className="text-lg font-bold text-white group-hover:text-violet-300">
+              <h2 className="text-lg font-bold text-slate-950 group-hover:text-violet-600 dark:text-white dark:group-hover:text-violet-300">
                 {deck.title}
               </h2>
 
-              <p className="mt-2 text-sm text-slate-400">
+              <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
                 {deck.count} {deck.count === 1 ? 'tarjeta' : 'tarjetas'}
               </p>
             </button>
@@ -102,11 +102,11 @@ export default function ReviewPage() {
   if (reviewCards.length === 0) {
     return (
       <div className="flex-1 flex items-center justify-center p-8">
-        <div className="w-full max-w-2xl rounded-2xl border border-slate-900 bg-slate-900/20 p-8 text-center">
-          <h1 className="text-2xl font-bold text-white mb-4">
+        <div className="w-full max-w-2xl rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm dark:border-slate-900 dark:bg-slate-900/20">
+          <h1 className="text-2xl font-bold text-slate-950 dark:text-white mb-4">
             Modo Repaso
           </h1>
-          <p className="text-slate-400">
+          <p className="text-slate-600 dark:text-slate-400">
             No hay tarjetas disponibles para repasar.
           </p>
         </div>
@@ -117,12 +117,12 @@ export default function ReviewPage() {
   if (isSessionFinished) {
   return (
     <div className="flex-1 flex items-center justify-center p-8">
-      <div className="w-full max-w-2xl rounded-2xl border border-slate-900 bg-slate-900/20 p-8 text-center">
-        <h1 className="text-2xl font-bold text-white mb-4">
+      <div className="w-full max-w-2xl rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm dark:border-slate-900 dark:bg-slate-900/20">
+        <h1 className="text-2xl font-bold text-slate-950 dark:text-white mb-4">
           🎉 Terminaste el mazo
         </h1>
 
-        <p className="text-slate-400 mb-8">
+        <p className="text-slate-600 dark:text-slate-400 mb-8">
           Repasaste {reviewCards.length} {reviewCards.length === 1 ? 'tarjeta' : 'tarjetas'}.
         </p>
 
@@ -133,7 +133,7 @@ export default function ReviewPage() {
               setShowAnswer(false);
               setIsSessionFinished(false);
             }}
-            className="rounded-xl bg-violet-600 px-4 py-2 font-semibold text-white hover:bg-violet-500 transition-colors"
+            className="rounded-xl bg-violet-600 px-4 py-2 font-semibold !text-white hover:bg-violet-500 transition-colors"
           >
             Repasar nuevamente
           </button>
@@ -145,7 +145,7 @@ export default function ReviewPage() {
               setShowAnswer(false);
               setIsSessionFinished(false);
             }}
-            className="rounded-xl border border-slate-700 px-4 py-2 font-semibold text-slate-300 hover:text-white hover:border-violet-500 transition-colors"
+            className="rounded-xl border border-slate-300 px-4 py-2 font-semibold text-slate-700 transition-colors hover:border-violet-400 hover:text-violet-600 dark:border-slate-700 dark:text-slate-300 dark:hover:text-white dark:hover:border-violet-500"
           >
             Volver a mazos
           </button>
@@ -157,7 +157,7 @@ export default function ReviewPage() {
 
   return (
     <div className="flex-1 flex items-center justify-center p-8">
-      <div className="w-full max-w-2xl rounded-2xl border border-slate-900 bg-slate-900/20 p-8">
+      <div className="w-full max-w-2xl rounded-2xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-900 dark:bg-slate-900/20">
         <Link
             to="/"
             className="mb-6 inline-block text-sm text-slate-400 hover:text-violet-300 transition-colors"
@@ -165,7 +165,7 @@ export default function ReviewPage() {
             ← Volver al Inicio
         </Link>
         
-        <h1 className="text-2xl font-bold text-white mb-6">
+        <h1 className="text-2xl font-bold text-slate-950 dark:text-white mb-6">
           Modo Repaso
         </h1>
 
@@ -175,7 +175,7 @@ export default function ReviewPage() {
                 Mazo actual
             </p>
 
-            <p className="text-lg font-semibold text-white">
+            <p className="text-lg font-semibold text-slate-950 dark:text-white">
                 {selectedTopic === 'all'
                     ? 'Todas las tarjetas'
                     : selectedTopic}
@@ -189,34 +189,34 @@ export default function ReviewPage() {
                 setShowAnswer(false);
                 setIsSessionFinished(false);
               }}
-            className="mb-6 text-sm text-slate-400 hover:text-violet-300 transition-colors"
+            className="mb-6 text-sm text-slate-600 hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-300 transition-colors"
             >
                 ← Cambiar mazo
             </button>
         </div>
 
-        <div className="w-full h-2 rounded-full bg-slate-800 mb-4">
+        <div className="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-800 mb-4">
             <div
                 className="h-2 rounded-full bg-violet-500 transition-all duration-300"
                 style={{ width: `${progress}%` }}
             />
         </div>
-        <p className="text-slate-400">
+        <p className="text-slate-600 dark:text-slate-400">
           Tarjeta {currentIndex + 1} de {reviewCards.length}
         </p>
 
         <div className="mt-6">
-          <h2 className="text-xl text-white">
+          <h2 className="text-xl text-slate-950 dark:text-white">
             {currentCard.question}
           </h2>
         </div>
 
         {showAnswer && (
-          <div className="mt-6 rounded-xl border border-slate-800 bg-slate-900/50 p-4">
+          <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900/50">
             <p className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-2">
               Respuesta
             </p>
-            <p className="text-slate-200 leading-relaxed">
+            <p className="text-slate-700 dark:text-slate-200 leading-relaxed">
               {currentCard.answer}
             </p>
           </div>
@@ -225,7 +225,7 @@ export default function ReviewPage() {
         {!showAnswer && (
           <button
             onClick={() => setShowAnswer(true)}
-            className="mt-8 rounded-xl bg-violet-600 px-4 py-2 font-semibold text-white hover:bg-violet-500 transition-colors"
+            className="mt-8 rounded-xl bg-violet-600 px-4 py-2 font-semibold !text-white hover:bg-violet-500 transition-colors"
           >
             Ver respuesta
           </button>
@@ -235,14 +235,14 @@ export default function ReviewPage() {
           <button
             onClick={handlePreviousCard}
             disabled={currentIndex === 0}
-            className="rounded-xl border border-slate-700 px-4 py-2 text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="rounded-xl border border-slate-300 px-4 py-2 text-slate-700 transition-colors hover:border-violet-400 hover:text-violet-600 disabled:opacity-40 disabled:cursor-not-allowed dark:border-slate-700 dark:text-slate-300 dark:hover:text-violet-300"
           >
             Anterior
           </button>
 
           <button
             onClick={handleNextCard}
-            className="rounded-xl border border-slate-700 px-4 py-2 text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="rounded-xl border border-slate-300 px-4 py-2 text-slate-700 transition-colors hover:border-violet-400 hover:text-violet-600 dark:border-slate-700 dark:text-slate-300 dark:hover:text-violet-300"
           >
             {currentIndex === reviewCards.length - 1 ? 'Finalizar' : 'Siguiente'}
           </button>
