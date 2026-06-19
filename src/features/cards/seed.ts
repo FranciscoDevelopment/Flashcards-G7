@@ -8,8 +8,8 @@ export const INITIAL_SEED_CARDS: Card[] = [
     answer: 'Es una función que recuerda y accede a las variables de su entorno léxico exterior, incluso cuando se ejecuta fuera de él.',
     topic: 'Programación',
     difficulty: 'medium',
-    hits: 5,
-    misses: 2, // Moderately mastered card
+    hits: 0,
+    misses: 0, // Moderately mastered card
     createdAt: new Date('2026-06-01').toISOString(),
   },
   {
@@ -18,8 +18,8 @@ export const INITIAL_SEED_CARDS: Card[] = [
     answer: 'Se utiliza para delimitar la porción de red y la porción de host de una dirección IP, permitiendo identificar a qué subred pertenece un dispositivo.',
     topic: 'Redes',
     difficulty: 'hard',
-    hits: 1,
-    misses: 6, // 🔴 Critical card (I4 should prioritize it due to high miss count)
+    hits: 0,
+    misses: 0, // 🔴 Critical card (I4 should prioritize it due to high miss count)
     createdAt: new Date('2026-06-02').toISOString(),
   },
   {
@@ -28,7 +28,7 @@ export const INITIAL_SEED_CARDS: Card[] = [
     answer: 'Transformar el voltaje de 12V proveniente de la fuente de alimentación a los valores bajos y ultra precisos (usualmente entre 0.8V y 1.2V) que el núcleo de la GPU y las memorias necesitan.',
     topic: 'Hardware',
     difficulty: 'hard',
-    hits: 4,
+    hits: 0,
     misses: 0, // 🟢 Mastered card (no priority needed)
     createdAt: new Date('2026-06-03').toISOString(),
   },
@@ -38,8 +38,8 @@ export const INITIAL_SEED_CARDS: Card[] = [
     answer: 'REST expone un endpoint por cada recurso y devuelve estructuras fijas. GraphQL expone un único endpoint y permite al cliente pedir exactamente los datos que necesita.',
     topic: 'Programación',
     difficulty: 'medium',
-    hits: 2,
-    misses: 3,
+    hits: 0,
+    misses: 0,
     createdAt: new Date('2026-06-04').toISOString(),
   },
   {
@@ -48,8 +48,8 @@ export const INITIAL_SEED_CARDS: Card[] = [
     answer: 'Una vulnerabilidad que permite a un atacante interferir en las consultas que una aplicación hace a su base de datos, logrando leer, modificar o borrar información sensible.',
     topic: 'Ciberseguridad',
     difficulty: 'medium',
-    hits: 8,
-    misses: 1, // Well-mastered card
+    hits: 0,
+    misses: 0, // Well-mastered card
     createdAt: new Date('2026-06-05').toISOString(),
   },
   {

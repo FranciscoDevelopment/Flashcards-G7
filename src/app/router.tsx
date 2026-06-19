@@ -1,6 +1,7 @@
 import { Routes, Route, Outlet } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import HomePage from '../features/home/HomePage';
+import CardsPage from '../features/cards/CardsPage';
 import CardForm from '../features/cards/components/CardForm';
 
 // Layout base persistente con Navbar y Outlet para las páginas hijas
@@ -22,6 +23,7 @@ export default function AppRouter() {
       <Route element={<Layout />}>
         {/* Rutas principales del Módulo I1 (D1) */}
         <Route path="/" element={<HomePage />} />
+        <Route path="/cards" element={<CardsPage />} />
         <Route path="/new" element={<CardForm />} />
         <Route path="/edit/:id" element={<CardForm />} />
 

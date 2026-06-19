@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Edit2, Trash2, Tag, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Edit2, Trash2, Tag, BarChart2 } from 'lucide-react';
 import type { Card } from '../types';
 
 interface CardItemProps {
@@ -31,18 +31,6 @@ export default function CardItem({ card, onDelete }: CardItemProps) {
             {card.difficulty}
           </span>
         </div>
-
-        {/* Hits and Misses stats */}
-        <div className="flex items-center gap-3 text-xs text-slate-500 font-semibold font-mono">
-          <span className="flex items-center gap-1 text-emerald-500/90" title="Aciertos en Quiz">
-            <CheckCircle2 size={12} />
-            {card.hits}
-          </span>
-          <span className="flex items-center gap-1 text-rose-500/90" title="Errores en Quiz">
-            <AlertCircle size={12} />
-            {card.misses}
-          </span>
-        </div>
       </div>
 
       {/* Main Text Content: Question & Answer side-by-side or stacked */}
@@ -67,6 +55,16 @@ export default function CardItem({ card, onDelete }: CardItemProps) {
         </span>
 
         <div className="flex items-center gap-2">
+          {/* Base/Placeholder para D3: Botón para abrir modal de métricas */}
+          <button
+            disabled
+            className="flex items-center justify-center gap-1 border border-slate-850 text-slate-650 dark:text-slate-500 cursor-not-allowed px-3 py-1.5 rounded-xl text-xs font-semibold"
+            title="Estadísticas (Próximamente en D3)"
+          >
+            <BarChart2 size={12} />
+            <span>Métricas</span>
+          </button>
+
           <Link
             to={`/edit/${card.id}`}
             className="flex items-center justify-center gap-1 border border-slate-850 text-slate-400 hover:text-white hover:bg-slate-900/80 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all"

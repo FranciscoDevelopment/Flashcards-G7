@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Tag, Eye, ShieldAlert } from 'lucide-react';
 import { useCardStore } from '../store';
@@ -15,30 +15,25 @@ export default function CardForm() {
 
   const card = (cards || []).find((c) => c.id === id);
 
-  const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
-  const [topic, setTopic] = useState('');
-  const [difficulty, setDifficulty] = useState<CardDifficulty>('medium');
+  const [question, setQuestion] = useState(card?.question || '');
+  const [answer, setAnswer] = useState(card?.answer || '');
+  const [topic, setTopic] = useState(card?.topic || '');
+  const [difficulty, setDifficulty] = useState<CardDifficulty>(card?.difficulty || 'medium');
   const [previewSide, setPreviewSide] = useState<'front' | 'back'>('front');
 
-  // Load card contents on edit mode
-  useEffect(() => {
-    if (isEditing && card) {
-      setQuestion(card.question);
-      setAnswer(card.answer);
-      setTopic(card.topic);
-      setDifficulty(card.difficulty);
-    } else {
-      setQuestion('');
-      setAnswer('');
-      setTopic('');
-      setDifficulty('medium');
-    }
-  }, [id, isEditing, card]);
+  // Reset/adjust state when the id changes (to support transitions between different card edits or new mode)
+  const [prevId, setPrevId] = useState(id);
+  if (id !== prevId) {
+    setPrevId(id);
+    setQuestion(card?.question || '');
+    setAnswer(card?.answer || '');
+    setTopic(card?.topic || '');
+    setDifficulty(card?.difficulty || 'medium');
+  }
 
   if (isEditing && !card) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center p-6 text-center text-slate-100 bg-slate-950">
+      <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
         <ShieldAlert className="text-rose-500 h-12 w-12 mb-4" />
         <h3 className="text-xl font-bold">Tarjeta no encontrada</h3>
         <p className="text-slate-400 mt-2">La tarjeta con ID "{id}" no existe en el store.</p>
@@ -76,7 +71,7 @@ export default function CardForm() {
   };
 
   return (
-    <div className="flex-1 overflow-y-auto p-6 md:p-10 space-y-8 bg-slate-950 text-slate-100 flex flex-col max-w-5xl mx-auto w-full">
+    <div className="flex-1 overflow-y-auto p-6 md:p-10 space-y-8 flex flex-col max-w-5xl mx-auto w-full">
       {/* Navigation Header */}
       <div className="space-y-4 shrink-0">
         <Link 

@@ -58,8 +58,9 @@ Flashcards-2.1/
         │   └── Flashcard.tsx     <-- Tarjeta 3D interactiva (preservada para I2)
         └── features/              <-- Estructura modular para características (Features)
             ├── home/
-            │   └── HomePage.tsx   <-- Pagina wrapper que renderiza el listado CardList
+            │   └── HomePage.tsx   <-- Dashboard de bienvenida y accesos rápidos
             └── cards/             <-- Módulo específico de gestión de tarjetas
+                ├── CardsPage.tsx  <-- Página dedicada para administración, filtros y estadísticas
                 ├── seed.ts
                 ├── store.ts
                 ├── types.ts
@@ -219,4 +220,39 @@ Esta práctica estándar en Zustand asegura que la comparación de identidad de 
 
 ### Archivos Modificados por esta Corrección
 *   [src/features/cards/components/CardList.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardList.tsx) — Se reemplazó el selector de objeto destructurado por selectores individuales estables para evitar renders cíclicos al listar tarjetas y estadísticas.
-*   [src/features/cards/components/CardForm.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardForm.tsx) — Se implementaron selectores estables individuales en el formulario de creación y edición. 
+*   [src/features/cards/components/CardForm.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardForm.tsx) — Se implementaron selectores estables individuales en el formulario de creación y edición.
+
+---
+
+## 🎛️ Refactorización de Arquitectura, Dashboard de Bienvenida y Solución de Advertencias (Warnings)
+
+Recientemente se reestructuró la aplicación para incorporar un Dashboard de Bienvenida y corregir advertencias de rendimiento y calidad reportadas por ESLint.
+
+### 1. Reestructuración de Vistas y Rutas
+* **[src/features/home/HomePage.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/home/HomePage.tsx) (Dashboard de Bienvenida)**
+  * *Qué:* Se transformó en un panel de bienvenida oscuro con accesos dinámicos a los modos de estudio ("Mis tarjetas", "Modo repaso" - bloqueado, "Modo quiz" - bloqueado, "Progreso" - bloqueado) y una sección de estadísticas generales de progreso simuladas con racha.
+  * *Por qué:* Actúa como la pantalla principal (`/`) de la aplicación para ofrecer una experiencia interactiva de gamificación de estudio de cara al usuario.
+* **[src/features/cards/CardsPage.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/CardsPage.tsx) (Página de Administración de Tarjetas - NUEVA)**
+  * *Qué:* Se creó esta nueva página de nivel superior para hospedar el listado principal de tarjetas, métricas y filtros que anteriormente estaban en `HomePage.tsx`.
+* **[src/features/cards/components/CardList.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardList.tsx) (Listado Presentacional)**
+  * *Qué:* Se convirtió en un componente presentacional puro que recibe las tarjetas filtradas y eventos a través de props, eliminando toda la lógica de filtrado y dependencias con el store.
+* **[src/app/router.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/app/router.tsx) y [src/components/Navbar.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/components/Navbar.tsx) (Navegación Actualizada)**
+  * *Qué:* Se añadió la ruta `/cards` en el enrutador y se actualizó el `Navbar` superior para reflejar las dos secciones activas: **Inicio** (Dashboard `/`) y **Tarjetas** (Listado `/cards`).
+
+### 2. Eliminación de Estilos de Fondo Redundantes
+* En `CardList.tsx` y `CardForm.tsx` se retiraron las clases de fondo redundantes (`bg-slate-950 text-slate-100`), delegando el control del fondo al contenedor del `Layout` persistente para evitar saltos o parpadeos de scroll.
+
+### 3. Correcciones de Advertencias (Warnings) de Compilación y ESLint
+* **Optimización de Estado en `CardForm.tsx`:**
+  * *Problema:* El hook `useEffect` ejecutaba llamadas síncronas a `setState` en el montaje y actualización, disparando renderizados síncronos redundantes en cascada.
+  * *Solución:* Se eliminó el `useEffect` e `import { useEffect }`. Se inicializan los estados directamente a partir de la tarjeta de estudio cargada del store, y para reaccionar al cambio del parámetro `id` de la URL se implementó una actualización síncrona en fase de renderizado que optimiza el ciclo de vida de React.
+* **Simplificación y Limpieza en `leitner.ts`:**
+  * *Problema:* La variable `newBox` se inicializaba innecesariamente antes de ser sobreescrita síncronamente en todas las ramas de ejecución (`no-useless-assignment`).
+  * *Solución:* Se simplificó la asignación utilizando una constante con operador ternario directo (`const newBox = success ? ... : ...`).
+
+### 4. Limpieza de Métricas de Aprendizaje y Preparación para D3
+* **Simplificación del Header en `CardsPage.tsx`:** Se eliminaron las 3 cajas grandes de estadísticas ("Total Tarjetas", "Críticas", "Dominadas") para evitar mostrar valores simulados o vacíos de Quiz. En su lugar se colocó un sutil contador resumido (`X tarjetas • Y temas`) debajo del título de la página.
+* **Limpieza Visual en `CardItem.tsx`:** Se borraron los contadores en línea de aciertos (`hits`) y errores (`misses`) para centrar el diseño exclusivamente en el CRUD de D1.
+* **Base para Integración en D3:** Se agregó un botón inactivo de **"Métricas"** con el icono `BarChart2` en cada tarjeta, sirviendo como punto de anclaje para que el desarrollador de D3 integre el modal de visualización de estadísticas.
+* **Inicialización limpia de semillas en `seed.ts`:** Se configuraron todos los campos de `hits: 0` y `misses: 0` en las tarjetas semilla iniciales.
+ 

@@ -14,13 +14,7 @@ export const BOX_INTERVALS: { [key: number]: number } = {
  */
 export function reviewCard(card: Card, success: boolean): Card {
   const previousBox = card.box;
-  let newBox = previousBox;
-
-  if (success) {
-    newBox = Math.min(5, previousBox + 1);
-  } else {
-    newBox = 1; // Classical Leitner resets to Box 1
-  }
+  const newBox = success ? Math.min(5, previousBox + 1) : 1;
 
   const daysInterval = BOX_INTERVALS[newBox];
   const nextReviewDate = new Date();

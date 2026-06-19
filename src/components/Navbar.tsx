@@ -1,9 +1,10 @@
 import { NavLink } from 'react-router-dom';
-import { BookOpen, PlusCircle, RefreshCw, HelpCircle } from 'lucide-react';
+import { BookOpen, PlusCircle, RefreshCw, HelpCircle, Home } from 'lucide-react';
 
 export default function Navbar() {
   const navItems = [
-    { to: '/', name: 'Tarjetas', icon: BookOpen, exact: true },
+    { to: '/', name: 'Inicio', icon: Home, exact: true },
+    { to: '/cards', name: 'Tarjetas', icon: BookOpen, exact: false },
     { to: '/new', name: 'Nueva Tarjeta', icon: PlusCircle, exact: false },
     { to: '/review', name: 'Repaso (I2)', icon: RefreshCw, exact: false },
     { to: '/quiz', name: 'Quiz (I2)', icon: HelpCircle, exact: false },
