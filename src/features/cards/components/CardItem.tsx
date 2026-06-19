@@ -59,8 +59,11 @@ export default function CardItem({ card, onDelete }: CardItemProps) {
 
       {/* Footer Row: Modification date + Action Buttons */}
       <div className="flex items-center justify-between pt-2 border-t border-slate-900/30">
-        <span className="text-[10px] font-mono text-slate-650" title={`Creada el: ${new Date(card.createdAt).toLocaleString()}`}>
-          Creada: {new Date(card.createdAt).toLocaleDateString()}
+        <span 
+          className="text-[10px] font-mono text-slate-650" 
+          title={card.createdAt ? `Creada el: ${new Date(card.createdAt).toLocaleString()}` : 'Sin fecha'}
+        >
+          Creada: {card.createdAt ? new Date(card.createdAt).toLocaleDateString() : 'N/A'}
         </span>
 
         <div className="flex items-center gap-2">

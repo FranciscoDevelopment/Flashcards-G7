@@ -48,22 +48,17 @@ Flashcards-2.1/
         ├── app/
         │   └── router.tsx        <-- Nuevo sistema de enrutamiento
         ├── types/
-        │   └── index.ts
+        │   └── index.ts          <-- Modelos heredados
         ├── utils/
-        │   └── leitner.ts
+        │   └── leitner.ts        <-- Utilidades Leitner (preservadas)
         ├── store/
-        │   └── useDeckStore.ts
+        │   └── useDeckStore.ts   <-- Store heredado
         ├── components/
-        │   ├── Sidebar.tsx
-        │   ├── DeckCard.tsx
-        │   ├── Flashcard.tsx
-        │   └── CreateDeckModal.tsx
-        ├── pages/
-        │   ├── HomePage.tsx       <-- Consolida Dashboard, LeitnerStats y Settings
-        │   ├── FlashcardsPage.tsx <-- Consolida DeckDetails y StudySession (Modo Estudio)
-        │   ├── NewCardPage.tsx    <-- Formulario de creación dedicado
-        │   └── EditCardPage.tsx   <-- Formulario de edición dedicado
+        │   ├── Navbar.tsx        <-- Barra de navegación horizontal superior
+        │   └── Flashcard.tsx     <-- Tarjeta 3D interactiva (preservada para I2)
         └── features/              <-- Estructura modular para características (Features)
+            ├── home/
+            │   └── HomePage.tsx   <-- Pagina wrapper que renderiza el listado CardList
             └── cards/             <-- Módulo específico de gestión de tarjetas
                 ├── seed.ts
                 ├── store.ts
@@ -160,6 +155,8 @@ A continuación se resume la lista de archivos que fueron creados, modificados o
 ### 1. Archivos Creados (Nuevos Módulos)
 *   **[src/components/Navbar.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/components/Navbar.tsx):**
     *   *Por qué:* Crea una barra superior horizontal unificada para la navegación del sitio en reemplazo del menú lateral (`Sidebar`). Mantiene accesos rápidos a Tarjetas (`/`), Nueva Tarjeta (`/new`), y placeholders estáticos para Repaso (`/review`) y Quiz (`/quiz`).
+*   **[src/features/home/HomePage.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/home/HomePage.tsx):**
+    *   *Por qué:* Página de inicio en el path `/` que sirve como contenedor y wrapper limpio del componente modular `CardList`, adaptándose a la arquitectura estándar de separación de vistas y características del proyecto.
 *   **[src/features/cards/components/CardList.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardList.tsx):**
     *   *Por qué:* Implementa el listado principal de tarjetas en la ruta `/`, calculando estadísticas generales de aprendizaje (totales, dominadas, críticas), filtrando por texto y categorías dinámicas, y posibilitando el reinicio del almacén local.
 *   **[src/features/cards/components/CardForm.tsx](file:///c:/Users/brand/Desktop/Flashcards-2.1/src/features/cards/components/CardForm.tsx):**
@@ -174,8 +171,8 @@ A continuación se resume la lista de archivos que fueron creados, modificados o
     *   *Por qué:* Se simplificó para remover el menú lateral `Sidebar` y delegar todo el renderizado de la estructura visual y de enrutamiento al componente `<AppRouter />`.
 
 ### 3. Archivos Eliminados (Código Obsoleto)
-*   **Carpeta `src/pages/` completa (`EditCardPage.tsx`, `FlashcardsPage.tsx`, `HomePage.tsx`, `NewCardPage.tsx`):**
-    *   *Por qué:* Estas páginas pertenecían al flujo anterior basado en mazos de estudio. Al pasar a una estructura plana por temas ("Topics"), estas vistas quedaron obsoletas y fueron depuradas de los directorios del proyecto.
+*   **Las páginas antiguas basadas en mazos de `src/pages/` (`EditCardPage.tsx`, `FlashcardsPage.tsx`, `NewCardPage.tsx` y el viejo `HomePage.tsx` basado en barajas):**
+    *   *Por qué:* Estas páginas pertenecían al flujo anterior basado en mazos de estudio. Al pasar a una estructura plana por temas ("Topics") y con Navbar superior, fueron depuradas de los directorios del proyecto.
 *   **`src/components/Sidebar.tsx`, `src/components/DeckCard.tsx` y `src/components/CreateDeckModal.tsx`:**
     *   *Por qué:* Removidos de la carpeta de componentes globales para evitar código muerto, ya que la navegación lateral y el flujo de barajas fueron sustituidos por la barra superior horizontal (`Navbar`) y la gestión plana de categorías.
 

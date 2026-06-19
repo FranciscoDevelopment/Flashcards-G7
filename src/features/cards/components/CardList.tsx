@@ -15,11 +15,13 @@ export default function CardList() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('all');
 
+  const safeCards = cards || [];
+
   // Dynamically extract all unique topics/tags from cards list
-  const topics = Array.from(new Set(cards.map((c) => c.topic))).filter(Boolean);
+  const topics = Array.from(new Set(safeCards.map((c) => c.topic))).filter(Boolean);
 
   // Filter cards based on search query and category
-  const filteredCards = cards.filter((card) => {
+  const filteredCards = safeCards.filter((card) => {
     const matchesSearch = 
       card.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
       card.answer.toLowerCase().includes(searchTerm.toLowerCase());
@@ -28,11 +30,11 @@ export default function CardList() {
   });
 
   // Calculate statistics
-  const totalCards = cards.length;
+  const totalCards = safeCards.length;
   // Critical review priority: cards with more misses than hits, or cards with high miss counts (>= 3)
-  const criticalCount = cards.filter((c) => c.misses >= 3 || (c.misses > 0 && c.misses >= c.hits)).length;
+  const criticalCount = safeCards.filter((c) => c.misses >= 3 || (c.misses > 0 && c.misses >= c.hits)).length;
   // Mastered cards: cards with high hits (>= 5) and low misses
-  const masteredCount = cards.filter((c) => c.hits >= 5 && c.hits > c.misses * 2).length;
+  const masteredCount = safeCards.filter((c) => c.hits >= 5 && c.hits > c.misses * 2).length;
 
   const handleDeleteCard = (id: string) => {
     if (window.confirm('¿Estás seguro de que quieres eliminar esta tarjeta?')) {
