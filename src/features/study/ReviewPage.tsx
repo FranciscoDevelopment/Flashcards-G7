@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useCardStore } from '../cards/store';
 import ReviewLayout from './components/ReviewLayout';
+import './styles/review.css';
 
 export default function ReviewPage() {
   const cards = useCardStore((state) => state.cards);
@@ -56,12 +57,12 @@ export default function ReviewPage() {
   if (selectedTopic === null) {
   return (
     <ReviewLayout>
-      <div className="mt-10 mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-900 dark:bg-slate-900/20">
+      <div className="mt-10 mx-auto max-w-4xl rounded-2xl border border-slate-200 bg-white p-10 shadow-sm dark:border-slate-800 dark:bg-slate-900/40">
         <p className="text-slate-600 dark:text-slate-400 mb-8">
           Elegí qué mazo querés repasar.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14 overflow-visible">
           {deckOptions.map((deck) => (
             <button
               key={deck.id}
@@ -71,8 +72,9 @@ export default function ReviewPage() {
                 setShowAnswer(false);
                 setIsSessionFinished(false);
               }}
-              className="group rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:border-violet-400 hover:shadow-md dark:border-slate-800 dark:bg-slate-950/60 dark:hover:border-violet-500/50 dark:hover:bg-slate-900"
+              className="deck-card group text-left"
             >
+              <span className="deck-card-front">
               <h2 className="text-lg font-bold text-slate-950 group-hover:text-violet-600 dark:text-white dark:group-hover:text-violet-300">
                 {deck.title}
               </h2>
@@ -80,6 +82,7 @@ export default function ReviewPage() {
               <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
                 {deck.count} {deck.count === 1 ? 'tarjeta' : 'tarjetas'}
               </p>
+              </span>
             </button>
           ))}
         </div>
