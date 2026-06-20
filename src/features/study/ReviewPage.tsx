@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useCardStore } from '../cards/store';
+import ReviewLayout from './components/ReviewLayout';
 
 export default function ReviewPage() {
   const cards = useCardStore((state) => state.cards);
@@ -55,19 +55,8 @@ export default function ReviewPage() {
 
   if (selectedTopic === null) {
   return (
-    <div className="flex-1 flex items-center justify-center p-8">
-      <div className="w-full max-w-4xl rounded-2xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-900 dark:bg-slate-900/20">
-        <Link
-            to="/"
-            className="mb-6 inline-block text-sm text-slate-400 hover:text-violet-300 transition-colors"
-        >
-            ← Volver al Inicio
-        </Link>
-        
-        <h1 className="text-2xl font-bold text-slate-950 dark:text-white mb-2">
-          Modo Repaso
-        </h1>
-
+    <ReviewLayout>
+      <div className="mt-10 mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-900 dark:bg-slate-900/20">
         <p className="text-slate-600 dark:text-slate-400 mb-8">
           Elegí qué mazo querés repasar.
         </p>
@@ -95,32 +84,29 @@ export default function ReviewPage() {
           ))}
         </div>
       </div>
-    </div>
+    </ReviewLayout>
   );
 }
 
   if (reviewCards.length === 0) {
-    return (
-      <div className="flex-1 flex items-center justify-center p-8">
-        <div className="w-full max-w-2xl rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm dark:border-slate-900 dark:bg-slate-900/20">
-          <h1 className="text-2xl font-bold text-slate-950 dark:text-white mb-4">
-            Modo Repaso
-          </h1>
-          <p className="text-slate-600 dark:text-slate-400">
-            No hay tarjetas disponibles para repasar.
-          </p>
-        </div>
+  return (
+    <ReviewLayout>
+      <div className="mx-auto max-w-2xl rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm dark:border-slate-900 dark:bg-slate-900/20">
+        <p className="text-slate-600 dark:text-slate-400">
+          No hay tarjetas disponibles para repasar.
+        </p>
       </div>
-    );
-  }
+    </ReviewLayout>
+  );
+}
 
   if (isSessionFinished) {
   return (
-    <div className="flex-1 flex items-center justify-center p-8">
-      <div className="w-full max-w-2xl rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm dark:border-slate-900 dark:bg-slate-900/20">
-        <h1 className="text-2xl font-bold text-slate-950 dark:text-white mb-4">
+    <ReviewLayout>
+      <div className="mx-auto max-w-2xl rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm dark:border-slate-900 dark:bg-slate-900/20">
+        <h2 className="text-2xl font-bold text-slate-950 dark:text-white mb-4">
           🎉 Terminaste el mazo
-        </h1>
+        </h2>
 
         <p className="text-slate-600 dark:text-slate-400 mb-8">
           Repasaste {reviewCards.length} {reviewCards.length === 1 ? 'tarjeta' : 'tarjetas'}.
@@ -151,23 +137,13 @@ export default function ReviewPage() {
           </button>
         </div>
       </div>
-    </div>
+    </ReviewLayout>
   );
 }
 
   return (
-    <div className="flex-1 flex items-center justify-center p-8">
-      <div className="w-full max-w-2xl rounded-2xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-900 dark:bg-slate-900/20">
-        <Link
-            to="/"
-            className="mb-6 inline-block text-sm text-slate-400 hover:text-violet-300 transition-colors"
-        >
-            ← Volver al Inicio
-        </Link>
-        
-        <h1 className="text-2xl font-bold text-slate-950 dark:text-white mb-6">
-          Modo Repaso
-        </h1>
+  <ReviewLayout>
+    <div className="mx-auto max-w-2xl rounded-2xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-900 dark:bg-slate-900/20">
 
         <div className="mb-6 flex items-center justify-between">
           <div>
@@ -248,6 +224,6 @@ export default function ReviewPage() {
           </button>
         </div>
       </div>
-    </div>
+  </ReviewLayout>
   );
 }
