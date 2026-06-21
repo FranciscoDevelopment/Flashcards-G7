@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useCardStore } from '../cards/store';
+import { getOrderedCards } from './utils/getOrderedCards';
 import ReviewLayout from './components/ReviewLayout';
 import DeckSelector from './components/DeckSelector';
 import ReviewSession from './components/ReviewSession';
@@ -18,7 +19,7 @@ export default function ReviewPage() {
     new Set(cards.map((card) => card.topic))
   ).filter(Boolean);
 
-  const orderedCards = cards;
+  const orderedCards = getOrderedCards(cards);
 
   const deckOptions = [
     {
