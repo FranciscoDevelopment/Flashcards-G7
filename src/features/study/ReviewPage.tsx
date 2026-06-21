@@ -94,7 +94,7 @@ export default function ReviewPage() {
 
   if (isSessionFinished) {
     return (
-      <ReviewLayout variant="session">
+      <ReviewLayout variant="finished">
         <ReviewFinished
           totalCards={reviewCards.length}
           onRestart={() => {

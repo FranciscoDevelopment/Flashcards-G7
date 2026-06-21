@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 interface ReviewLayoutProps {
   children: ReactNode;
   subtitle?: string;
-  variant?: 'selector' | 'session';
+  variant?: 'selector' | 'session' | 'finished';
   backLabel?: string;
   onBack?: () => void;
 }
@@ -18,6 +18,7 @@ export default function ReviewLayout({
 }: ReviewLayoutProps) {
 
   const isSelector = variant === 'selector';
+  const isFinished = variant === 'finished';
 
   return (
     <>
@@ -25,7 +26,9 @@ export default function ReviewLayout({
         className={
           isSelector
             ? 'mx-auto mt-14 w-full max-w-4xl px-6'
-            : 'mx-auto mt-9 w-full max-w-5xl px-12'
+            : isFinished
+              ? 'mx-auto mt-16 w-full max-w-5xl px-12'
+              : 'mx-auto mt-9 w-full max-w-5xl px-12'
         }
       >
         <div
@@ -37,7 +40,7 @@ export default function ReviewLayout({
         >
           <div>
             <h1 className="text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white">
-              Modo repaso
+              Modo Repaso
             </h1>
 
             {subtitle && (
@@ -60,7 +63,8 @@ export default function ReviewLayout({
           ) : (
             <Link
               to="/"
-              className="mt-1 text-sm text-slate-600 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-300"
+              className={`text-sm text-slate-600 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-300 ${isFinished ? 'mr-12 mt-4' : 'mt-1'
+                }`}
             >
               ← {backLabel}
             </Link>
