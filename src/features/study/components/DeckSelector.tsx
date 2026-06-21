@@ -11,11 +11,7 @@ type DeckSelectorProps = {
 
 export default function DeckSelector({ decks, onSelectDeck }: DeckSelectorProps) {
   return (
-    <div className="mt-10 mx-auto max-w-4xl rounded-2xl border border-slate-200 bg-white p-10 shadow-sm dark:border-slate-800 dark:bg-slate-900/40">
-      <p className="text-slate-600 dark:text-slate-400 mb-8">
-        Elegí qué mazo querés repasar.
-      </p>
-
+    <div className="mt-10 mx-auto max-w-4xl rounded-2xl border border-slate-200 bg-white p-10 shadow-sm dark:border-slate-800 dark:bg-slate-900/40"> 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14 overflow-visible">
         {decks.map((deck) => (
           <button

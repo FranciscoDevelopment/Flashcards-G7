@@ -28,7 +28,19 @@ export default function ReviewSession({
   const isLastCard = currentIndex === totalCards - 1;
   const isReadyToFinish = isLastCard && showAnswer;
   return (
-    <div className="mx-auto max-w-2xl space-y-4">
+    <div className="relative mx-auto max-w-2xl space-y-4">
+      <div className="absolute left-0 top-0 hidden -translate-x-[115%] lg:block">
+        <div className="rounded-2xl border border-slate-200/70 bg-white/60 px-5 py-4 shadow-sm backdrop-blur-sm dark:border-slate-800/70 dark:bg-slate-900/30">
+          <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+            Mazo actual
+          </p>
+
+          <p className="mt-1 text-base font-semibold text-slate-950 dark:text-white">
+            {selectedTopic === 'all' ? 'Todas las tarjetas' : selectedTopic}
+          </p>
+        </div>
+      </div>
+
       <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-900/30 dark:shadow-[0_0_0_1px_rgba(139,92,246,0.08)]">
         <div className="mb-8">
           <div className="mb-2 flex items-center justify-between gap-4">
@@ -109,7 +121,7 @@ export default function ReviewSession({
       </div>
 
 
-      <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/40">
+      <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/40 lg:hidden">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
             Mazo actual
