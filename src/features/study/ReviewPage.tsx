@@ -39,7 +39,9 @@ export default function ReviewPage() {
         : orderedCards.filter((card) => card.topic === selectedTopic);
 
   const currentCard = reviewCards[currentIndex];
-  const progress = ((currentIndex + 1) / reviewCards.length) * 100;
+  const completedCards = currentIndex + (showAnswer ? 1 : 0);
+  const progress = (completedCards / reviewCards.length) * 100;
+  const visibleProgress = Math.max(progress, 1);
 
   const handleNextCard = () => {
     if (currentIndex < reviewCards.length - 1) {
@@ -114,10 +116,10 @@ export default function ReviewPage() {
       currentCard={currentCard}
       currentIndex={currentIndex}
       totalCards={reviewCards.length}
-      progress={progress}
+      progress={visibleProgress}
       selectedTopic={selectedTopic}
       showAnswer={showAnswer}
-      onShowAnswer={() => setShowAnswer(true)}
+      onShowAnswer={() => setShowAnswer((prev) => !prev)}
       onNextCard={handleNextCard}
       onPreviousCard={handlePreviousCard}
       onChangeDeck={() => {
