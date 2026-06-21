@@ -48,8 +48,8 @@ export default function HomePage() {
             <div className="p-3 bg-violet-600/10 rounded-xl text-violet-400 mb-4 group-hover:scale-105 transition-transform">
               <Brain size={32} />
             </div>
-            <h3 className="text-lg font-bold text-white mb-2">Modo repaso</h3>
-            <p className="text-sm text-slate-450 px-2">Repasa las tarjetas y refuerza tu memoria.</p>
+            <h3 className="text-lg font-bold text-white mb-2">Modo Repaso</h3>
+            <p className="text-sm text-slate-400 px-2">Repasa las tarjetas y refuerza tu memoria.</p>
           </div>
           <div className="flex justify-end mt-4">
             <div className="p-2 bg-slate-800 text-slate-300 rounded-full group-hover:bg-violet-600 group-hover:text-white transition-colors">
@@ -58,19 +58,24 @@ export default function HomePage() {
           </div>
         </Link>
 
-        {/* Card 3: Modo Quiz (Bloqueada - Placeholder para D2) */}
-        <div className="relative border-2 border-dashed border-slate-900 bg-slate-900/10 rounded-2xl p-6 flex flex-col justify-between min-h-[250px] opacity-60">
+        {/* Card 3: Modo Quiz */}
+        <Link
+          to="/study/quiz"
+          className="relative group bg-slate-900/40 border-2 border-slate-900 hover:border-violet-500/30 rounded-2xl p-6 flex flex-col justify-between min-h-[250px] transition-all hover:shadow-lg hover:shadow-violet-600/5 hover:-translate-y-0.5"
+        >
           <div className="flex flex-col items-center text-center mt-4">
-            <div className="p-3 bg-slate-950 rounded-xl text-slate-600 mb-4">
+            <div className="p-3 bg-violet-600/10 rounded-xl text-violet-400 mb-4 group-hover:scale-105 transition-transform">
               <HelpCircle size={32} />
             </div>
-            <h3 className="text-lg font-bold text-slate-500 mb-2">Modo quiz</h3>
-            <p className="text-sm text-slate-500 px-2">Poné a prueba tus conocimientos.</p>
+            <h3 className="text-lg font-bold text-white mb-2">Modo Quiz</h3>
+            <p className="text-sm text-slate-400 px-2">Poné a prueba tus conocimientos.</p>
           </div>
-          <div className="flex justify-end mt-4 text-slate-600">
-            <Lock size={16} />
+          <div className="flex justify-end mt-4">
+            <div className="p-2 bg-slate-800 text-slate-300 rounded-full group-hover:bg-violet-600 group-hover:text-white transition-colors">
+              <ArrowRight size={16} />
+            </div>
           </div>
-        </div>
+        </Link>
 
         {/* Card 4: Progreso (Bloqueada - Placeholder para D5) */}
         <div className="relative border-2 border-dashed border-slate-900 bg-slate-900/10 rounded-2xl p-6 flex flex-col justify-between min-h-[250px] opacity-60">
