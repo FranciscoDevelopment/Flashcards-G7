@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useCardStore } from '../cards/store';
 import { getOrderedCards } from './utils/getOrderedCards';
-import ReviewLayout from './components/ReviewLayout';
+import StudyLayout from './components/StudyLayout';
 import DeckSelector from './components/DeckSelector';
 import ReviewSession from './components/ReviewSession';
 import ReviewFinished from './components/ReviewFinished';
@@ -69,7 +69,8 @@ export default function ReviewPage() {
 
   if (selectedTopic === null) {
     return (
-      <ReviewLayout
+      <StudyLayout
+        title="Modo Repaso"
         variant="selector"
         subtitle="Elegí un mazo para comenzar tu sesión de repaso."
       >
@@ -77,25 +78,25 @@ export default function ReviewPage() {
           decks={deckOptions}
           onSelectDeck={handleSelectDeck}
         />
-      </ReviewLayout>
+      </StudyLayout>
     );
   }
 
   if (reviewCards.length === 0) {
     return (
-      <ReviewLayout>
+      <StudyLayout title="Modo Repaso">
         <div className="mx-auto max-w-2xl rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm dark:border-slate-900 dark:bg-slate-900/20">
           <p className="text-slate-600 dark:text-slate-400">
             No hay tarjetas disponibles para repasar.
           </p>
         </div>
-      </ReviewLayout>
+      </StudyLayout>
     );
   }
 
   if (isSessionFinished) {
     return (
-      <ReviewLayout variant="finished">
+      <StudyLayout title="Modo Repaso" variant="finished">
         <ReviewFinished
           totalCards={reviewCards.length}
           onRestart={() => {
@@ -110,12 +111,13 @@ export default function ReviewPage() {
             setIsSessionFinished(false);
           }}
         />
-      </ReviewLayout>
+      </StudyLayout>
     );
   }
 
   return (
-    <ReviewLayout
+    <StudyLayout
+      title="Modo Repaso"
       backLabel="Cambiar mazo"
       onBack={() => {
         setSelectedTopic(null);
@@ -141,6 +143,6 @@ export default function ReviewPage() {
           setIsSessionFinished(false);
         }}
       />
-    </ReviewLayout>
+    </StudyLayout>
   );
 }

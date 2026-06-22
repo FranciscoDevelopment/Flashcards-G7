@@ -1,8 +1,9 @@
-import ReviewLayout from './components/ReviewLayout';
+import StudyLayout from './components/StudyLayout';
 
 export default function QuizPage() {
   return (
-    <ReviewLayout
+    <StudyLayout
+      title="Modo Quiz"
       variant="selector"
       subtitle="Elegí un mazo para poner a prueba tus conocimientos."
     >
@@ -11,6 +12,6 @@ export default function QuizPage() {
           Modo quiz en construcción.
         </p>
       </div>
-    </ReviewLayout>
+    </StudyLayout>
   );
 }
