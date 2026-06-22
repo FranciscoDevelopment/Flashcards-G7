@@ -37,7 +37,7 @@ export default function QuizPage() {
       ? orderedCards
       : orderedCards.filter((card) => card.topic === selectedTopic);
   const currentCard = quizCards[currentIndex];
-  const completedCards = currentIndex + (showAnswer ? 1 : 0);
+  const completedCards = currentIndex;
   const progress = (completedCards / quizCards.length) * 100;
   const visibleProgress = Math.max(progress, 1);
 
@@ -55,13 +55,6 @@ export default function QuizPage() {
     } else {
       setIsSessionFinished(true);
     }
-  };
-
-  const handlePreviousCard = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-      setShowAnswer(false);
-      }
   };
 
   if (selectedTopic === null) {
@@ -95,10 +88,10 @@ export default function QuizPage() {
       currentIndex={currentIndex}
       totalCards={quizCards.length}
       progress={visibleProgress}
+      selectedTopic={selectedTopic}
       showAnswer={showAnswer}
-      onShowAnswer={() => setShowAnswer(true)}
+      onShowAnswer={() => setShowAnswer((prev) => !prev)}
       onNextCard={handleNextCard}
-      onPreviousCard={handlePreviousCard}
     />
     </StudyLayout>
   );

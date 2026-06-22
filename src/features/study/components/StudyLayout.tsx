@@ -78,7 +78,7 @@ export default function StudyLayout({
         className={
           isSelector
             ? 'flex flex-1 justify-center pt-9 pb-8'
-            : 'flex flex-1 justify-center pt-8 pb-8'
+            : 'flex flex-1 justify-center pt-6 pb-8'
         }
       >
         <div className="w-full max-w-4xl">
