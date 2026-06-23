@@ -5,7 +5,7 @@ import StudyLayout from './components/StudyLayout';
 import DeckSelector from './components/DeckSelector';
 import QuizSession from './components/QuizSession';
 import StudyFinished from './components/StudyFinished';
-import './styles/review.css';
+import './styles/study.css';
 
 export default function QuizPage() {
   const cards = useCardStore((state) => state.cards);

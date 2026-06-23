@@ -7,6 +7,7 @@ type ReviewSessionProps = {
   progress: number;
   selectedTopic: string;
   showAnswer: boolean;
+  direction: 'next' | 'prev';
   onShowAnswer: () => void;
   onNextCard: () => void;
   onPreviousCard: () => void;
@@ -20,6 +21,7 @@ export default function ReviewSession({
   progress,
   selectedTopic,
   showAnswer,
+  direction,
   onShowAnswer,
   onNextCard,
   onPreviousCard,
@@ -61,7 +63,23 @@ export default function ReviewSession({
           </div>
         </div>
 
-        <div className="review-flip-card mt-12">
+        <div
+          key={currentCard.id}
+          className={`review-flip-card relative mt-12 ${direction === 'prev' ? 'study-card-enter-prev' : 'study-card-enter-next'
+            }`}
+        >
+          <div className="study-card-deck" aria-hidden="true">
+            {Array.from({
+              length: Math.min(3, Math.max(totalCards - currentIndex - 1, 0)),
+            }).map((_, index) => (
+              <span
+                key={index}
+                className="study-card-deck-item"
+                style={{ '--deck-index': index } as React.CSSProperties}
+              />
+            ))}
+          </div>
+
           <div className={`review-flip-inner ${showAnswer ? 'is-flipped' : ''}`}>
             <div className="review-flip-face review-flip-front">
               <div className="flex h-full min-h-44 items-center">

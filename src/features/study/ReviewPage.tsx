@@ -5,7 +5,7 @@ import StudyLayout from './components/StudyLayout';
 import DeckSelector from './components/DeckSelector';
 import ReviewSession from './components/ReviewSession';
 import StudyFinished from './components/StudyFinished';
-import './styles/review.css';
+import './styles/study.css';
 
 export default function ReviewPage() {
   const cards = useCardStore((state) => state.cards);
@@ -43,9 +43,11 @@ export default function ReviewPage() {
   const completedCards = currentIndex + (showAnswer ? 1 : 0);
   const progress = (completedCards / reviewCards.length) * 100;
   const visibleProgress = Math.max(progress, 1);
+  const [direction, setDirection] = useState<'next' | 'prev'>('next');
 
   const handleNextCard = () => {
     if (currentIndex < reviewCards.length - 1) {
+      setDirection('next');
       setCurrentIndex(currentIndex + 1);
       setShowAnswer(false);
     } else {
@@ -55,6 +57,7 @@ export default function ReviewPage() {
 
   const handlePreviousCard = () => {
     if (currentIndex > 0) {
+      setDirection('prev');
       setCurrentIndex(currentIndex - 1);
       setShowAnswer(false);
     }
@@ -137,6 +140,7 @@ export default function ReviewPage() {
         progress={visibleProgress}
         selectedTopic={selectedTopic}
         showAnswer={showAnswer}
+        direction={direction}
         onShowAnswer={() => setShowAnswer((prev) => !prev)}
         onNextCard={handleNextCard}
         onPreviousCard={handlePreviousCard}

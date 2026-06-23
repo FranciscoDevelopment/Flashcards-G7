@@ -25,7 +25,7 @@ export default function QuizSession({
 
   return (
     <div className="relative mx-auto max-w-2xl space-y-4">
-    <div className="absolute left-0 top-0 hidden -translate-x-[115%] lg:block">
+      <div className="absolute left-0 top-0 hidden -translate-x-[115%] lg:block">
         <div className="rounded-2xl border border-slate-200/70 bg-white/60 px-5 py-4 shadow-sm backdrop-blur-sm dark:border-slate-800/70 dark:bg-slate-900/30">
           <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
             Mazo actual
@@ -56,7 +56,22 @@ export default function QuizSession({
           </div>
         </div>
 
-        <div className="review-flip-card mt-12">
+        <div
+          key={currentCard.id}
+          className="review-flip-card relative mt-12 study-card-enter"
+        >
+          <div className="study-card-deck" aria-hidden="true">
+            {Array.from({
+              length: Math.min(3, Math.max(totalCards - currentIndex - 1, 0)),
+            }).map((_, index) => (
+              <span
+                key={index}
+                className="study-card-deck-item"
+                style={{ '--deck-index': index } as React.CSSProperties}
+              />
+            ))}
+          </div>
+
           <div className={`review-flip-inner ${showAnswer ? 'is-flipped' : ''}`}>
             <div className="review-flip-face review-flip-front">
               <div className="flex h-full min-h-44 items-center">
@@ -81,40 +96,40 @@ export default function QuizSession({
         </div>
 
         <div className="mt-8">
-  {!showAnswer ? (
-    <div className="flex justify-center">
-      <button
-        onClick={onShowAnswer}
-        className="rounded-xl bg-violet-600 px-6 py-3 font-semibold !text-white transition-colors hover:bg-violet-500"
-      >
-        Ver respuesta
-      </button>
-    </div>
-  ) : (
-    <div className="grid grid-cols-3 items-center gap-4">
-      <div className="flex justify-start pt-6">
-        <button
-          onClick={onShowAnswer}
-          className="pl-2 text-sm text-slate-500 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-300"
-        >
-           Recordar pregunta
-        </button>
-      </div>
+          {!showAnswer ? (
+            <div className="flex justify-center">
+              <button
+                onClick={onShowAnswer}
+                className="rounded-xl bg-violet-600 px-6 py-3 font-semibold !text-white transition-colors hover:bg-violet-500"
+              >
+                Ver respuesta
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-3 items-center gap-4">
+              <div className="flex justify-start pt-6">
+                <button
+                  onClick={onShowAnswer}
+                  className="pl-2 text-sm text-slate-500 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-300"
+                >
+                  Recordar pregunta
+                </button>
+              </div>
 
-      <div className="flex justify-center">
-        <QuizResultActions onNextCard={onNextCard} />
+              <div className="flex justify-center">
+                <QuizResultActions onNextCard={onNextCard} />
+              </div>
+            </div>
+          )}
+
+          {showAnswer && (
+            <p className="mt-3 text-center text-xs text-slate-500 dark:text-slate-400">
+              Marcá una opción para continuar.
+            </p>
+          )}
+        </div>
       </div>
     </div>
-  )}
-
-  {showAnswer && (
-    <p className="mt-3 text-center text-xs text-slate-500 dark:text-slate-400">
-      Marcá una opción para continuar.
-    </p>
-  )}
-</div>
-</div>
-      </div>
 
   );
 }
