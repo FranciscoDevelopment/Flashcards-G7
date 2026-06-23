@@ -4,7 +4,7 @@ import { getOrderedCards } from './utils/getOrderedCards';
 import StudyLayout from './components/StudyLayout';
 import DeckSelector from './components/DeckSelector';
 import ReviewSession from './components/ReviewSession';
-import ReviewFinished from './components/ReviewFinished';
+import StudyFinished from './components/StudyFinished';
 import './styles/review.css';
 
 export default function ReviewPage() {
@@ -97,14 +97,18 @@ export default function ReviewPage() {
   if (isSessionFinished) {
     return (
       <StudyLayout title="Modo Repaso" variant="finished">
-        <ReviewFinished
-          totalCards={reviewCards.length}
-          onRestart={() => {
+        <StudyFinished
+          eyebrow="Repaso terminado"
+          title="🎉 ¡Todo listo!"
+          description={`Terminaste todas las tarjetas, ¡gran trabajo!.`}
+          primaryLabel="Repasar nuevamente"
+          secondaryLabel="Volver a mazos"
+          onPrimary={() => {
             setCurrentIndex(0);
             setShowAnswer(false);
             setIsSessionFinished(false);
           }}
-          onBackToDecks={() => {
+          onSecondary={() => {
             setSelectedTopic(null);
             setCurrentIndex(0);
             setShowAnswer(false);

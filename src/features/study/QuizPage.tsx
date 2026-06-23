@@ -4,6 +4,7 @@ import { getOrderedCards } from './utils/getOrderedCards';
 import StudyLayout from './components/StudyLayout';
 import DeckSelector from './components/DeckSelector';
 import QuizSession from './components/QuizSession';
+import StudyFinished from './components/StudyFinished';
 import './styles/review.css';
 
 export default function QuizPage() {
@@ -72,6 +73,31 @@ export default function QuizPage() {
     );
   }
 
+  if (isSessionFinished) {
+    return (
+      <StudyLayout title="Modo Quiz" variant="finished">
+        <StudyFinished
+          eyebrow="Quiz terminado"
+          title="🎯 ¡Sesión completada!"
+          description={`Tu conocimiento sigue creciendo.`}
+          primaryLabel="Repetir quiz"
+          secondaryLabel="Elegir otro mazo"
+          onPrimary={() => {
+            setCurrentIndex(0);
+            setShowAnswer(false);
+            setIsSessionFinished(false);
+          }}
+          onSecondary={() => {
+            setSelectedTopic(null);
+            setCurrentIndex(0);
+            setShowAnswer(false);
+            setIsSessionFinished(false);
+          }}
+        />
+      </StudyLayout>
+    );
+  }
+
   return (
     <StudyLayout
       title="Modo Quiz"
@@ -83,16 +109,16 @@ export default function QuizPage() {
         setIsSessionFinished(false);
       }}
     >
-    <QuizSession
-      currentCard={currentCard}
-      currentIndex={currentIndex}
-      totalCards={quizCards.length}
-      progress={visibleProgress}
-      selectedTopic={selectedTopic}
-      showAnswer={showAnswer}
-      onShowAnswer={() => setShowAnswer((prev) => !prev)}
-      onNextCard={handleNextCard}
-    />
+      <QuizSession
+        currentCard={currentCard}
+        currentIndex={currentIndex}
+        totalCards={quizCards.length}
+        progress={visibleProgress}
+        selectedTopic={selectedTopic}
+        showAnswer={showAnswer}
+        onShowAnswer={() => setShowAnswer((prev) => !prev)}
+        onNextCard={handleNextCard}
+      />
     </StudyLayout>
   );
 }
