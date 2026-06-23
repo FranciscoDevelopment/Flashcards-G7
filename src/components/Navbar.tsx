@@ -7,8 +7,8 @@ export default function Navbar() {
     { to: '/', name: 'Inicio', icon: Home, exact: true },
     { to: '/cards', name: 'Tarjetas', icon: BookOpen, exact: false },
     { to: '/new', name: 'Nueva Tarjeta', icon: PlusCircle, exact: false },
-    { to: '/review', name: 'Repaso (I2)', icon: RefreshCw, exact: false },
-    { to: '/quiz', name: 'Quiz (I2)', icon: HelpCircle, exact: false },
+    { to: '/study/review', name: 'Repaso (I2)', icon: RefreshCw, exact: false },
+    { to: '/study/quiz', name: 'Quiz (I2)', icon: HelpCircle, exact: false },
   ];
 
   return (

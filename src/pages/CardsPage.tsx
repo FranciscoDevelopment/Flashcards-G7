@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { 
   Plus, Search, RotateCcw, BookOpen, SlidersHorizontal 
 } from 'lucide-react';
-import { useCardStore } from './store';
-import CardList from './components/CardList';
+import { useCardStore } from '../features/cards/store';
+import CardList from '../features/cards/components/CardList';
 
 export default function CardsPage() {
   const cards = useCardStore((state) => state.cards);
