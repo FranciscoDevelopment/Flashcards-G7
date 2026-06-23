@@ -1,10 +1,10 @@
 import { Routes, Route, Outlet } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import HomePage from '../features/home/HomePage';
-import CardsPage from '../features/cards/CardsPage';
+import HomePage from '../pages/HomePage';
+import CardsPage from '../pages/CardsPage';
 import CardForm from '../features/cards/components/CardForm';
-import ReviewPage from '../features/study/ReviewPage';
-import QuizPage from '../features/study/QuizPage';
+import ReviewPage from '../pages/ReviewPage';
+import QuizPage from '../pages/QuizPage';
 
 // Layout base persistente con Navbar y Outlet para las páginas hijas
 function Layout() {

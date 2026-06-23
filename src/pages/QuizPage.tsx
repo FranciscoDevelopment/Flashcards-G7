@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { useCardStore } from '../cards/store';
-import { getOrderedCards } from './utils/getOrderedCards';
-import StudyLayout from './components/StudyLayout';
-import DeckSelector from './components/DeckSelector';
-import QuizSession from './components/QuizSession';
-import StudyFinished from './components/StudyFinished';
-import './styles/study.css';
+import { useCardStore } from '../features/cards/store';
+import { getOrderedCards } from '../features/study/utils/getOrderedCards';
+import StudyLayout from '../features/study/components/StudyLayout';
+import DeckSelector from '../features/study/components/DeckSelector';
+import QuizSession from '../features/study/components/QuizSession';
+import StudyFinished from '../features/study/components/StudyFinished';
+import '../features/study/styles/study.css';
 
 export default function QuizPage() {
   const cards = useCardStore((state) => state.cards);
