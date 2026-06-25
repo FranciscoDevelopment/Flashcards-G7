@@ -3,18 +3,21 @@ import { useCardStore } from '../../cards/store';
 type QuizResultActionsProps = {
   cardId: string;
   onNextCard: () => void;
+  onRecordResult: (result: 'hit' | 'miss') => void;
 };
 
-export default function QuizResultActions({ cardId, onNextCard }: QuizResultActionsProps) {
+export default function QuizResultActions({ cardId, onNextCard, onRecordResult }: QuizResultActionsProps) {
   const recordResult = useCardStore((state) => state.recordResult);
 
   const handleCorrect = () => {
     recordResult(cardId, 'hit');
+    onRecordResult('hit');
     onNextCard();
   };
 
   const handleIncorrect = () => {
     recordResult(cardId, 'miss');
+    onRecordResult('miss');
     onNextCard();
   };
 
