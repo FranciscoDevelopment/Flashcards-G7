@@ -9,7 +9,7 @@ interface CardState {
   cards: Card[];
 
   // I1 Actions (D1 - Basic CRUD)
-  addCard: (newCard: Omit<Card, 'id' | 'hits' | 'misses' | 'createdAt' | 'lastReviewedAt'>) => void;
+  addCard: (newCard: Omit<Card, 'id' | 'hits' | 'misses' | 'history' | 'createdAt' | 'lastReviewedAt'>) => void;
   editCard: (id: string, updatedFields: Partial<Omit<Card, 'id'>>) => void;
   deleteCard: (id: string) => void;
 
