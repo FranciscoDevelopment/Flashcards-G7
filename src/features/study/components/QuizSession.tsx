@@ -117,7 +117,7 @@ export default function QuizSession({
               </div>
 
               <div className="flex justify-center">
-                <QuizResultActions onNextCard={onNextCard} />
+                <QuizResultActions cardId={currentCard.id} onNextCard={onNextCard} />
               </div>
             </div>
           )}
