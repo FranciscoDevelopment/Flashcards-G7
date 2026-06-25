@@ -13,6 +13,9 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
   const total = card.hits + card.misses;
   const percentage = total === 0 ? 0 : Math.round((card.hits / total) * 100);
 
+  // Últimas 10 respuestas en orden cronológico
+  const recentHistory = (card.history ?? []).slice(-10);
+
   const handleReset = () => {
     if (window.confirm('¿Resetear las métricas de esta tarjeta? Esta acción no se puede deshacer.')) {
       resetCardMetrics(card.id);
@@ -20,7 +23,6 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
     }
   };
 
-  // Color del porcentaje según rendimiento
   const percentageColor =
     percentage >= 70
       ? 'text-emerald-400'
@@ -28,15 +30,25 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
         ? 'text-amber-400'
         : 'text-rose-400';
 
+  const ringColor =
+    percentage >= 70
+      ? '#34d399'
+      : percentage >= 40
+        ? '#fbbf24'
+        : '#f87171';
+
+  // SVG circular progress
+  const radius = 28;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (percentage / 100) * circumference;
+
   return (
-    // Overlay
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
       onClick={onClose}
     >
-      {/* Modal */}
       <div
-        className="relative w-full max-w-md rounded-2xl border border-slate-800 bg-slate-950 p-6 shadow-xl space-y-5"
+        className="relative w-full max-w-lg rounded-2xl border border-slate-800 bg-slate-950 p-6 shadow-xl space-y-5"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -57,74 +69,113 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
           </button>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-3 gap-3">
-          <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-4 text-center space-y-1">
-            <div className="flex items-center justify-center gap-1 text-emerald-400">
-              <CheckCircle2 size={14} />
-              <span className="text-[10px] font-bold uppercase tracking-wider">Aciertos</span>
-            </div>
+        {/* Stats Grid — 4 columnas como en el diseño */}
+        <div className="grid grid-cols-4 gap-3">
+          <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 text-center space-y-1">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">
+              Aciertos (hits)
+            </p>
             <p className="text-2xl font-extrabold text-emerald-400">{card.hits}</p>
           </div>
 
-          <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-4 text-center space-y-1">
-            <div className="flex items-center justify-center gap-1 text-rose-400">
-              <XCircle size={14} />
-              <span className="text-[10px] font-bold uppercase tracking-wider">Errores</span>
-            </div>
+          <div className="rounded-xl border border-rose-500/20 bg-rose-500/5 p-4 text-center space-y-1">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-rose-400">
+              Errores (misses)
+            </p>
             <p className="text-2xl font-extrabold text-rose-400">{card.misses}</p>
           </div>
 
           <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-4 text-center space-y-1">
-            <div className="flex items-center justify-center gap-1 text-slate-400">
-              <span className="text-[10px] font-bold uppercase tracking-wider">Precisión</span>
-            </div>
-            <p className={`text-2xl font-extrabold ${percentageColor}`}>
-              {total === 0 ? '—' : `${percentage}%`}
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+              Total respuestas
             </p>
+            <p className="text-2xl font-extrabold text-white">{total}</p>
+          </div>
+
+          {/* Circular progress */}
+          <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-4 text-center space-y-1 flex flex-col items-center justify-center">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+              Porcentaje de aciertos
+            </p>
+            <div className="relative flex items-center justify-center mt-1">
+              <svg width="70" height="70" className="-rotate-90">
+                <circle
+                  cx="35"
+                  cy="35"
+                  r={radius}
+                  fill="none"
+                  stroke="#1e293b"
+                  strokeWidth="6"
+                />
+                <circle
+                  cx="35"
+                  cy="35"
+                  r={radius}
+                  fill="none"
+                  stroke={total === 0 ? '#1e293b' : ringColor}
+                  strokeWidth="6"
+                  strokeDasharray={circumference}
+                  strokeDashoffset={strokeDashoffset}
+                  strokeLinecap="round"
+                  className="transition-all duration-500"
+                />
+              </svg>
+              <span className={`absolute text-sm font-extrabold ${percentageColor}`}>
+                {total === 0 ? '—' : `${percentage}%`}
+              </span>
+            </div>
           </div>
         </div>
 
-        {/* Total responses */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/30 px-4 py-3 flex items-center justify-between">
-          <span className="text-xs text-slate-400 font-medium">Total de respuestas</span>
-          <span className="text-sm font-bold text-white">{total}</span>
+        {/* Historial reciente */}
+        <div className="space-y-2">
+          <p className="text-xs font-bold text-slate-300">
+            Historial reciente{' '}
+            <span className="text-slate-500 font-normal">(últimas 10 respuestas)</span>
+          </p>
+
+          {recentHistory.length === 0 ? (
+            <p className="text-xs text-slate-500 italic">
+              Todavía no hay respuestas registradas para esta tarjeta.
+            </p>
+          ) : (
+            <div className="flex items-center gap-2 flex-wrap">
+              {recentHistory.map((entry, index) =>
+                entry === 'hit' ? (
+                  <CheckCircle2
+                    key={index}
+                    size={22}
+                    className="text-emerald-400"
+                  />
+                ) : (
+                  <XCircle
+                    key={index}
+                    size={22}
+                    className="text-rose-400"
+                  />
+                )
+              )}
+            </div>
+          )}
         </div>
 
-        {/* Last reviewed */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/30 px-4 py-3 flex items-center justify-between">
-          <span className="text-xs text-slate-400 font-medium">Último repaso</span>
-          <span className="text-sm font-bold text-white">
-            {card.lastReviewedAt
-              ? new Date(card.lastReviewedAt).toLocaleDateString()
-              : 'Sin repasos aún'}
-          </span>
+        {/* Sección informativa */}
+        <div className="rounded-xl border border-violet-500/20 bg-violet-500/5 px-4 py-3 space-y-1">
+          <p className="text-xs font-bold text-violet-300">¿Qué significa?</p>
+          <ul className="text-xs text-slate-400 space-y-0.5 list-disc list-inside">
+            <li>HIT (acierto): el usuario eligió "Lo sabía".</li>
+            <li>MISS (error): el usuario eligió "No lo sabía".</li>
+          </ul>
         </div>
-
-        {/* Progress bar */}
-        {total > 0 && (
-          <div className="space-y-1.5">
-            <div className="flex justify-between text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
-              <span>Errores</span>
-              <span>Aciertos</span>
-            </div>
-            <div className="h-2 w-full overflow-hidden rounded-full bg-rose-500/30">
-              <div
-                className="h-full rounded-full bg-emerald-500 transition-all duration-500"
-                style={{ width: `${percentage}%` }}
-              />
-            </div>
-          </div>
-        )}
 
         {/* Footer */}
         <div className="flex justify-between items-center pt-1 border-t border-slate-800/60">
           <button
             onClick={handleReset}
-            className="flex items-center gap-1.5 text-xs font-semibold text-rose-400 hover:text-rose-300 transition-colors"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-rose-500/30 text-xs font-semibold text-rose-400 hover:text-rose-300 hover:bg-rose-500/5 transition-all"
           >
             <RotateCcw size={13} />
-            Resetear métricas
+            Resetear métricas de esta tarjeta
           </button>
           <button
             onClick={onClose}
