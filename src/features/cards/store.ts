@@ -9,16 +9,16 @@ interface CardState {
   cards: Card[];
 
   // I1 Actions (D1 - Basic CRUD)
-  addCard: (newCard: Omit<Card, 'id' | 'hits' | 'misses' | 'createdAt' | 'lastReviewedAt'>) => void;
+  addCard: (newCard: Omit<Card, 'id' | 'hits' | 'misses' | 'history' | 'createdAt' | 'lastReviewedAt'>) => void;
   editCard: (id: string, updatedFields: Partial<Omit<Card, 'id'>>) => void;
   deleteCard: (id: string) => void;
 
   // Additional utility actions
   resetCards: () => void;
 
-  // RESERVED FOR I3 (D3 - Metrics tracking)
-  // Function declared in the interface and mapped below so I3 can work here.
+  // I3 Actions (D3 - Metrics tracking)
   recordResult: (id: string, result: 'hit' | 'miss') => void;
+  resetCardMetrics: (id: string) => void;
 }
 
 // Create the Store using the 'persist' middleware
@@ -40,6 +40,7 @@ export const useCardStore = create<CardState>()(
               id: `card-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`, // Safe fallback ID generator for non-HTTPS contexts
               hits: 0,                 // Initialize to 0 for I3 and I4
               misses: 0,               // Initialize to 0 for I3 and I4
+              history: [],              
               createdAt: new Date().toISOString(), // Current creation date
             },
           ],
@@ -65,14 +66,30 @@ export const useCardStore = create<CardState>()(
           cards: INITIAL_SEED_CARDS,
         })),
 
-      // SLOT FOR I3 (D3)
-      // Structure is ready. When I3 joins the project,
-      // they only need to replace this comment with their hits/misses logic.
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      recordResult: (_id, _result) =>
+      /** Records a hit or miss for the card and updates the last review date */
+      recordResult: (id, result) =>
         set((state) => ({
-          // NOTE FOR I3: Map over 'cards' and increment hits or misses based on 'result'
-          cards: state.cards, 
+          cards: state.cards.map((card) =>
+            card.id === id
+              ? {
+                  ...card,
+                  hits: result === 'hit' ? card.hits + 1 : card.hits,
+                  misses: result === 'miss' ? card.misses + 1 : card.misses,
+                  history: [...(card.history ?? []), result],
+                  lastReviewedAt: new Date().toISOString(),
+                }
+              : card
+          ),
+        })),
+
+      /** Resets the hits and misses for a specific card (action available from the metrics modal) */
+      resetCardMetrics: (id) =>
+        set((state) => ({
+          cards: state.cards.map((card) =>
+            card.id === id
+              ? { ...card, hits: 0, misses: 0, history: [], lastReviewedAt: undefined }
+              : card
+          ),
         })),
     }),
     {

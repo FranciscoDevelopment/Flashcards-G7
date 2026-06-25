@@ -9,7 +9,8 @@ export const INITIAL_SEED_CARDS: Card[] = [
     topic: 'Programación',
     difficulty: 'medium',
     hits: 0,
-    misses: 0, // Moderately mastered card
+    misses: 0,
+    history: [],
     createdAt: new Date('2026-06-01').toISOString(),
   },
   {
@@ -19,17 +20,19 @@ export const INITIAL_SEED_CARDS: Card[] = [
     topic: 'Redes',
     difficulty: 'hard',
     hits: 0,
-    misses: 0, // 🔴 Critical card (I4 should prioritize it due to high miss count)
+    misses: 0,
+    history: [],
     createdAt: new Date('2026-06-02').toISOString(),
   },
   {
     id: 'seed-3',
     question: '¿Cuál es la función principal de los reguladores de voltaje (VRM) en una tarjeta gráfica (GPU)?',
-    answer: 'Transformar el voltaje de 12V proveniente de la fuente de alimentación a los valores bajos y ultra precisos (usualmente entre 0.8V y 1.2V) que el núcleo de la GPU y las memorias necesitan.',
+    answer: 'Transforman el voltaje de 12V proveniente de la fuente de alimentación a los valores bajos y ultra precisos (usualmente entre 0.8V y 1.2V) que el núcleo de la GPU y las memorias necesitan.',
     topic: 'Hardware',
     difficulty: 'hard',
     hits: 0,
-    misses: 0, // 🟢 Mastered card (no priority needed)
+    misses: 0,
+    history: [],
     createdAt: new Date('2026-06-03').toISOString(),
   },
   {
@@ -40,6 +43,7 @@ export const INITIAL_SEED_CARDS: Card[] = [
     difficulty: 'medium',
     hits: 0,
     misses: 0,
+    history: [],
     createdAt: new Date('2026-06-04').toISOString(),
   },
   {
@@ -49,7 +53,8 @@ export const INITIAL_SEED_CARDS: Card[] = [
     topic: 'Ciberseguridad',
     difficulty: 'medium',
     hits: 0,
-    misses: 0, // Well-mastered card
+    misses: 0,
+    history: [],
     createdAt: new Date('2026-06-05').toISOString(),
   },
   {
@@ -59,7 +64,8 @@ export const INITIAL_SEED_CARDS: Card[] = [
     topic: 'Redes',
     difficulty: 'easy',
     hits: 0,
-    misses: 0, // New card, never reviewed
+    misses: 0,
+    history: [],
     createdAt: new Date('2026-06-06').toISOString(),
-  }
+  },
 ];

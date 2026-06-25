@@ -10,6 +10,7 @@ type QuizSessionProps = {
   showAnswer: boolean;
   onShowAnswer: () => void;
   onNextCard: () => void;
+  onRecordResult: (result: 'hit' | 'miss') => void;
 };
 
 export default function QuizSession({
@@ -21,6 +22,7 @@ export default function QuizSession({
   showAnswer,
   onShowAnswer,
   onNextCard,
+  onRecordResult,
 }: QuizSessionProps) {
 
   return (
@@ -36,6 +38,7 @@ export default function QuizSession({
           </p>
         </div>
       </div>
+
       <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-900 dark:bg-slate-900/20">
         <div className="mb-8">
           <div className="mb-2 flex items-center justify-between gap-4">
@@ -115,13 +118,15 @@ export default function QuizSession({
                   Recordar pregunta
                 </button>
               </div>
-
               <div className="flex justify-center">
-                <QuizResultActions onNextCard={onNextCard} />
+                <QuizResultActions
+                  cardId={currentCard.id}
+                  onNextCard={onNextCard}
+                  onRecordResult={onRecordResult}
+                />
               </div>
             </div>
           )}
-
           {showAnswer && (
             <p className="mt-3 text-center text-xs text-slate-500 dark:text-slate-400">
               Marcá una opción para continuar.
@@ -130,6 +135,5 @@ export default function QuizSession({
         </div>
       </div>
     </div>
-
   );
 }

@@ -14,6 +14,9 @@ export default function QuizPage() {
   const [showAnswer, setShowAnswer] = useState(false);
   const [isSessionFinished, setIsSessionFinished] = useState(false);
 
+  const [sessionHits, setSessionHits] = useState(0);
+  const [sessionMisses, setSessionMisses] = useState(0);
+
   const orderedCards = getOrderedCards(cards);
 
   const topics = Array.from(
@@ -47,6 +50,8 @@ export default function QuizPage() {
     setCurrentIndex(0);
     setShowAnswer(false);
     setIsSessionFinished(false);
+    setSessionHits(0);
+    setSessionMisses(0);
   };
 
   const handleNextCard = () => {
@@ -56,6 +61,11 @@ export default function QuizPage() {
     } else {
       setIsSessionFinished(true);
     }
+  };
+
+  const handleRecordResult = (result: 'hit' | 'miss') => {
+    if (result === 'hit') setSessionHits((prev) => prev + 1);
+    else setSessionMisses((prev) => prev + 1);
   };
 
   if (selectedTopic === null) {
@@ -79,19 +89,25 @@ export default function QuizPage() {
         <StudyFinished
           eyebrow="Quiz terminado"
           title="🎯 ¡Sesión completada!"
-          description={`Tu conocimiento sigue creciendo.`}
+          description="Tu conocimiento sigue creciendo."
           primaryLabel="Repetir quiz"
           secondaryLabel="Elegir otro mazo"
+          sessionHits={sessionHits}
+          sessionMisses={sessionMisses}
           onPrimary={() => {
             setCurrentIndex(0);
             setShowAnswer(false);
             setIsSessionFinished(false);
+            setSessionHits(0);
+            setSessionMisses(0);
           }}
           onSecondary={() => {
             setSelectedTopic(null);
             setCurrentIndex(0);
             setShowAnswer(false);
             setIsSessionFinished(false);
+            setSessionHits(0);
+            setSessionMisses(0);
           }}
         />
       </StudyLayout>
@@ -107,6 +123,8 @@ export default function QuizPage() {
         setCurrentIndex(0);
         setShowAnswer(false);
         setIsSessionFinished(false);
+        setSessionHits(0);
+        setSessionMisses(0);
       }}
     >
       <QuizSession
@@ -118,6 +136,7 @@ export default function QuizPage() {
         showAnswer={showAnswer}
         onShowAnswer={() => setShowAnswer((prev) => !prev)}
         onNextCard={handleNextCard}
+        onRecordResult={handleRecordResult}
       />
     </StudyLayout>
   );
