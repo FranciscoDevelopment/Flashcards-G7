@@ -69,8 +69,8 @@ export default function StudyFinished({
               <p className="text-2xl font-extrabold text-rose-400">{sessionMisses}</p>
             </div>
 
-            <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-4 text-center space-y-1">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+            <div className="rounded-xl border border-slate-200 bg-slate-100 p-4 text-center space-y-1 dark:border-slate-800 dark:bg-slate-900/50">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 Precisión
               </span>
               <p className={`text-2xl font-extrabold ${percentageColor}`}>

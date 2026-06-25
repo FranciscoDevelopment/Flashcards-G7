@@ -85,16 +85,16 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
             <p className="text-2xl font-extrabold text-rose-400">{card.misses}</p>
           </div>
 
-          <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-4 text-center space-y-1">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+          <div className="rounded-xl border border-slate-200 bg-slate-100 p-4 text-center space-y-1 dark:border-slate-800 dark:bg-slate-900/50">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Total respuestas
             </p>
-            <p className="text-2xl font-extrabold text-white">{total}</p>
+            <p className="text-2xl font-extrabold text-slate-800 dark:text-white">{total}</p>
           </div>
 
           {/* Circular progress */}
-          <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-4 text-center space-y-1 flex flex-col items-center justify-center">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+          <div className="rounded-xl border border-slate-200 bg-slate-100 p-4 text-center space-y-1 dark:border-slate-800 dark:bg-slate-900/50">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Porcentaje de aciertos
             </p>
             <div className="relative flex items-center justify-center mt-1">
