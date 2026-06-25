@@ -22,6 +22,9 @@ export interface Card {
   /** Número de fallos en el modo Quiz */
   misses: number;
 
+  /** Historial de respuestas individuales (D3 - últimas respuestas en orden cronológico) */
+  history: ('hit' | 'miss')[];
+
   /** Fecha de creación de la tarjeta (Formato ISO String) */
   createdAt: string;
 

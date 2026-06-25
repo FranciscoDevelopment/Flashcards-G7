@@ -40,6 +40,7 @@ export const useCardStore = create<CardState>()(
               id: `card-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`, // Safe fallback ID generator for non-HTTPS contexts
               hits: 0,                 // Initialize to 0 for I3 and I4
               misses: 0,               // Initialize to 0 for I3 and I4
+              history: [],              
               createdAt: new Date().toISOString(), // Current creation date
             },
           ],
@@ -74,6 +75,7 @@ export const useCardStore = create<CardState>()(
                   ...card,
                   hits: result === 'hit' ? card.hits + 1 : card.hits,
                   misses: result === 'miss' ? card.misses + 1 : card.misses,
+                  history: [...(card.history ?? []), result],
                   lastReviewedAt: new Date().toISOString(),
                 }
               : card
@@ -85,7 +87,7 @@ export const useCardStore = create<CardState>()(
         set((state) => ({
           cards: state.cards.map((card) =>
             card.id === id
-              ? { ...card, hits: 0, misses: 0, lastReviewedAt: undefined }
+              ? { ...card, hits: 0, misses: 0, history: [], lastReviewedAt: undefined }
               : card
           ),
         })),
