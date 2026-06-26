@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Edit2, Trash2, Tag, BarChart2 } from 'lucide-react';
 import type { Card } from '../types';
 import MetricsModal from './MetricsModal';
+import { getCardPriorityScore} from  '../../study/utils/getOrderedCards';
+
 
 interface CardItemProps {
   card: Card;
@@ -11,6 +13,8 @@ interface CardItemProps {
 
 export default function CardItem({ card, onDelete }: CardItemProps) {
   const [showMetrics, setShowMetrics] = useState(false);
+  const score = getCardPriorityScore(card);
+  const needsReview = score > 60;
 
   const difficultyColors = {
     easy: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
@@ -58,6 +62,12 @@ export default function CardItem({ card, onDelete }: CardItemProps) {
             Creada: {card.createdAt ? new Date(card.createdAt).toLocaleDateString() : 'N/A'}
           </span>
 
+          {needsReview && (
+          <span className="text-[10px] font-bold uppercase tracking-wider bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2 py-0.5 rounded-md">
+           ⚠️ Necesita repaso
+          </span>
+          )}
+          
           <div className="flex items-center gap-2">
             {/* D3: Botón de métricas habilitado */}
             <button
