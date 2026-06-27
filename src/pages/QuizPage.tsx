@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useCardStore } from '../features/cards/store';
-import { getOrderedCards } from '../features/study/utils/getOrderedCards';
 import StudyLayout from '../features/study/components/StudyLayout';
 import DeckSelector from '../features/study/components/DeckSelector';
 import QuizSession from '../features/study/components/QuizSession';
