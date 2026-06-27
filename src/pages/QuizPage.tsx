@@ -17,8 +17,7 @@ export default function QuizPage() {
   const [sessionHits, setSessionHits] = useState(0);
   const [sessionMisses, setSessionMisses] = useState(0);
 
-  const orderedCards = getOrderedCards(cards);
-
+  const orderedCards = [...cards].sort(() => Math.random() - 0.5);
   const topics = Array.from(
     new Set(cards.map((card) => card.topic))
   ).filter(Boolean);
