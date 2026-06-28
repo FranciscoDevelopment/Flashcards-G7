@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useCardStore } from '../features/cards/store';
-import { getOrderedCards } from '../features/study/utils/getOrderedCards';
 import StudyLayout from '../features/study/components/StudyLayout';
 import DeckSelector from '../features/study/components/DeckSelector';
 import QuizSession from '../features/study/components/QuizSession';
@@ -17,8 +16,7 @@ export default function QuizPage() {
   const [sessionHits, setSessionHits] = useState(0);
   const [sessionMisses, setSessionMisses] = useState(0);
 
-  const orderedCards = getOrderedCards(cards);
-
+  const orderedCards = [...cards].sort(() => Math.random() - 0.5);
   const topics = Array.from(
     new Set(cards.map((card) => card.topic))
   ).filter(Boolean);
