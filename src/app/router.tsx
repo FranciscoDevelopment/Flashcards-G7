@@ -5,6 +5,7 @@ import CardsPage from '../pages/CardsPage';
 import CardForm from '../features/cards/components/CardForm';
 import ReviewPage from '../pages/ReviewPage';
 import QuizPage from '../pages/QuizPage';
+import ProgressPage from '../pages/ProgressPage';
 
 // Layout base persistente con Navbar y Outlet para las páginas hijas
 function Layout() {
@@ -30,6 +31,7 @@ export default function AppRouter() {
         <Route path="/edit/:id" element={<CardForm />} />
         <Route path="/study/review" element={<ReviewPage />} />
         <Route path="/study/quiz" element={<QuizPage />} />
+        <Route path="/progress" element={<ProgressPage />} />
       </Route>
     </Routes>
   );

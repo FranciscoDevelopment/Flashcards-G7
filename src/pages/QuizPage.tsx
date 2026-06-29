@@ -5,14 +5,16 @@ import DeckSelector from '../features/study/components/DeckSelector';
 import QuizSession from '../features/study/components/QuizSession';
 import StudyFinished from '../features/study/components/StudyFinished';
 import '../features/study/styles/study.css';
+import { useProgressStore } from '../features/progress/store/useProgresseStore';
 
 export default function QuizPage() {
   const cards = useCardStore((state) => state.cards);
+  const registerSession = useProgressStore((state) => state.registerSession);
+
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [isSessionFinished, setIsSessionFinished] = useState(false);
-
   const [sessionHits, setSessionHits] = useState(0);
   const [sessionMisses, setSessionMisses] = useState(0);
 
@@ -62,8 +64,15 @@ export default function QuizPage() {
   };
 
   const handleRecordResult = (result: 'hit' | 'miss') => {
-    if (result === 'hit') setSessionHits((prev) => prev + 1);
-    else setSessionMisses((prev) => prev + 1);
+    const nextHits = result === 'hit' ? sessionHits + 1 : sessionHits;
+    const nextMisses = result === 'miss' ? sessionMisses + 1 : sessionMisses;
+
+    setSessionHits(nextHits);
+    setSessionMisses(nextMisses);
+
+    if (currentIndex === quizCards.length - 1) {
+      registerSession(nextHits, nextMisses);
+    }
   };
 
   if (selectedTopic === null) {
