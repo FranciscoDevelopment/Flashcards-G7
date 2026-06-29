@@ -60,13 +60,19 @@ export default function QuizPage() {
       setShowAnswer(false);
     } else {
       setIsSessionFinished(true);
-      registerSession(sessionHits, sessionMisses); // ← D5: registra la sesión
     }
   };
 
   const handleRecordResult = (result: 'hit' | 'miss') => {
-    if (result === 'hit') setSessionHits((prev) => prev + 1);
-    else setSessionMisses((prev) => prev + 1);
+    const nextHits = result === 'hit' ? sessionHits + 1 : sessionHits;
+    const nextMisses = result === 'miss' ? sessionMisses + 1 : sessionMisses;
+
+    setSessionHits(nextHits);
+    setSessionMisses(nextMisses);
+
+    if (currentIndex === quizCards.length - 1) {
+      registerSession(nextHits, nextMisses);
+    }
   };
 
   if (selectedTopic === null) {

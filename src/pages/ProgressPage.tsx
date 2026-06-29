@@ -101,11 +101,11 @@ export default function ProgressPage() {
             </div>
             <p className="text-2xl font-extrabold text-rose-400">{totalMisses}</p>
           </div>
-          <div className="rounded-xl border border-slate-200 bg-slate-100 p-4 text-center space-y-1 dark:border-slate-800 dark:bg-slate-900/50">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <div className="rounded-xl border border-slate-500/20 bg-slate-500/5 p-4 text-center space-y-1">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
              Total respuestas
             </span>
-            <p className="text-2xl font-extrabold text-slate-800 dark:text-white">{totalAnswers}</p>
+            <p className="text-2xl font-extrabold text-slate-800">{totalAnswers}</p>
           </div>
         </div>
       </div>
@@ -134,12 +134,12 @@ export default function ProgressPage() {
               return (
                 <div
                   key={index}
-                  className="grid grid-cols-4 gap-4 rounded-xl border border-slate-800 bg-slate-900/30 px-4 py-3 text-sm"
+                  className="grid grid-cols-4 gap-4 rounded-xl border border-slate-500/20 bg-slate-500/5 px-4 py-3 text-sm"
                 >
-                  <p className="text-slate-400">{date}</p>
-                  <p className="text-emerald-400 font-semibold">{session.hits} aciertos</p>
-                  <p className="text-rose-400 font-semibold">{session.misses} errores</p>
-                  <p className="text-white font-bold">{pct}%</p>
+                  <p className="text-slate-500">{date}</p>
+                  <p className="text-emerald-500 font-semibold">{session.hits} aciertos</p>
+                  <p className="text-rose-500 font-semibold">{session.misses} errores</p>
+                  <p className="text-slate-800 font-bold">{pct}%</p>
                 </div>
               );
             })}
