@@ -8,6 +8,7 @@ type QuizSessionProps = {
   progress: number;
   selectedTopic: string;
   showAnswer: boolean;
+  canRevealAnswer: boolean;
   onShowAnswer: () => void;
   onNextCard: () => void;
   onRecordResult: (result: 'hit' | 'miss') => void;
@@ -20,6 +21,7 @@ export default function QuizSession({
   progress,
   selectedTopic,
   showAnswer,
+  canRevealAnswer,
   onShowAnswer,
   onNextCard,
   onRecordResult,
@@ -102,11 +104,12 @@ export default function QuizSession({
           {!showAnswer ? (
             <div className="flex justify-center">
               <button
-                onClick={onShowAnswer}
-                className="rounded-xl bg-violet-600 px-6 py-3 font-semibold !text-white transition-colors hover:bg-violet-500"
-              >
-                Ver respuesta
-              </button>
+  onClick={onShowAnswer}
+  disabled={!canRevealAnswer}
+  className="rounded-xl bg-violet-600 px-6 py-3 font-semibold !text-white transition-colors hover:bg-violet-500 disabled:cursor-not-allowed disabled:bg-slate-400 disabled:hover:bg-slate-400 dark:disabled:bg-slate-700"
+>
+  Ver respuesta
+</button>
             </div>
           ) : (
             <div className="grid grid-cols-3 items-center gap-4">

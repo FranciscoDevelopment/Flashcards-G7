@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCardStore } from '../features/cards/store';
 import StudyLayout from '../features/study/components/StudyLayout';
 import DeckSelector from '../features/study/components/DeckSelector';
@@ -17,12 +17,25 @@ export default function QuizPage() {
 
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [quizCards, setQuizCards] = useState<typeof cards>([]);
+  const [canRevealAnswer, setCanRevealAnswer] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
   const [isSessionFinished, setIsSessionFinished] = useState(false);
   const [sessionHits, setSessionHits] = useState(0);
   const [sessionMisses, setSessionMisses] = useState(0);
 
-  const [quizCards, setQuizCards] = useState<typeof cards>([]);
+  useEffect(() => {
+    if (selectedTopic === null || isSessionFinished) return;
+
+    setCanRevealAnswer(false);
+
+    const timer = setTimeout(() => {
+      setCanRevealAnswer(true);
+    }, 2500);
+
+    return () => clearTimeout(timer);
+  }, [currentIndex, selectedTopic, isSessionFinished]);
+
   const topics = Array.from(
     new Set(cards.map((card) => card.topic))
   ).filter(Boolean);
@@ -148,6 +161,7 @@ export default function QuizPage() {
         progress={visibleProgress}
         selectedTopic={selectedTopic}
         showAnswer={showAnswer}
+        canRevealAnswer={canRevealAnswer}
         onShowAnswer={() => setShowAnswer((prev) => !prev)}
         onNextCard={handleNextCard}
         onRecordResult={handleRecordResult}
