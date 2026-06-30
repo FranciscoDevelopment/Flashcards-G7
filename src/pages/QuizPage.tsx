@@ -7,6 +7,10 @@ import StudyFinished from '../features/study/components/StudyFinished';
 import '../features/study/styles/study.css';
 import { useProgressStore } from '../features/progress/store/useProgresseStore';
 
+function shuffleCards<T>(items: T[]): T[] {
+  return [...items].sort(() => Math.random() - 0.5);
+}
+
 export default function QuizPage() {
   const cards = useCardStore((state) => state.cards);
   const registerSession = useProgressStore((state) => state.registerSession);
@@ -18,7 +22,7 @@ export default function QuizPage() {
   const [sessionHits, setSessionHits] = useState(0);
   const [sessionMisses, setSessionMisses] = useState(0);
 
-  const orderedCards = [...cards].sort(() => Math.random() - 0.5);
+  const [quizCards, setQuizCards] = useState<typeof cards>([]);
   const topics = Array.from(
     new Set(cards.map((card) => card.topic))
   ).filter(Boolean);
@@ -27,25 +31,27 @@ export default function QuizPage() {
     {
       id: 'all',
       title: 'Todas las tarjetas',
-      count: orderedCards.length,
+      count: cards.length,
     },
     ...topics.map((topic) => ({
       id: topic,
       title: topic,
-      count: orderedCards.filter((card) => card.topic === topic).length,
+      count: cards.filter((card) => card.topic === topic).length,
     })),
   ];
 
-  const quizCards =
-    selectedTopic === 'all'
-      ? orderedCards
-      : orderedCards.filter((card) => card.topic === selectedTopic);
   const currentCard = quizCards[currentIndex];
   const completedCards = currentIndex;
   const progress = (completedCards / quizCards.length) * 100;
   const visibleProgress = Math.max(progress, 1);
 
   const handleSelectDeck = (deckId: string) => {
+    const selectedCards =
+      deckId === 'all'
+        ? cards
+        : cards.filter((card) => card.topic === deckId);
+
+    setQuizCards(shuffleCards(selectedCards));
     setSelectedTopic(deckId);
     setCurrentIndex(0);
     setShowAnswer(false);
@@ -102,6 +108,7 @@ export default function QuizPage() {
           sessionHits={sessionHits}
           sessionMisses={sessionMisses}
           onPrimary={() => {
+            setQuizCards(shuffleCards(quizCards));
             setCurrentIndex(0);
             setShowAnswer(false);
             setIsSessionFinished(false);
