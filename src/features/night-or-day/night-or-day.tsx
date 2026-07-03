@@ -121,9 +121,9 @@ export function ThemeToggle() {
       title={theme === 'dark' ? 'Cambiar a modo día' : 'Cambiar a modo noche'}
     >
       {theme === 'dark' ? (
-        <Sun size={16} className="text-amber-500" />
+        <Sun size={16} className="text-amber-500" aria-hidden="true" />
       ) : (
-        <Moon size={16} className="text-violet-500" />
+        <Moon size={16} className="text-violet-500"  aria-hidden="true"/>
       )}
     </button>
   );
