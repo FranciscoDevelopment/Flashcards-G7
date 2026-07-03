@@ -55,7 +55,7 @@ export default function ReviewSession({
             </p>
           </div>
 
-          <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+          <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800" aria-hidden="true">
             <div
               className="h-full rounded-full bg-violet-500 transition-all duration-300"
               style={{ width: `${progress}%` }}
@@ -81,7 +81,7 @@ export default function ReviewSession({
           </div>
 
           <div className={`review-flip-inner ${showAnswer ? 'is-flipped' : ''}`}>
-            <div className="review-flip-face review-flip-front">
+            <div className="review-flip-face review-flip-front" aria-hidden={showAnswer}>
               <div className="flex h-full min-h-44 items-center">
                 <h2 className="text-2xl font-semibold leading-relaxed text-slate-950 dark:text-white">
                   {currentCard.question}
@@ -89,7 +89,7 @@ export default function ReviewSession({
               </div>
             </div>
 
-            <div className="review-flip-face review-flip-back">
+            <div className="review-flip-face review-flip-back" aria-hidden={!showAnswer}>
               <div className="flex h-full min-h-44 flex-col justify-center">
                 <p className="mb-4 text-sm font-bold uppercase tracking-wider text-violet-500 dark:text-violet-300">
                   Respuesta
