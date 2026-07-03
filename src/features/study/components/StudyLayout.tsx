@@ -1,3 +1,4 @@
+
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -41,9 +42,9 @@ export default function StudyLayout({
           }
         >
           <div>
-            <h1 className="text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white">
+            <h2 className="text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white">
               {title}
-            </h1>
+            </h2>
 
             {subtitle && (
               <p
