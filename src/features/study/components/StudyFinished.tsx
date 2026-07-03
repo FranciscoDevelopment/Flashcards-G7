@@ -55,7 +55,7 @@ export default function StudyFinished({
           <div className="grid grid-cols-3 gap-4 max-w-sm mx-auto">
             <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 text-center space-y-1">
               <div className="flex items-center justify-center gap-1 text-emerald-400">
-                <CheckCircle2 size={14} />
+                <CheckCircle2 size={14} aria-hidden="true" />
                 <span className="text-[10px] font-bold uppercase tracking-wider">Aciertos</span>
               </div>
               <p className="text-2xl font-extrabold text-emerald-400">{sessionHits}</p>
@@ -63,7 +63,7 @@ export default function StudyFinished({
 
             <div className="rounded-xl border border-rose-500/20 bg-rose-500/5 p-4 text-center space-y-1">
               <div className="flex items-center justify-center gap-1 text-rose-400">
-                <XCircle size={14} />
+                <XCircle size={14} aria-hidden="true"/>
                 <span className="text-[10px] font-bold uppercase tracking-wider">Errores</span>
               </div>
               <p className="text-2xl font-extrabold text-rose-400">{sessionMisses}</p>

@@ -208,3 +208,18 @@
   box-shadow: none;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .review-flip-inner,
+  .deck-card::before,
+  .deck-card::after,
+  .deck-card-front,
+  .study-card-enter-next,
+  .study-card-enter-prev {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .review-flip-inner.is-flipped {
+    transform: none;
+  }
+} 

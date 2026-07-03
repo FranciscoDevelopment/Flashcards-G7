@@ -64,7 +64,7 @@ export default function CardItem({ card, onDelete }: CardItemProps) {
 
           {needsReview && (
           <span className="text-[10px] font-bold uppercase tracking-wider bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2 py-0.5 rounded-md">
-           ⚠️ Necesita repaso
+           <span aria-hidden="true">⚠️</span> Necesita repaso
           </span>
           )}
           
@@ -72,27 +72,30 @@ export default function CardItem({ card, onDelete }: CardItemProps) {
             {/* D3: Botón de métricas habilitado */}
             <button
               onClick={() => setShowMetrics(true)}
+              aria-label={`Ver métricas de la tarjeta: ${card.question}`}
               className="flex items-center justify-center gap-1 border border-slate-800 text-slate-400 hover:text-violet-400 hover:border-violet-500/50 hover:bg-violet-500/5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all"
               title="Ver métricas de esta tarjeta"
             >
-              <BarChart2 size={12} />
+              <BarChart2 size={12} aria-hidden="true" />
               <span>Métricas</span>
             </button>
 
             <Link
               to={`/edit/${card.id}`}
+              aria-label={`Editar tarjeta: ${card.question}`}
               className="flex items-center justify-center gap-1 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-900/80 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all"
               title="Editar tarjeta"
             >
-              <Edit2 size={12} />
+              <Edit2 size={12} aria-hidden="true" />
               <span>Editar</span>
             </Link>
             <button
               onClick={() => onDelete(card.id)}
+              aria-label={`Eliminar tarjeta: ${card.question}`}
               className="flex items-center justify-center gap-1 border border-slate-800 text-slate-500 hover:text-rose-400 hover:bg-rose-500/5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all"
               title="Eliminar tarjeta"
             >
-              <Trash2 size={12} />
+              <Trash2 size={12} aria-hidden="true" />
               <span>Eliminar</span>
             </button>
           </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Tag, Eye, ShieldAlert } from 'lucide-react';
 import { useCardStore } from '../store';
@@ -8,6 +8,9 @@ export default function CardForm() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const isEditing = !!id;
+   useEffect(() => {
+    document.title = isEditing ? 'SmartFlash | Editar Tarjeta' : 'SmartFlash | Crear Nueva Tarjeta';
+  }, [isEditing]);
 
   const cards = useCardStore((state) => state.cards);
   const addCard = useCardStore((state) => state.addCard);
@@ -34,11 +37,11 @@ export default function CardForm() {
   if (isEditing && !card) {
     return (
       <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
-        <ShieldAlert className="text-rose-500 h-12 w-12 mb-4" />
+        <ShieldAlert className="text-rose-500 h-12 w-12 mb-4" aria-hidden="true" />
         <h3 className="text-xl font-bold">Tarjeta no encontrada</h3>
         <p className="text-slate-400 mt-2">La tarjeta con ID "{id}" no existe en el store.</p>
         <Link to="/cards" className="text-violet-400 hover:underline mt-4 flex items-center gap-1.5 font-semibold">
-          <ArrowLeft size={16} /> Volver al Listado
+          <ArrowLeft size={16} aria-hidden="true" /> Volver al Listado
         </Link>
       </div>
     );
@@ -78,7 +81,7 @@ export default function CardForm() {
           to="/cards" 
           className="text-slate-400 hover:text-white inline-flex items-center gap-2 text-sm font-semibold transition-colors"
         >
-          <ArrowLeft size={16} /> Volver al Listado
+          <ArrowLeft size={16} aria-hidden="true" /> Volver al Listado
         </Link>
 
         <div className="border-b border-slate-900 pb-6">
@@ -102,6 +105,7 @@ export default function CardForm() {
             </label>
             <textarea
               required
+              aria-required="true"
               rows={4}
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
@@ -118,6 +122,7 @@ export default function CardForm() {
             <textarea
               required
               rows={4}
+              aria-required="true"
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
               placeholder="Ej: Es una vulnerabilidad que permite a un atacante ejecutar sentencias SQL maliciosas..."
@@ -134,6 +139,7 @@ export default function CardForm() {
               <input
                 type="text"
                 required
+                aria-required="true" 
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
                 placeholder="Ej: Programación, Hardware, Redes"
@@ -195,6 +201,7 @@ export default function CardForm() {
               <button
                 type="button"
                 onClick={() => setPreviewSide('front')}
+                aria-pressed={previewSide === 'front'}
                 className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all ${
                   previewSide === 'front' ? 'bg-violet-600 text-white' : 'text-slate-400 hover:text-slate-200'
                 }`}
@@ -204,6 +211,7 @@ export default function CardForm() {
               <button
                 type="button"
                 onClick={() => setPreviewSide('back')}
+                aria-pressed={previewSide === 'back'}
                 className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all ${
                   previewSide === 'back' ? 'bg-violet-600 text-white' : 'text-slate-400 hover:text-slate-200'
                 }`}
@@ -221,7 +229,7 @@ export default function CardForm() {
 
             <div className="flex justify-between items-center z-10">
               <span className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
-                <Tag size={10} />
+                <Tag size={10} aria-hidden="true"/>
                 {topic || 'Categoría'}
               </span>
               <span className={`text-[9px] font-black border rounded px-1.5 py-0.5 uppercase tracking-wider ${difficultyColors[difficulty]}`}>

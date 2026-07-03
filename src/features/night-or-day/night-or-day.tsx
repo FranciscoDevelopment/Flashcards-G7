@@ -116,13 +116,14 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
+      aria-label={theme === 'dark' ? 'Cambiar a modo día' : 'Cambiar a modo noche'}
       className="p-2 rounded-xl border border-slate-200 dark:border-slate-900 bg-white/50 dark:bg-slate-950/40 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900/60 transition-all duration-200 flex items-center justify-center cursor-pointer shadow-sm ml-1"
       title={theme === 'dark' ? 'Cambiar a modo día' : 'Cambiar a modo noche'}
     >
       {theme === 'dark' ? (
-        <Sun size={16} className="text-amber-500" />
+        <Sun size={16} className="text-amber-500" aria-hidden="true" />
       ) : (
-        <Moon size={16} className="text-violet-500" />
+        <Moon size={16} className="text-violet-500"  aria-hidden="true"/>
       )}
     </button>
   );

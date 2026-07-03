@@ -1,8 +1,13 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Layers, Brain, HelpCircle, BarChart3, ArrowRight } from 'lucide-react';
 import HomeSummary from '../features/progress/components/HomeSummary';
 
 export default function HomePage() {
+  useEffect(() => {
+  document.title = 'SmartFlash | Inicio';
+  }, []);
+
   return (
     <div className="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
       {/* Sección de Bienvenida */}

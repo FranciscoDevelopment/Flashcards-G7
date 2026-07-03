@@ -1,8 +1,13 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Flame, Trophy, CheckCircle2, XCircle, TrendingUp, Calendar } from 'lucide-react';
 import { useProgressStats } from '../features/progress/hooks/useProgressStats';
 
 export default function ProgressPage() {
+    useEffect(() => {
+    document.title = 'SmartFlash | Progreso';
+  }, []);
+
   const {
     currentStreak,
     bestStreak,
@@ -29,12 +34,13 @@ export default function ProgressPage() {
       <div className="flex items-center gap-4">
         <Link
           to="/"
+          aria-label="Volver al inicio"
           className="p-2 rounded-xl border border-slate-800 text-slate-400 hover:text-white hover:border-slate-600 transition-all"
         >
           <ArrowLeft size={18} />
         </Link>
         <div>
-          <h1 className="text-2xl font-extrabold text-white">Tu progreso</h1>
+          <h2 className="text-2xl font-extrabold text-white">Tu progreso</h2>
           <p className="text-sm text-slate-400">Estadísticas generales y rachas de estudio.</p>
         </div>
       </div>
@@ -105,7 +111,7 @@ export default function ProgressPage() {
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
              Total respuestas
             </span>
-            <p className="text-2xl font-extrabold text-slate-800">{totalAnswers}</p>
+            <p className="text-2xl font-extrabold text-slate-800 dark:text-white">{totalAnswers}</p>
           </div>
         </div>
       </div>
@@ -139,7 +145,7 @@ export default function ProgressPage() {
                   <p className="text-slate-500">{date}</p>
                   <p className="text-emerald-500 font-semibold">{session.hits} aciertos</p>
                   <p className="text-rose-500 font-semibold">{session.misses} errores</p>
-                  <p className="text-slate-800 font-bold">{pct}%</p>
+                  <p className="text-slate-800 dark:text-white font-bold">{pct}%</p>
                 </div>
               );
             })}

@@ -63,9 +63,10 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
           </div>
           <button
             onClick={onClose}
+            aria-label="Cerrar modal de métricas"
             className="shrink-0 text-slate-500 hover:text-white transition-colors"
           >
-            <X size={18} />
+            <X size={18} aria-hidden="true" />
           </button>
         </div>
 
@@ -98,7 +99,7 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
               Porcentaje de aciertos
             </p>
             <div className="relative flex items-center justify-center mt-1">
-              <svg width="70" height="70" className="-rotate-90">
+              <svg width="70" height="70" className="-rotate-90" aria-hidden="true">
                 <circle
                   cx="35"
                   cy="35"
@@ -146,12 +147,16 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
                     key={index}
                     size={22}
                     className="text-emerald-400"
+                    role="img"
+                    aria-label="Acierto"
                   />
                 ) : (
                   <XCircle
                     key={index}
                     size={22}
                     className="text-rose-400"
+                    role="img"
+                    aria-label="Error"
                   />
                 )
               )}
@@ -174,7 +179,7 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
             onClick={handleReset}
             className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-rose-500/30 text-xs font-semibold text-rose-400 hover:text-rose-300 hover:bg-rose-500/5 transition-all"
           >
-            <RotateCcw size={13} />
+            <RotateCcw size={13}aria-hidden="true"/>
             Resetear métricas de esta tarjeta
           </button>
           <button

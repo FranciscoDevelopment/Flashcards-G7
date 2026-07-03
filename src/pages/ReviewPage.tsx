@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCardStore } from '../features/cards/store';
 import { getOrderedCards } from '../features/study/utils/getOrderedCards';
 import StudyLayout from '../features/study/components/StudyLayout';
@@ -8,6 +8,9 @@ import StudyFinished from '../features/study/components/StudyFinished';
 import '../features/study/styles/study.css';
 
 export default function ReviewPage() {
+  useEffect(() => {
+    document.title = 'SmartFlash | Modo Repaso';
+  }, []);
   const cards = useCardStore((state) => state.cards);
 
   const [currentIndex, setCurrentIndex] = useState(0);
