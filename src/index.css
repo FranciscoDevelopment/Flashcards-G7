@@ -31,3 +31,13 @@
 .glow-active {
   animation: pulse-glow 3s infinite;
 }
+
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+  outline: 2px solid #7c3aed;
+  outline-offset: 2px;
+}
