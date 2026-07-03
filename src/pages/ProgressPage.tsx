@@ -29,12 +29,13 @@ export default function ProgressPage() {
       <div className="flex items-center gap-4">
         <Link
           to="/"
+          aria-label="Volver al inicio"
           className="p-2 rounded-xl border border-slate-800 text-slate-400 hover:text-white hover:border-slate-600 transition-all"
         >
           <ArrowLeft size={18} />
         </Link>
         <div>
-          <h1 className="text-2xl font-extrabold text-white">Tu progreso</h1>
+          <h2 className="text-2xl font-extrabold text-white">Tu progreso</h2>
           <p className="text-sm text-slate-400">Estadísticas generales y rachas de estudio.</p>
         </div>
       </div>
