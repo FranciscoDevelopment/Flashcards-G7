@@ -106,7 +106,7 @@ export default function ProgressPage() {
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
              Total respuestas
             </span>
-            <p className="text-2xl font-extrabold text-slate-800">{totalAnswers}</p>
+            <p className="text-2xl font-extrabold text-slate-800 dark:text-white">{totalAnswers}</p>
           </div>
         </div>
       </div>
@@ -140,7 +140,7 @@ export default function ProgressPage() {
                   <p className="text-slate-500">{date}</p>
                   <p className="text-emerald-500 font-semibold">{session.hits} aciertos</p>
                   <p className="text-rose-500 font-semibold">{session.misses} errores</p>
-                  <p className="text-slate-800 font-bold">{pct}%</p>
+                  <p className="text-slate-800 dark:text-white font-bold">{pct}%</p>
                 </div>
               );
             })}
