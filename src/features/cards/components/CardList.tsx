@@ -28,9 +28,9 @@ export default function CardList({
           ))}
         </div>
       ) : (
-        <div className="text-center py-20 border border-dashed border-slate-900 rounded-3xl bg-slate-900/5">
+        <div className="text-center py-20 border border-dashed border-slate-900 rounded-3xl bg-slate-900/5" role="status" aria-live="polite">
           <div className="h-12 w-12 rounded-2xl bg-slate-900 flex items-center justify-center text-slate-500 mx-auto mb-4">
-            <HelpCircle size={20} />
+            <HelpCircle size={20} aria-hidden="true"/>
           </div>
           <h4 className="text-lg font-bold text-slate-300">No se encontraron tarjetas</h4>
           <p className="text-slate-500 text-sm mt-1 max-w-xs mx-auto">
