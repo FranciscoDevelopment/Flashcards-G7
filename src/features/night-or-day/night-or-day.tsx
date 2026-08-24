@@ -2,10 +2,30 @@ import { useEffect, useState } from 'react';
 import { Sun, Moon } from 'lucide-react';
 
 export function ThemeToggle() {
+  
+  /*
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     if (typeof window === 'undefined') return 'dark';
     return (localStorage.getItem('theme') as 'light' | 'dark') || 'dark';
   });
+  */
+
+
+  const [theme, setTheme] = useState<"light" | "dark">("dark") ;
+
+  const [ mounted, setMounted ] = useState(false) ;
+
+
+  useEffect( () => {
+
+    setMounted(true)
+
+    const stored = ( localStorage.getItem( "theme" ) as "light" | "dark" ) ;
+
+    setTheme( stored )
+
+  } , [] )
+
 
   useEffect(() => {
     // Inject light mode stylesheet overrides if not already injected
@@ -98,6 +118,9 @@ export function ThemeToggle() {
       document.head.appendChild(styleTag);
     }
 
+    if( !mounted ) return ;
+
+
     // Apply the class to documentElement
     const root = window.document.documentElement;
     if (theme === 'light') {
@@ -108,7 +131,7 @@ export function ThemeToggle() {
       root.classList.remove('light');
     }
     localStorage.setItem('theme', theme);
-  }, [theme]);
+  }, [theme, mounted]);
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
