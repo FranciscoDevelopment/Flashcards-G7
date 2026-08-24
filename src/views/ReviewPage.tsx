@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { useCardStore } from '../features/cards/store';
 import { getOrderedCards } from '../features/study/utils/getOrderedCards';

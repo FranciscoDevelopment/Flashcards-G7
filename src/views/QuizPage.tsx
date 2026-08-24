@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { useCardStore } from '../features/cards/store';
 import StudyLayout from '../features/study/components/StudyLayout';
@@ -29,8 +31,6 @@ export default function QuizPage() {
 
   useEffect(() => {
     if (selectedTopic === null || isSessionFinished) return;
-
-    setCanRevealAnswer(false);
 
     const timer = setTimeout(() => {
       setCanRevealAnswer(true);
@@ -71,6 +71,7 @@ export default function QuizPage() {
     setSelectedTopic(deckId);
     setCurrentIndex(0);
     setShowAnswer(false);
+    setCanRevealAnswer(false);
     setIsSessionFinished(false);
     setSessionHits(0);
     setSessionMisses(0);
@@ -80,6 +81,7 @@ export default function QuizPage() {
     if (currentIndex < quizCards.length - 1) {
       setCurrentIndex(currentIndex + 1);
       setShowAnswer(false);
+      setCanRevealAnswer(false);
     } else {
       setIsSessionFinished(true);
     }
@@ -127,6 +129,7 @@ export default function QuizPage() {
             setQuizCards(shuffleCards(quizCards));
             setCurrentIndex(0);
             setShowAnswer(false);
+            setCanRevealAnswer(false);
             setIsSessionFinished(false);
             setSessionHits(0);
             setSessionMisses(0);
@@ -135,6 +138,7 @@ export default function QuizPage() {
             setSelectedTopic(null);
             setCurrentIndex(0);
             setShowAnswer(false);
+            setCanRevealAnswer(false);
             setIsSessionFinished(false);
             setSessionHits(0);
             setSessionMisses(0);
@@ -152,6 +156,7 @@ export default function QuizPage() {
         setSelectedTopic(null);
         setCurrentIndex(0);
         setShowAnswer(false);
+        setCanRevealAnswer(false);
         setIsSessionFinished(false);
         setSessionHits(0);
         setSessionMisses(0);

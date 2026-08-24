@@ -1,12 +1,17 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import Link from 'next/link';
+import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeft, Tag, Eye, ShieldAlert } from 'lucide-react';
 import { useCardStore } from '../store';
 import type { CardDifficulty } from '../types';
 
 export default function CardForm() {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+  const params = useParams<{ id?: string | string[] }>();
+  const router = useRouter();
+  const rawId = params?.id;
+  const id = Array.isArray(rawId) ? rawId[0] : rawId;
   const isEditing = !!id;
    useEffect(() => {
     document.title = isEditing ? 'SmartFlash | Editar Tarjeta' : 'SmartFlash | Crear Nueva Tarjeta';
@@ -40,7 +45,7 @@ export default function CardForm() {
         <ShieldAlert className="text-rose-500 h-12 w-12 mb-4" aria-hidden="true" />
         <h3 className="text-xl font-bold">Tarjeta no encontrada</h3>
         <p className="text-slate-400 mt-2">La tarjeta con ID "{id}" no existe en el store.</p>
-        <Link to="/cards" className="text-violet-400 hover:underline mt-4 flex items-center gap-1.5 font-semibold">
+        <Link href="/cards" className="text-violet-400 hover:underline mt-4 flex items-center gap-1.5 font-semibold">
           <ArrowLeft size={16} aria-hidden="true" /> Volver al Listado
         </Link>
       </div>
@@ -64,7 +69,7 @@ export default function CardForm() {
       addCard(cardData);
     }
 
-    navigate('/cards');
+    router.push('/cards');
   };
 
   const difficultyColors = {
@@ -78,7 +83,7 @@ export default function CardForm() {
       {/* Navigation Header */}
       <div className="space-y-4 shrink-0">
         <Link 
-          to="/cards" 
+          href="/cards" 
           className="text-slate-400 hover:text-white inline-flex items-center gap-2 text-sm font-semibold transition-colors"
         >
           <ArrowLeft size={16} aria-hidden="true" /> Volver al Listado
@@ -179,7 +184,7 @@ export default function CardForm() {
           <div className="flex justify-end gap-3 border-t border-slate-900 pt-6">
             <button
               type="button"
-              onClick={() => navigate('/')}
+              onClick={() => router.push('/')}
               className="rounded-xl px-5 py-2.5 text-sm font-semibold text-slate-400 hover:bg-slate-900 hover:text-white transition-colors"
             >
               Cancelar
