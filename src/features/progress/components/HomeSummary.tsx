@@ -1,5 +1,5 @@
 import { TrendingUp, CheckCircle2, XCircle, Flame } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useProgressStats } from '../hooks/useProgressStats';
 
 export default function HomeSummary() {
@@ -95,7 +95,7 @@ export default function HomeSummary() {
       </div>
 
       <Link
-        to="/progress"
+        href="/progress"
         className="shrink-0 text-xs font-semibold text-violet-400 hover:text-violet-300 transition-colors whitespace-nowrap"
       >
         Ver más →

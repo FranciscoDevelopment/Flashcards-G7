@@ -1,5 +1,7 @@
+'use client';
+
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { 
   Plus, Search, RotateCcw, BookOpen, SlidersHorizontal 
 } from 'lucide-react';
@@ -71,7 +73,7 @@ export default function CardsPage() {
           </button>
           
           <Link
-            to="/new"
+            href="/new"
             className="flex items-center justify-center gap-2 bg-violet-600 hover:bg-violet-500 active:bg-violet-700 text-white font-semibold text-xs px-5 py-2.5 rounded-xl transition-all shadow-lg shadow-violet-600/25 active:scale-[0.98]"
           >
             <Plus size={16} />
