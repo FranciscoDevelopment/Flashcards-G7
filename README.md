@@ -4,14 +4,13 @@ Aplicacion de flashcards para crear tarjetas de estudio, repasarlas por tema, pr
 
 ## Integrantes
 
-| Integrante | Desafio / tarea | Rama sugerida |
+| Integrante | Desafio / tarea | Rama |
 |------------|------------------|---------------|
 | Facundo Ferreyra | Migracion base a Next.js App Router | `feat/next-migration-app-router` |
-|  | Revision, documentacion y flujo Git | `docs/readme-next-migration` |
-|  | Metadata, SEO y rutas nativas | `feat/metadata-seo` |
-|  | Accesibilidad y semantica | `fix/accessibility-semantics` |
-|  | Estado global e hidratacion | `fix/zustand-hydration` |
-|  | Optimizacion y deploy |  |
+| Francisco Chiressi | Fix de tema dia/noche, revision y flujo Git | `fix/theme-by-client-state` |
+| Irina D'Andrea | Metadata, SEO, sitemap, robots, next/font y deploy | `feat/metadata-seo` |
+| Camila Ferro | Accesibilidad y semantica | `fix/accessibility-semantics` |
+| Luca Almiron | Estado global e hidratacion | `fix/zustand-hydration` |
 
 ## Tecnologias
 
@@ -43,9 +42,9 @@ Next.js 16 · React 19 · TypeScript · Tailwind CSS v3 · Zustand · date-fns �
 
 ## Links
 
-- Deploy: pendiente
-- Repositorio original: pendiente
-- Repositorio migrado: pendiente
+- Deploy: https://flashcards-g7.vercel.app
+- Repositorio original: https://github.com/Bran-Nick/Flashcards-
+- Repositorio migrado: https://github.com/FranciscoDevelopment/Flashcards-G7
 
 ## Instalacion local
 
@@ -141,15 +140,19 @@ Resultado:
 - Build de Next.js correcto.
 - Auditoria npm sin vulnerabilidades altas reportadas.
 
+## Bugs encontrados y corregidos
+
+| Bug | Causa | Solucion |
+|-----|-------|----------|
+| El tema dia/noche no persistia bien y generaba parpadeo (flash) al cargar | El toggle de tema dependia solo de estado de React sin sincronizarse con `localStorage` antes del primer render | Se implemento inicializacion del tema en el cliente con un script embebido en `layout.tsx` y manejo de estado client-side (rama `fix/theme-by-client-state`) |
+| Los titulos de pestana se seteaban a mano con `document.title` dentro de `useEffect` en cada vista | Patron heredado de la version en React + Vite, incompatible con el modelo de metadata de Next.js | Se reemplazo por `export const metadata` (o metadata por ruta) en cada `page.tsx`, y se eliminaron los `document.title` y los `useEffect` que ya no se usaban |
+| El build fallaba en produccion (`npm run build`) por errores de TypeScript en `vite.config.ts` | Quedo un archivo residual de la version en Vite que ya no tiene sus dependencias instaladas | Se elimino `vite.config.ts` del repositorio |
+
 ## Trabajo pendiente
 
-- Agregar metadata especifica por ruta con `export const metadata`.
-- Reemplazar los `document.title` de las vistas por metadata nativa de Next.
-- Cargar la fuente con `next/font/google`.
-- Agregar `src/app/robots.ts` y `src/app/sitemap.ts`.
 - Revisar hidratacion de los stores persistidos de Zustand.
-- Mejorar semantica de headings y labels de accesibilidad.
-- Completar links de repositorio y deploy.
+- Mejorar semantica de headings y labels de accesibilidad (verificar que no se rompio nada en la migracion).
+- Corregir el error de lint en `src/features/night-or-day/night-or-day.tsx` (setState dentro de un useEffect).
 
 ## Flujo Git recomendado
 
