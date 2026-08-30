@@ -1,15 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Flame, Trophy, CheckCircle2, XCircle, TrendingUp, Calendar } from 'lucide-react';
 import { useProgressStats } from '../features/progress/hooks/useProgressStats';
 
 export default function ProgressPage() {
-    useEffect(() => {
-    document.title = 'SmartFlash | Progreso';
-  }, []);
-
   const {
     currentStreak,
     bestStreak,

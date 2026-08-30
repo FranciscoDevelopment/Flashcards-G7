@@ -14,9 +14,6 @@ function shuffleCards<T>(items: T[]): T[] {
 }
 
 export default function QuizPage() {
- useEffect(() => {
-    document.title = 'SmartFlash | Modo Quiz';
-  }, []) 
   const cards = useCardStore((state) => state.cards);
   const registerSession = useProgressStore((state) => state.registerSession);
 

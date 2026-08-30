@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { 
   Plus, Search, RotateCcw, BookOpen, SlidersHorizontal 
@@ -9,9 +9,7 @@ import { useCardStore } from '../features/cards/store';
 import CardList from '../features/cards/components/CardList';
 
 export default function CardsPage() {
-    useEffect(() => {
-    document.title = 'SmartFlash | Mis Tarjetas';
-  }, []); const cards = useCardStore((state) => state.cards);
+  const cards = useCardStore((state) => state.cards);
   const deleteCard = useCardStore((state) => state.deleteCard);
   const resetCards = useCardStore((state) => state.resetCards);
 
