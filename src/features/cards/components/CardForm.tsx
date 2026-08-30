@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeft, Tag, Eye, ShieldAlert } from 'lucide-react';
@@ -13,10 +13,6 @@ export default function CardForm() {
   const rawId = params?.id;
   const id = Array.isArray(rawId) ? rawId[0] : rawId;
   const isEditing = !!id;
-   useEffect(() => {
-    document.title = isEditing ? 'SmartFlash | Editar Tarjeta' : 'SmartFlash | Crear Nueva Tarjeta';
-  }, [isEditing]);
-
   const cards = useCardStore((state) => state.cards);
   const addCard = useCardStore((state) => state.addCard);
   const editCard = useCardStore((state) => state.editCard);
