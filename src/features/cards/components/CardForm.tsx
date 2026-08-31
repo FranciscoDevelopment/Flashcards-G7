@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+'use client';
+
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeft, Tag, Eye, ShieldAlert } from 'lucide-react';
 import { useCardStore } from '../store';
 import type { CardDifficulty } from '../types';
 
 export default function CardForm() {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+  const params = useParams<{ id?: string | string[] }>();
+  const router = useRouter();
+  const rawId = params?.id;
+  const id = Array.isArray(rawId) ? rawId[0] : rawId;
   const isEditing = !!id;
-   useEffect(() => {
-    document.title = isEditing ? 'SmartFlash | Editar Tarjeta' : 'SmartFlash | Crear Nueva Tarjeta';
-  }, [isEditing]);
-
   const cards = useCardStore((state) => state.cards);
   const addCard = useCardStore((state) => state.addCard);
   const editCard = useCardStore((state) => state.editCard);
-
   const card = (cards || []).find((c) => c.id === id);
 
   const [question, setQuestion] = useState(card?.question || '');
@@ -40,7 +40,7 @@ export default function CardForm() {
         <ShieldAlert className="text-rose-500 h-12 w-12 mb-4" aria-hidden="true" />
         <h3 className="text-xl font-bold">Tarjeta no encontrada</h3>
         <p className="text-slate-400 mt-2">La tarjeta con ID "{id}" no existe en el store.</p>
-        <Link to="/cards" className="text-violet-400 hover:underline mt-4 flex items-center gap-1.5 font-semibold">
+        <Link href="/cards" className="text-violet-400 hover:underline mt-4 flex items-center gap-1.5 font-semibold">
           <ArrowLeft size={16} aria-hidden="true" /> Volver al Listado
         </Link>
       </div>
@@ -64,7 +64,7 @@ export default function CardForm() {
       addCard(cardData);
     }
 
-    navigate('/cards');
+    router.push('/cards');
   };
 
   const difficultyColors = {
@@ -78,7 +78,7 @@ export default function CardForm() {
       {/* Navigation Header */}
       <div className="space-y-4 shrink-0">
         <Link 
-          to="/cards" 
+          href="/cards" 
           className="text-slate-400 hover:text-white inline-flex items-center gap-2 text-sm font-semibold transition-colors"
         >
           <ArrowLeft size={16} aria-hidden="true" /> Volver al Listado
@@ -100,10 +100,11 @@ export default function CardForm() {
         <form onSubmit={handleSubmit} className="space-y-6 lg:col-span-7 bg-slate-900/10 border border-slate-900 p-6 md:p-8 rounded-3xl">
           {/* Question text */}
           <div className="space-y-2">
-            <label className="block text-sm font-bold text-slate-400">
+            <label htmlFor="question" className="block text-sm font-bold text-slate-400">
               Anverso (Pregunta o Concepto)
             </label>
             <textarea
+              id="question"
               required
               aria-required="true"
               rows={4}
@@ -116,10 +117,11 @@ export default function CardForm() {
 
           {/* Answer text */}
           <div className="space-y-2">
-            <label className="block text-sm font-bold text-slate-400">
+            <label htmlFor="answer" className="block text-sm font-bold text-slate-400">
               Reverso (Respuesta o Detalles)
             </label>
             <textarea
+              id="answer"
               required
               rows={4}
               aria-required="true"
@@ -133,10 +135,11 @@ export default function CardForm() {
           {/* Category/Topic Input */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="block text-sm font-bold text-slate-400">
+              <label htmlFor="topic" className="block text-sm font-bold text-slate-400">
                 Tema / Categoría
               </label>
               <input
+                id="topic"
                 type="text"
                 required
                 aria-required="true" 
@@ -158,6 +161,7 @@ export default function CardForm() {
                     key={level}
                     type="button"
                     onClick={() => setDifficulty(level)}
+                    aria-label={`Seleccionar dificultad ${level === 'easy' ? 'Fácil' : level === 'medium' ? 'Medio' : 'Difícil'}`}
                     className={`py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${
                       difficulty === level
                         ? level === 'easy'
@@ -179,13 +183,15 @@ export default function CardForm() {
           <div className="flex justify-end gap-3 border-t border-slate-900 pt-6">
             <button
               type="button"
-              onClick={() => navigate('/')}
+              onClick={() => router.push('/')}
+              aria-label="Cancelar"
               className="rounded-xl px-5 py-2.5 text-sm font-semibold text-slate-400 hover:bg-slate-900 hover:text-white transition-colors"
             >
               Cancelar
             </button>
             <button
               type="submit"
+              aria-label={isEditing ? 'Guardar Cambios' : 'Crear Tarjeta'}
               className="rounded-xl bg-violet-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-violet-500 active:bg-violet-700 transition-all shadow-lg shadow-violet-600/25 active:scale-[0.98]"
             >
               {isEditing ? 'Guardar Cambios' : 'Crear Tarjeta'}
@@ -202,6 +208,7 @@ export default function CardForm() {
                 type="button"
                 onClick={() => setPreviewSide('front')}
                 aria-pressed={previewSide === 'front'}
+                aria-label="Mostrar anverso"
                 className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all ${
                   previewSide === 'front' ? 'bg-violet-600 text-white' : 'text-slate-400 hover:text-slate-200'
                 }`}
@@ -212,6 +219,7 @@ export default function CardForm() {
                 type="button"
                 onClick={() => setPreviewSide('back')}
                 aria-pressed={previewSide === 'back'}
+                aria-label="Mostrar reverso"
                 className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all ${
                   previewSide === 'back' ? 'bg-violet-600 text-white' : 'text-slate-400 hover:text-slate-200'
                 }`}

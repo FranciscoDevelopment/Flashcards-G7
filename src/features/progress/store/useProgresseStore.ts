@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import { isToday, isYesterday } from 'date-fns';
 
 interface SessionEntry {
@@ -14,11 +14,15 @@ interface ProgressState {
   lastStudyDate: string | null;
   sessionHistory: SessionEntry[];
   registerSession: (hits: number, misses: number) => void;
+  hasHydrated: boolean;
+  setHasHydrated: (v: boolean) => void;
 }
 
 export const useProgressStore = create<ProgressState>()(
   persist(
     (set, get) => ({
+      hasHydrated: false,
+      setHasHydrated: (v: boolean) => set({ hasHydrated: v }),
       currentStreak: 0,
       bestStreak: 0,
       lastStudyDate: null,
@@ -56,6 +60,12 @@ export const useProgressStore = create<ProgressState>()(
         });
       },
     }),
-    { name: 'progress-storage' }
+    {
+      name: 'progress-storage',
+      storage: typeof window === 'undefined' ? undefined : createJSONStorage(() => localStorage),
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated?.(true);
+      },
+    }
   )
 );

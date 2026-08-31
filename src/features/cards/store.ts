@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import type { Card } from './types';
 import { INITIAL_SEED_CARDS } from './seed';
 
@@ -19,12 +19,16 @@ interface CardState {
   // I3 Actions (D3 - Metrics tracking)
   recordResult: (id: string, result: 'hit' | 'miss') => void;
   resetCardMetrics: (id: string) => void;
+  hasHydrated: boolean;
+  setHasHydrated: (v: boolean) => void;
 }
 
 // Create the Store using the 'persist' middleware
 export const useCardStore = create<CardState>()(
   persist(
     (set) => ({
+      hasHydrated: false,
+      setHasHydrated: (v: boolean) => set({ hasHydrated: v }),
       // INITIAL LOAD: Inject seed data into the base state
       cards: INITIAL_SEED_CARDS,
 
@@ -95,6 +99,10 @@ export const useCardStore = create<CardState>()(
     {
       // Unique key name to identify this data in the browser's localStorage
       name: 'smart-flashcards-storage',
+      storage: typeof window === 'undefined' ? undefined : createJSONStorage(() => localStorage),
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated?.(true);
+      },
     }
   )
 );

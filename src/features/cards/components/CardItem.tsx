@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Edit2, Trash2, Tag, BarChart2 } from 'lucide-react';
 import type { Card } from '../types';
 import MetricsModal from './MetricsModal';
@@ -81,7 +81,7 @@ export default function CardItem({ card, onDelete }: CardItemProps) {
             </button>
 
             <Link
-              to={`/edit/${card.id}`}
+              href={`/edit/${card.id}`}
               aria-label={`Editar tarjeta: ${card.question}`}
               className="flex items-center justify-center gap-1 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-900/80 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all"
               title="Editar tarjeta"

@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef } from 'react';
 import { X, RotateCcw, CheckCircle2, XCircle } from 'lucide-react';
 import { useCardStore } from '../store';
 import type { Card } from '../types';
@@ -9,6 +12,10 @@ interface MetricsModalProps {
 
 export default function MetricsModal({ card, onClose }: MetricsModalProps) {
   const resetCardMetrics = useCardStore((state) => state.resetCardMetrics);
+
+  const modalRef = useRef<HTMLDivElement | null>(null);
+  const closeBtnRef = useRef<HTMLButtonElement | null>(null);
+  const previouslyFocused = useRef<HTMLElement | null>(null);
 
   const total = card.hits + card.misses;
   const percentage = total === 0 ? 0 : Math.round((card.hits / total) * 100);
@@ -22,6 +29,67 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
       onClose();
     }
   };
+
+  useEffect(() => {
+    // Save previously focused element to restore later
+    previouslyFocused.current = document.activeElement as HTMLElement | null;
+
+    // Focus the close button (or first focusable) when modal opens
+    const focusable = modalRef.current?.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    if (closeBtnRef.current) {
+      closeBtnRef.current.focus();
+    } else if (focusable && focusable.length) {
+      focusable[0].focus();
+    }
+
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onClose();
+        return;
+      }
+
+      if (e.key === 'Tab') {
+        const nodes = modalRef.current?.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (!nodes || nodes.length === 0) return;
+
+        const focusable = Array.from(nodes);
+        const idx = focusable.indexOf(document.activeElement as HTMLElement);
+        if (e.shiftKey) {
+          if (idx === 0 || document.activeElement === modalRef.current) {
+            e.preventDefault();
+            focusable[focusable.length - 1].focus();
+          }
+        } else {
+          if (idx === focusable.length - 1) {
+            e.preventDefault();
+            focusable[0].focus();
+          }
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown);
+    // prevent background from being focusable by marking inert (basic approach)
+    const rootSiblings = Array.from(document.body.children).filter((c) => c !== modalRef.current?.parentElement);
+    rootSiblings.forEach((el) => el.setAttribute('aria-hidden', 'true'));
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      // restore aria-hidden
+      rootSiblings.forEach((el) => el.removeAttribute('aria-hidden'));
+      // restore previous focus
+      try {
+        previouslyFocused.current?.focus?.();
+      } catch {
+        /* ignore */
+      }
+    };
+  }, [onClose]);
 
   const percentageColor =
     percentage >= 70
@@ -48,6 +116,9 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
       onClick={onClose}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={`metrics-modal-title-${card.id}`}
         className="relative w-full max-w-lg rounded-2xl border border-slate-800 bg-slate-950 p-6 shadow-xl space-y-5"
         onClick={(e) => e.stopPropagation()}
       >
@@ -57,7 +128,7 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
             <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
               Métricas de
             </p>
-            <h3 className="text-base font-semibold text-white leading-snug line-clamp-2">
+            <h3 id={`metrics-modal-title-${card.id}`} className="text-base font-semibold text-white leading-snug line-clamp-2">
               {card.question}
             </h3>
           </div>
@@ -177,6 +248,7 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
         <div className="flex justify-between items-center pt-1 border-t border-slate-800/60">
           <button
             onClick={handleReset}
+            aria-label="Resetear métricas de esta tarjeta"
             className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-rose-500/30 text-xs font-semibold text-rose-400 hover:text-rose-300 hover:bg-rose-500/5 transition-all"
           >
             <RotateCcw size={13}aria-hidden="true"/>
@@ -184,6 +256,7 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
           </button>
           <button
             onClick={onClose}
+            aria-label="Cerrar modal de métricas"
             className="px-4 py-2 rounded-xl border border-slate-800 text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-900 transition-all"
           >
             Cerrar

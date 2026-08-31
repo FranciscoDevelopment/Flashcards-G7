@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { useCardStore } from '../features/cards/store';
 import StudyLayout from '../features/study/components/StudyLayout';
@@ -12,9 +14,6 @@ function shuffleCards<T>(items: T[]): T[] {
 }
 
 export default function QuizPage() {
- useEffect(() => {
-    document.title = 'SmartFlash | Modo Quiz';
-  }, []) 
   const cards = useCardStore((state) => state.cards);
   const registerSession = useProgressStore((state) => state.registerSession);
 
@@ -30,8 +29,6 @@ export default function QuizPage() {
   useEffect(() => {
     if (selectedTopic === null || isSessionFinished) return;
 
-    setCanRevealAnswer(false);
-
     const timer = setTimeout(() => {
       setCanRevealAnswer(true);
     }, 2500);
@@ -39,9 +36,7 @@ export default function QuizPage() {
     return () => clearTimeout(timer);
   }, [currentIndex, selectedTopic, isSessionFinished]);
 
-  const topics = Array.from(
-    new Set(cards.map((card) => card.topic))
-  ).filter(Boolean);
+  const topics = Array.from(new Set(cards.map((card) => card.topic))).filter(Boolean);
 
   const deckOptions = [
     {
@@ -71,6 +66,7 @@ export default function QuizPage() {
     setSelectedTopic(deckId);
     setCurrentIndex(0);
     setShowAnswer(false);
+    setCanRevealAnswer(false);
     setIsSessionFinished(false);
     setSessionHits(0);
     setSessionMisses(0);
@@ -80,6 +76,7 @@ export default function QuizPage() {
     if (currentIndex < quizCards.length - 1) {
       setCurrentIndex(currentIndex + 1);
       setShowAnswer(false);
+      setCanRevealAnswer(false);
     } else {
       setIsSessionFinished(true);
     }
@@ -127,6 +124,7 @@ export default function QuizPage() {
             setQuizCards(shuffleCards(quizCards));
             setCurrentIndex(0);
             setShowAnswer(false);
+            setCanRevealAnswer(false);
             setIsSessionFinished(false);
             setSessionHits(0);
             setSessionMisses(0);
@@ -135,6 +133,7 @@ export default function QuizPage() {
             setSelectedTopic(null);
             setCurrentIndex(0);
             setShowAnswer(false);
+            setCanRevealAnswer(false);
             setIsSessionFinished(false);
             setSessionHits(0);
             setSessionMisses(0);
@@ -152,6 +151,7 @@ export default function QuizPage() {
         setSelectedTopic(null);
         setCurrentIndex(0);
         setShowAnswer(false);
+        setCanRevealAnswer(false);
         setIsSessionFinished(false);
         setSessionHits(0);
         setSessionMisses(0);

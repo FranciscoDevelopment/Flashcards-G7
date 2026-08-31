@@ -1,13 +1,10 @@
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+'use client';
+
+import Link from 'next/link';
 import { Layers, Brain, HelpCircle, BarChart3, ArrowRight } from 'lucide-react';
 import HomeSummary from '../features/progress/components/HomeSummary';
 
 export default function HomePage() {
-  useEffect(() => {
-  document.title = 'SmartFlash | Inicio';
-  }, []);
-
   return (
     <div className="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
       {/* Sección de Bienvenida */}
@@ -20,7 +17,7 @@ export default function HomePage() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
 
         <Link
-          to="/cards"
+          href="/cards"
           className="relative group bg-slate-900/40 border-2 border-slate-900 hover:border-violet-500/30 rounded-2xl p-6 flex flex-col justify-between min-h-[250px] transition-all hover:shadow-lg hover:shadow-violet-600/5 hover:-translate-y-0.5"
         >
           <div className="flex flex-col items-center text-center mt-4">
@@ -38,7 +35,7 @@ export default function HomePage() {
         </Link>
 
         <Link
-          to="/study/review"
+          href="/study/review"
           className="relative group bg-slate-900/40 border-2 border-slate-900 hover:border-violet-500/30 rounded-2xl p-6 flex flex-col justify-between min-h-[250px] transition-all hover:shadow-lg hover:shadow-violet-600/5 hover:-translate-y-0.5"
         >
           <div className="flex flex-col items-center text-center mt-4">
@@ -56,7 +53,7 @@ export default function HomePage() {
         </Link>
 
         <Link
-          to="/study/quiz"
+          href="/study/quiz"
           className="relative group bg-slate-900/40 border-2 border-slate-900 hover:border-violet-500/30 rounded-2xl p-6 flex flex-col justify-between min-h-[250px] transition-all hover:shadow-lg hover:shadow-violet-600/5 hover:-translate-y-0.5"
         >
           <div className="flex flex-col items-center text-center mt-4">
@@ -75,7 +72,7 @@ export default function HomePage() {
 
         {/* Card 4: Progreso — D5 */}
         <Link
-          to="/progress"
+          href="/progress"
           className="relative group bg-slate-900/40 border-2 border-slate-900 hover:border-violet-500/30 rounded-2xl p-6 flex flex-col justify-between min-h-[250px] transition-all hover:shadow-lg hover:shadow-violet-600/5 hover:-translate-y-0.5"
         >
           <div className="flex flex-col items-center text-center mt-4">

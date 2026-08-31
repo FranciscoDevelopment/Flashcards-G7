@@ -104,18 +104,20 @@ export default function QuizSession({
           {!showAnswer ? (
             <div className="flex justify-center">
               <button
-  onClick={onShowAnswer}
-  disabled={!canRevealAnswer}
-  className="rounded-xl bg-violet-600 px-6 py-3 font-semibold !text-white transition-colors hover:bg-violet-500 disabled:cursor-not-allowed disabled:bg-slate-400 disabled:hover:bg-slate-400 dark:disabled:bg-slate-700"
->
-  Ver respuesta
-</button>
+                onClick={onShowAnswer}
+                disabled={!canRevealAnswer}
+                aria-label="Ver respuesta"
+                className="rounded-xl bg-violet-600 px-6 py-3 font-semibold !text-white transition-colors hover:bg-violet-500 disabled:cursor-not-allowed disabled:bg-slate-400 disabled:hover:bg-slate-400 dark:disabled:bg-slate-700"
+              >
+                Ver respuesta
+              </button>
             </div>
           ) : (
             <div className="grid grid-cols-3 items-center gap-4">
               <div className="flex justify-start pt-6">
                 <button
                   onClick={onShowAnswer}
+                  aria-label="Recordar pregunta"
                   className="pl-2 text-sm text-slate-500 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-300"
                 >
                   Recordar pregunta

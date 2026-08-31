@@ -83,6 +83,7 @@ export default function StudyFinished({
         <div className="flex flex-col justify-center gap-3 sm:flex-row">
           <button
             onClick={onPrimary}
+            aria-label={primaryLabel}
             className="rounded-xl bg-violet-600 px-4 py-2 font-semibold !text-white transition-colors hover:bg-violet-500"
           >
             {primaryLabel}
@@ -90,6 +91,7 @@ export default function StudyFinished({
 
           <button
             onClick={onSecondary}
+            aria-label={secondaryLabel}
             className="rounded-xl border border-slate-300 px-4 py-2 font-semibold text-slate-700 transition-colors hover:border-violet-400 hover:text-violet-600 dark:border-slate-700 dark:text-slate-300 dark:hover:border-violet-500 dark:hover:text-white"
           >
             {secondaryLabel}

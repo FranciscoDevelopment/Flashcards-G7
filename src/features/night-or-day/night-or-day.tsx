@@ -2,9 +2,22 @@ import { useEffect, useState } from 'react';
 import { Sun, Moon } from 'lucide-react';
 
 export function ThemeToggle() {
+  
+  /*
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window === 'undefined') return 'dark';
     return (localStorage.getItem('theme') as 'light' | 'dark') || 'dark';
   });
+  */
+
+
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window === 'undefined') return 'dark';
+    return (localStorage.getItem('theme') as 'light' | 'dark') || 'dark';
+  });
+
+  // No need for a separate 'mounted' state — use a runtime check instead
+
 
   useEffect(() => {
     // Inject light mode stylesheet overrides if not already injected
@@ -96,6 +109,9 @@ export function ThemeToggle() {
       `;
       document.head.appendChild(styleTag);
     }
+
+    if (typeof window === 'undefined') return;
+
 
     // Apply the class to documentElement
     const root = window.document.documentElement;

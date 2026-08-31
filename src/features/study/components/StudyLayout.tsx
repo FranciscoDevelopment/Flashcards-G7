@@ -1,6 +1,6 @@
 
 import type { ReactNode } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 interface StudyLayoutProps {
   children: ReactNode;
@@ -59,13 +59,15 @@ export default function StudyLayout({
           {onBack ? (
             <button
               onClick={onBack}
+              aria-label={backLabel}
               className="mr-16 mt-4 text-sm text-slate-600 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-300"
             >
               ← {backLabel}
             </button>
           ) : (
             <Link
-              to="/"
+              href="/"
+              aria-label={backLabel}
               className={`text-sm text-slate-600 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-300 ${isFinished ? 'mr-12 mt-4' : 'mt-1'
                 }`}
             >

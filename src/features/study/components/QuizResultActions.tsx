@@ -25,6 +25,7 @@ export default function QuizResultActions({ cardId, onNextCard, onRecordResult }
     <div className="mt-1 flex flex-col justify-center gap-3 sm:flex-row">
       <button
         onClick={handleIncorrect}
+        aria-label="No lo sabía"
         className="rounded-xl border border-rose-300 px-5 py-3 min-w-[140px] font-semibold text-rose-600 transition-colors hover:bg-rose-50 dark:border-rose-800 dark:text-rose-300 dark:hover:bg-rose-950/40"
       >
         No lo sabía
@@ -32,6 +33,7 @@ export default function QuizResultActions({ cardId, onNextCard, onRecordResult }
 
       <button
         onClick={handleCorrect}
+        aria-label="Lo sabía"
         className="rounded-xl border border-emerald-300 px-5 py-3 min-w-[140px] font-semibold text-emerald-600 transition-colors hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-300 dark:hover:bg-emerald-950/40"
       >
         Lo sabía

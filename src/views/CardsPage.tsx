@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
 import { 
   Plus, Search, RotateCcw, BookOpen, SlidersHorizontal 
 } from 'lucide-react';
@@ -7,9 +9,7 @@ import { useCardStore } from '../features/cards/store';
 import CardList from '../features/cards/components/CardList';
 
 export default function CardsPage() {
-    useEffect(() => {
-    document.title = 'SmartFlash | Mis Tarjetas';
-  }, []); const cards = useCardStore((state) => state.cards);
+  const cards = useCardStore((state) => state.cards);
   const deleteCard = useCardStore((state) => state.deleteCard);
   const resetCards = useCardStore((state) => state.resetCards);
 
@@ -63,6 +63,7 @@ export default function CardsPage() {
         <div className="flex gap-3 shrink-0 self-start md:self-auto">
           <button
             onClick={handleReset}
+            aria-label="Restaurar Semillas"
             className="flex items-center justify-center gap-1.5 border border-slate-900 hover:bg-slate-900 text-slate-400 hover:text-slate-200 font-semibold text-xs px-4 py-2.5 rounded-xl transition-all"
             title="Reiniciar base de datos a tarjetas semillas"
           >
@@ -71,7 +72,7 @@ export default function CardsPage() {
           </button>
           
           <Link
-            to="/new"
+            href="/new"
             className="flex items-center justify-center gap-2 bg-violet-600 hover:bg-violet-500 active:bg-violet-700 text-white font-semibold text-xs px-5 py-2.5 rounded-xl transition-all shadow-lg shadow-violet-600/25 active:scale-[0.98]"
           >
             <Plus size={16} />

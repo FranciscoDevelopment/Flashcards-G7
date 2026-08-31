@@ -108,6 +108,7 @@ export default function ReviewSession({
             <button
               onClick={onPreviousCard}
               disabled={currentIndex === 0}
+              aria-label="Anterior"
               className="rounded-xl border border-slate-300 px-4 py-2 text-slate-700 transition-colors hover:border-violet-400 hover:text-violet-600 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:text-slate-300 dark:hover:text-violet-300"
             >
               Anterior
@@ -117,6 +118,7 @@ export default function ReviewSession({
           <div className="flex justify-center pb-4">
             <button
               onClick={onShowAnswer}
+              aria-label={showAnswer ? 'Ver pregunta' : 'Ver respuesta'}
               className="rounded-xl bg-violet-600 px-6 py-3 font-semibold !text-white transition-colors hover:bg-violet-500"
             >
               {showAnswer ? 'Ver pregunta' : 'Ver respuesta'}
@@ -126,6 +128,7 @@ export default function ReviewSession({
           <div className="flex justify-end">
             <button
               onClick={onNextCard}
+              aria-label={isReadyToFinish ? 'Finalizar' : isLastCard ? 'Finalizar' : 'Siguiente'}
               className={
                 isReadyToFinish
                   ? 'rounded-xl bg-emerald-500 px-7 py-3 font-semibold !text-white shadow-lg shadow-emerald-500/30 transition-all hover:-translate-y-0.5 hover:bg-emerald-400'
@@ -152,6 +155,7 @@ export default function ReviewSession({
 
         <button
           onClick={onChangeDeck}
+          aria-label="Cambiar mazo"
           className="text-sm text-slate-600 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-300"
         >
           ← Cambiar mazo

@@ -1,73 +1,180 @@
-# React + TypeScript + Vite
+# SmartFlash
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicacion de flashcards para crear tarjetas de estudio, repasarlas por tema, practicar en modo quiz y consultar estadisticas de progreso. El proyecto fue migrado desde React + Vite a Next.js con App Router.
 
-Currently, two official plugins are available:
+## Integrantes
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Integrante | Desafio / tarea | Rama |
+|------------|------------------|---------------|
+| Facundo Ferreyra | Migracion base a Next.js App Router | `feat/next-migration-app-router` |
+| Francisco Chiressi | Fix de tema dia/noche, revision y flujo Git | `fix/theme-by-client-state` |
+| Irina D'Andrea | Metadata, SEO, sitemap, robots, next/font y deploy | `feat/metadata-seo` |
+| Camila Ferro | Accesibilidad y semantica | `fix/accessibility-semantics` |
+| Luca Almiron | Estado global e hidratacion | `fix/zustand-hydration` |
 
-## React Compiler
+## Tecnologias
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Next.js 16 · React 19 · TypeScript · Tailwind CSS v3 · Zustand · date-fns · lucide-react · ESLint
 
-## Expanding the ESLint configuration
+## Funcionalidades
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Home con accesos a los modulos principales.
+- CRUD de tarjetas de estudio.
+- Creacion y edicion de tarjetas con pregunta, respuesta, tema y dificultad.
+- Listado con busqueda, filtro por tema y restauracion de tarjetas semilla.
+- Modo repaso por mazo o por todas las tarjetas.
+- Modo quiz con registro de aciertos y errores.
+- Progreso general con racha actual, mejor racha, aciertos, errores e historial de sesiones.
+- Persistencia local con Zustand y `localStorage`.
+- Cambio de tema dia/noche.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Rutas
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+| Ruta | Pantalla |
+|------|----------|
+| `/` | Inicio |
+| `/cards` | Mis tarjetas |
+| `/new` | Crear tarjeta |
+| `/edit/[id]` | Editar tarjeta |
+| `/study/review` | Modo repaso |
+| `/study/quiz` | Modo quiz |
+| `/progress` | Progreso |
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Links
+
+- Deploy: https://flashcards-g7.vercel.app
+- Repositorio original: https://github.com/Bran-Nick/Flashcards-
+- Repositorio migrado: https://github.com/FranciscoDevelopment/Flashcards-G7
+
+## Instalacion local
+
+```bash
+git clone <url-del-repositorio>
+cd Flashcards-G7
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Luego abrir:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```txt
+http://127.0.0.1:3000
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Scripts disponibles
+
+```bash
+npm run dev
+```
+
+Inicia el servidor de desarrollo de Next.js.
+
+```bash
+npm run build
+```
+
+Genera el build de produccion y valida TypeScript.
+
+```bash
+npm run start
+```
+
+Ejecuta el build de produccion.
+
+```bash
+npm run lint
+```
+
+Ejecuta ESLint sobre el proyecto.
+
+## Migracion a Next.js
+
+La migracion realizada reemplaza la estructura de Vite y React Router por App Router de Next.js.
+
+Cambios principales:
+
+- `vite.config.ts`, `index.html`, `src/main.tsx` y `src/App.tsx` fueron eliminados.
+- Se agrego `next.config.ts`.
+- Se creo `src/app/layout.tsx` como layout raiz.
+- Se crearon rutas en `src/app` para todas las pantallas originales.
+- Las pantallas originales se movieron de `src/pages` a `src/views` para evitar que Next active Pages Router.
+- `react-router-dom` fue reemplazado por `next/link` y `next/navigation`.
+- `package.json`, `tsconfig.json`, `tailwind.config.js`, `.gitignore` y `eslint.config.js` fueron actualizados para Next.js.
+
+## Estructura principal
+
+```txt
+src/
+  app/
+    layout.tsx
+    page.tsx
+    cards/page.tsx
+    new/page.tsx
+    edit/[id]/page.tsx
+    progress/page.tsx
+    study/review/page.tsx
+    study/quiz/page.tsx
+  views/
+    HomePage.tsx
+    CardsPage.tsx
+    ProgressPage.tsx
+    QuizPage.tsx
+    ReviewPage.tsx
+  components/
+  features/
+```
+
+## Validacion
+
+Ultimas verificaciones realizadas:
+
+```bash
+npm run lint
+npm run build
+npm audit --audit-level=high
+```
+
+Resultado:
+
+- Lint sin errores.
+- Build de Next.js correcto.
+- Auditoria npm sin vulnerabilidades altas reportadas.
+
+## Bugs encontrados y corregidos
+
+| Bug | Causa | Solucion |
+|-----|-------|----------|
+| El tema dia/noche no persistia bien y generaba parpadeo (flash) al cargar | El toggle de tema dependia solo de estado de React sin sincronizarse con `localStorage` antes del primer render | Se implemento inicializacion del tema en el cliente con un script embebido en `layout.tsx` y manejo de estado client-side (rama `fix/theme-by-client-state`) |
+| Los titulos de pestana se seteaban a mano con `document.title` dentro de `useEffect` en cada vista | Patron heredado de la version en React + Vite, incompatible con el modelo de metadata de Next.js | Se reemplazo por `export const metadata` (o metadata por ruta) en cada `page.tsx`, y se eliminaron los `document.title` y los `useEffect` que ya no se usaban |
+| El build fallaba en produccion (`npm run build`) por errores de TypeScript en `vite.config.ts` | Quedo un archivo residual de la version en Vite que ya no tiene sus dependencias instaladas | Se elimino `vite.config.ts` del repositorio |
+
+## Trabajo pendiente
+
+- Revisar hidratacion de los stores persistidos de Zustand.
+- Mejorar semantica de headings y labels de accesibilidad (verificar que no se rompio nada en la migracion).
+- Corregir el error de lint en `src/features/night-or-day/night-or-day.tsx` (setState dentro de un useEffect).
+
+## Flujo Git recomendado
+
+La migracion base se trabaja en:
+
+```bash
+feat/next-migration-app-router
+```
+
+Despues de subir esa rama, conviene abrir un Pull Request hacia `main` y continuar con cambios chicos en ramas separadas:
+
+```txt
+feat/metadata-seo
+perf/next-font
+fix/zustand-hydration
+fix/accessibility-semantics
+docs/update-readme-migration
+```
+
+Antes de integrar a `main`, correr:
+
+```bash
+npm run lint
+npm run build
 ```
