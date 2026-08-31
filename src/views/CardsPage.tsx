@@ -63,6 +63,7 @@ export default function CardsPage() {
         <div className="flex gap-3 shrink-0 self-start md:self-auto">
           <button
             onClick={handleReset}
+            aria-label="Restaurar Semillas"
             className="flex items-center justify-center gap-1.5 border border-slate-900 hover:bg-slate-900 text-slate-400 hover:text-slate-200 font-semibold text-xs px-4 py-2.5 rounded-xl transition-all"
             title="Reiniciar base de datos a tarjetas semillas"
           >

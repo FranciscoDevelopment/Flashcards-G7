@@ -101,10 +101,11 @@ export default function CardForm() {
         <form onSubmit={handleSubmit} className="space-y-6 lg:col-span-7 bg-slate-900/10 border border-slate-900 p-6 md:p-8 rounded-3xl">
           {/* Question text */}
           <div className="space-y-2">
-            <label className="block text-sm font-bold text-slate-400">
+            <label htmlFor="question" className="block text-sm font-bold text-slate-400">
               Anverso (Pregunta o Concepto)
             </label>
             <textarea
+              id="question"
               required
               aria-required="true"
               rows={4}
@@ -117,10 +118,11 @@ export default function CardForm() {
 
           {/* Answer text */}
           <div className="space-y-2">
-            <label className="block text-sm font-bold text-slate-400">
+            <label htmlFor="answer" className="block text-sm font-bold text-slate-400">
               Reverso (Respuesta o Detalles)
             </label>
             <textarea
+              id="answer"
               required
               rows={4}
               aria-required="true"
@@ -134,10 +136,11 @@ export default function CardForm() {
           {/* Category/Topic Input */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="block text-sm font-bold text-slate-400">
+              <label htmlFor="topic" className="block text-sm font-bold text-slate-400">
                 Tema / Categoría
               </label>
               <input
+                id="topic"
                 type="text"
                 required
                 aria-required="true" 
@@ -159,6 +162,7 @@ export default function CardForm() {
                     key={level}
                     type="button"
                     onClick={() => setDifficulty(level)}
+                    aria-label={`Seleccionar dificultad ${level === 'easy' ? 'Fácil' : level === 'medium' ? 'Medio' : 'Difícil'}`}
                     className={`py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${
                       difficulty === level
                         ? level === 'easy'
@@ -181,12 +185,14 @@ export default function CardForm() {
             <button
               type="button"
               onClick={() => router.push('/')}
+              aria-label="Cancelar"
               className="rounded-xl px-5 py-2.5 text-sm font-semibold text-slate-400 hover:bg-slate-900 hover:text-white transition-colors"
             >
               Cancelar
             </button>
             <button
               type="submit"
+              aria-label={isEditing ? 'Guardar Cambios' : 'Crear Tarjeta'}
               className="rounded-xl bg-violet-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-violet-500 active:bg-violet-700 transition-all shadow-lg shadow-violet-600/25 active:scale-[0.98]"
             >
               {isEditing ? 'Guardar Cambios' : 'Crear Tarjeta'}
@@ -203,6 +209,7 @@ export default function CardForm() {
                 type="button"
                 onClick={() => setPreviewSide('front')}
                 aria-pressed={previewSide === 'front'}
+                aria-label="Mostrar anverso"
                 className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all ${
                   previewSide === 'front' ? 'bg-violet-600 text-white' : 'text-slate-400 hover:text-slate-200'
                 }`}
@@ -213,6 +220,7 @@ export default function CardForm() {
                 type="button"
                 onClick={() => setPreviewSide('back')}
                 aria-pressed={previewSide === 'back'}
+                aria-label="Mostrar reverso"
                 className={`px-3 py-1 rounded-md text-[10px] font-bold transition-all ${
                   previewSide === 'back' ? 'bg-violet-600 text-white' : 'text-slate-400 hover:text-slate-200'
                 }`}

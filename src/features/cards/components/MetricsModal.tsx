@@ -48,6 +48,9 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
       onClick={onClose}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={`metrics-modal-title-${card.id}`}
         className="relative w-full max-w-lg rounded-2xl border border-slate-800 bg-slate-950 p-6 shadow-xl space-y-5"
         onClick={(e) => e.stopPropagation()}
       >
@@ -57,7 +60,7 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
             <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
               Métricas de
             </p>
-            <h3 className="text-base font-semibold text-white leading-snug line-clamp-2">
+            <h3 id={`metrics-modal-title-${card.id}`} className="text-base font-semibold text-white leading-snug line-clamp-2">
               {card.question}
             </h3>
           </div>
@@ -177,6 +180,7 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
         <div className="flex justify-between items-center pt-1 border-t border-slate-800/60">
           <button
             onClick={handleReset}
+            aria-label="Resetear métricas de esta tarjeta"
             className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-rose-500/30 text-xs font-semibold text-rose-400 hover:text-rose-300 hover:bg-rose-500/5 transition-all"
           >
             <RotateCcw size={13}aria-hidden="true"/>
@@ -184,6 +188,7 @@ export default function MetricsModal({ card, onClose }: MetricsModalProps) {
           </button>
           <button
             onClick={onClose}
+            aria-label="Cerrar modal de métricas"
             className="px-4 py-2 rounded-xl border border-slate-800 text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-900 transition-all"
           >
             Cerrar

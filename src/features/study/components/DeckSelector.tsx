@@ -17,6 +17,7 @@ export default function DeckSelector({ decks, onSelectDeck }: DeckSelectorProps)
           <button
             key={deck.id}
             onClick={() => onSelectDeck(deck.id)}
+            aria-label={`Seleccionar mazo ${deck.title}`}
             className="deck-card group text-left"
           >
             <span className="deck-card-front">
