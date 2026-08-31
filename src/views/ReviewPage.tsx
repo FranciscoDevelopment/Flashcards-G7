@@ -17,9 +17,7 @@ export default function ReviewPage() {
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
   const [isSessionFinished, setIsSessionFinished] = useState(false);
 
-  const topics = Array.from(
-    new Set(cards.map((card) => card.topic))
-  ).filter(Boolean);
+  const topics = Array.from(new Set(cards.map((card) => card.topic))).filter(Boolean);
 
   const orderedCards = getOrderedCards(cards);
 

@@ -16,7 +16,6 @@ export default function CardForm() {
   const cards = useCardStore((state) => state.cards);
   const addCard = useCardStore((state) => state.addCard);
   const editCard = useCardStore((state) => state.editCard);
-
   const card = (cards || []).find((c) => c.id === id);
 
   const [question, setQuestion] = useState(card?.question || '');

@@ -11,10 +11,9 @@ export function ThemeToggle() {
   */
 
 
-  const [theme, setTheme] = useState<"light" | "dark">(() => {
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     if (typeof window === 'undefined') return 'dark';
-    const stored = localStorage.getItem('theme') as "light" | "dark" | null;
-    return stored || 'dark';
+    return (localStorage.getItem('theme') as 'light' | 'dark') || 'dark';
   });
 
   // No need for a separate 'mounted' state — use a runtime check instead
