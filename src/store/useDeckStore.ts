@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import type { Card, Deck, StudySessionLog } from '../types';
 import { reviewCard as calculateLeitnerReview } from '../utils/leitner';
 
@@ -24,6 +24,8 @@ interface DeckState {
   // Bulk Actions
   importData: (decks: Deck[], cards: Card[]) => void;
   resetAll: () => void;
+  hasHydrated: boolean;
+  setHasHydrated: (v: boolean) => void;
 }
 
 // Initial demo data to populate the dashboard right away
@@ -132,6 +134,8 @@ const initialCards: Card[] = [
 export const useDeckStore = create<DeckState>()(
   persist(
     (set) => ({
+      hasHydrated: false,
+      setHasHydrated: (v: boolean) => set({ hasHydrated: v }),
       decks: initialDecks,
       cards: initialCards,
       logs: [],
@@ -237,6 +241,10 @@ export const useDeckStore = create<DeckState>()(
     }),
     {
       name: 'leitner-flashcards-storage',
+      storage: typeof window === 'undefined' ? undefined : createJSONStorage(() => localStorage),
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated?.(true);
+      },
     }
   )
 );

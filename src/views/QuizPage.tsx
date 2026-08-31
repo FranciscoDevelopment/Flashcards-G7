@@ -36,9 +36,7 @@ export default function QuizPage() {
     return () => clearTimeout(timer);
   }, [currentIndex, selectedTopic, isSessionFinished]);
 
-  const topics = Array.from(
-    new Set(cards.map((card) => card.topic))
-  ).filter(Boolean);
+  const topics = Array.from(new Set(cards.map((card) => card.topic))).filter(Boolean);
 
   const deckOptions = [
     {
