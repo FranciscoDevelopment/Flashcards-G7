@@ -11,20 +11,13 @@ export function ThemeToggle() {
   */
 
 
-  const [theme, setTheme] = useState<"light" | "dark">("dark") ;
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    if (typeof window === 'undefined') return 'dark';
+    const stored = localStorage.getItem('theme') as "light" | "dark" | null;
+    return stored || 'dark';
+  });
 
-  const [ mounted, setMounted ] = useState(false) ;
-
-
-  useEffect( () => {
-
-    setMounted(true)
-
-    const stored = ( localStorage.getItem( "theme" ) as "light" | "dark" ) ;
-
-    setTheme( stored )
-
-  } , [] )
+  // No need for a separate 'mounted' state — use a runtime check instead
 
 
   useEffect(() => {
@@ -118,7 +111,7 @@ export function ThemeToggle() {
       document.head.appendChild(styleTag);
     }
 
-    if( !mounted ) return ;
+    if (typeof window === 'undefined') return;
 
 
     // Apply the class to documentElement
@@ -131,7 +124,7 @@ export function ThemeToggle() {
       root.classList.remove('light');
     }
     localStorage.setItem('theme', theme);
-  }, [theme, mounted]);
+  }, [theme]);
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
