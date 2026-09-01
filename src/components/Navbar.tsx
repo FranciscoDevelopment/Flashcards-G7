@@ -25,7 +25,7 @@ export default function Navbar() {
             <BookOpen className="text-white h-4.5 w-4.5" />
           </div>
           <div>
-            <h1 className="text-md font-bold text-white tracking-tight leading-none">SmartFlash</h1>
+            <p className="text-md font-bold text-white tracking-tight leading-none">SmartFlash</p>
             <span className="text-[10px] text-slate-500 font-medium">Módulo de Tarjetas</span>
           </div>
         </Link>

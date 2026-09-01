@@ -38,7 +38,7 @@ export default function CardForm() {
     return (
       <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
         <ShieldAlert className="text-rose-500 h-12 w-12 mb-4" aria-hidden="true" />
-        <h3 className="text-xl font-bold">Tarjeta no encontrada</h3>
+        <h1 className="text-xl font-bold">Tarjeta no encontrada</h1>
         <p className="text-slate-400 mt-2">La tarjeta con ID "{id}" no existe en el store.</p>
         <Link href="/cards" className="text-violet-400 hover:underline mt-4 flex items-center gap-1.5 font-semibold">
           <ArrowLeft size={16} aria-hidden="true" /> Volver al Listado
@@ -85,9 +85,9 @@ export default function CardForm() {
         </Link>
 
         <div className="border-b border-slate-900 pb-6">
-          <h2 className="text-3xl font-extrabold text-white tracking-tight">
+          <h1 className="text-3xl font-extrabold text-white tracking-tight">
             {isEditing ? 'Editar Tarjeta de Estudio' : 'Crear Nueva Tarjeta'}
-          </h2>
+          </h1>
           <p className="text-slate-400 mt-1">
             {isEditing ? 'Actualiza los campos de tu tarjeta para modificar tu mazo.' : 'Define una pregunta y una respuesta para guardar en tu biblioteca.'}
           </p>

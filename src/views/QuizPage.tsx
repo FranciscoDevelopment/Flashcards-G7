@@ -15,6 +15,7 @@ function shuffleCards<T>(items: T[]): T[] {
 
 export default function QuizPage() {
   const cards = useCardStore((state) => state.cards);
+  const hasHydrated = useCardStore((state) => state.hasHydrated);
   const registerSession = useProgressStore((state) => state.registerSession);
 
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
@@ -35,6 +36,16 @@ export default function QuizPage() {
 
     return () => clearTimeout(timer);
   }, [currentIndex, selectedTopic, isSessionFinished]);
+
+  if (!hasHydrated) {
+    return (
+      <div className="flex-1 flex items-center justify-center p-10">
+        <p className="text-slate-500 text-sm" role="status" aria-live="polite">
+          Cargando tarjetas...
+        </p>
+      </div>
+    );
+  }
 
   const topics = Array.from(new Set(cards.map((card) => card.topic))).filter(Boolean);
 

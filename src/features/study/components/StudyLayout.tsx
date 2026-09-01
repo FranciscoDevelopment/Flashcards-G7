@@ -42,9 +42,9 @@ export default function StudyLayout({
           }
         >
           <div>
-            <h2 className="text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white">
+            <h1 className="text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white">
               {title}
-            </h2>
+            </h1>
 
             {subtitle && (
               <p

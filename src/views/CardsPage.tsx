@@ -12,11 +12,22 @@ export default function CardsPage() {
   const cards = useCardStore((state) => state.cards);
   const deleteCard = useCardStore((state) => state.deleteCard);
   const resetCards = useCardStore((state) => state.resetCards);
+  const hasHydrated = useCardStore((state) => state.hasHydrated);
 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('all');
 
   const safeCards = cards || [];
+
+  if (!hasHydrated) {
+    return (
+      <div className="flex-1 flex items-center justify-center p-10">
+        <p className="text-slate-500 text-sm" role="status" aria-live="polite">
+          Cargando tarjetas...
+        </p>
+      </div>
+    );
+  }
 
   // Dynamically extract all unique topics/tags from cards list
   const topics = Array.from(new Set(safeCards.map((c) => c.topic))).filter(Boolean);
@@ -50,7 +61,7 @@ export default function CardsPage() {
       {/* Welcome Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-slate-900 shrink-0">
         <div>
-          <h2 className="text-3xl font-extrabold text-white tracking-tight">Mis Tarjetas</h2>
+          <h1 className="text-3xl font-extrabold text-white tracking-tight">Mis Tarjetas</h1>
           <p className="text-slate-400 mt-2 flex flex-wrap items-center gap-2">
             <span>Administra tus tarjetas de estudio.</span>
             <span className="inline-flex items-center gap-1.5 px-3 py-0.5 text-[11px] font-bold font-mono rounded-full bg-slate-900 border border-slate-800 text-violet-400">

@@ -9,7 +9,7 @@ export default function HomePage() {
     <div className="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
       {/* Sección de Bienvenida */}
       <div className="text-center mb-12">
-        <h2 className="text-3xl font-extrabold text-white tracking-tight mb-2">¡Bienvenido!</h2>
+        <h1 className="text-3xl font-extrabold text-white tracking-tight mb-2">¡Bienvenido!</h1>
         <p className="text-lg text-slate-400">¿Qué te gustaría hacer hoy?</p>
       </div>
 
@@ -24,7 +24,7 @@ export default function HomePage() {
             <div className="p-3 bg-violet-600/10 rounded-xl text-violet-400 mb-4 group-hover:scale-105 transition-transform">
               <Layers size={32} />
             </div>
-            <h3 className="text-lg font-bold text-white mb-2">Mis tarjetas</h3>
+            <h2 className="text-lg font-bold text-white mb-2">Mis tarjetas</h2>
             <p className="text-sm text-slate-400 px-2">Crea, edita y organiza tus tarjetas de estudio.</p>
           </div>
           <div className="flex justify-end mt-4">
@@ -42,7 +42,7 @@ export default function HomePage() {
             <div className="p-3 bg-violet-600/10 rounded-xl text-violet-400 mb-4 group-hover:scale-105 transition-transform">
               <Brain size={32} />
             </div>
-            <h3 className="text-lg font-bold text-white mb-2">Modo Repaso</h3>
+            <h2 className="text-lg font-bold text-white mb-2">Modo Repaso</h2>
             <p className="text-sm text-slate-400 px-2">Repasa las tarjetas y refuerza tu memoria.</p>
           </div>
           <div className="flex justify-end mt-4">
@@ -60,7 +60,7 @@ export default function HomePage() {
             <div className="p-3 bg-violet-600/10 rounded-xl text-violet-400 mb-4 group-hover:scale-105 transition-transform">
               <HelpCircle size={32} />
             </div>
-            <h3 className="text-lg font-bold text-white mb-2">Modo Quiz</h3>
+            <h2 className="text-lg font-bold text-white mb-2">Modo Quiz</h2>
             <p className="text-sm text-slate-400 px-2">Poné a prueba tus conocimientos.</p>
           </div>
           <div className="flex justify-end mt-4">
@@ -79,7 +79,7 @@ export default function HomePage() {
             <div className="p-3 bg-violet-600/10 rounded-xl text-violet-400 mb-4 group-hover:scale-105 transition-transform">
               <BarChart3 size={32} />
             </div>
-            <h3 className="text-lg font-bold text-white mb-2">Progreso</h3>
+            <h2 className="text-lg font-bold text-white mb-2">Progreso</h2>
             <p className="text-sm text-slate-400 px-2">Mirá tus estadísticas y rachas.</p>
           </div>
           <div className="flex justify-end mt-4">
