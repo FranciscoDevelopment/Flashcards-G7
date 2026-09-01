@@ -3,7 +3,10 @@ import { useProgressStore } from '../store/useProgresseStore';
 
 export function useProgressStats() {
   const cards = useCardStore((state) => state.cards);
+  const cardsHydrated = useCardStore((state) => state.hasHydrated);
   const { currentStreak, bestStreak, sessionHistory } = useProgressStore();
+  const progressHydrated = useProgressStore((state) => state.hasHydrated);
+  const hasHydrated = cardsHydrated && progressHydrated;
 
   // Lee hits y misses acumulados de todas las tarjetas (los registró D3)
   const totalHits = cards.reduce((acc, card) => acc + card.hits, 0);
@@ -23,5 +26,6 @@ export function useProgressStats() {
     totalAnswers,
     accuracyPercentage,
     sessionHistory,
+    hasHydrated,
   };
 }

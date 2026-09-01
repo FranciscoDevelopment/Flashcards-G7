@@ -11,6 +11,7 @@ import '../features/study/styles/study.css';
 
 export default function ReviewPage() {
   const cards = useCardStore((state) => state.cards);
+  const hasHydrated = useCardStore((state) => state.hasHydrated);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -44,6 +45,16 @@ export default function ReviewPage() {
   const progress = (completedCards / reviewCards.length) * 100;
   const visibleProgress = Math.max(progress, 1);
   const [direction, setDirection] = useState<'next' | 'prev'>('next');
+
+  if (!hasHydrated) {
+    return (
+      <div className="flex-1 flex items-center justify-center p-10">
+        <p className="text-slate-500 text-sm" role="status" aria-live="polite">
+          Cargando tarjetas...
+        </p>
+      </div>
+    );
+  }
 
   const handleNextCard = () => {
     if (currentIndex < reviewCards.length - 1) {

@@ -13,7 +13,18 @@ export default function ProgressPage() {
     totalAnswers,
     accuracyPercentage,
     sessionHistory,
+    hasHydrated,
   } = useProgressStats();
+
+  if (!hasHydrated) {
+    return (
+      <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <p className="text-slate-500 text-sm text-center py-16" role="status" aria-live="polite">
+          Cargando progreso...
+        </p>
+      </div>
+    );
+  }
 
   const barColor =
     accuracyPercentage >= 70
@@ -37,7 +48,7 @@ export default function ProgressPage() {
           <ArrowLeft size={18} />
         </Link>
         <div>
-          <h2 className="text-2xl font-extrabold text-white">Tu progreso</h2>
+          <h1 className="text-2xl font-extrabold text-white">Tu progreso</h1>
           <p className="text-sm text-slate-400">Estadísticas generales y rachas de estudio.</p>
         </div>
       </div>
