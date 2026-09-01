@@ -89,17 +89,14 @@ Ejecuta ESLint sobre el proyecto.
 
 ## Migracion a Next.js
 
-La migracion realizada reemplaza la estructura de Vite y React Router por App Router de Next.js.
+Se cambió toda la base de Vite + React Router por el App Router de Next.js. En resumen:
 
-Cambios principales:
-
-- `vite.config.ts`, `index.html`, `src/main.tsx` y `src/App.tsx` fueron eliminados.
-- Se agrego `next.config.ts`.
-- Se creo `src/app/layout.tsx` como layout raiz.
-- Se crearon rutas en `src/app` para todas las pantallas originales.
-- Las pantallas originales se movieron de `src/pages` a `src/views` para evitar que Next active Pages Router.
-- `react-router-dom` fue reemplazado por `next/link` y `next/navigation`.
-- `package.json`, `tsconfig.json`, `tailwind.config.js`, `.gitignore` y `eslint.config.js` fueron actualizados para Next.js.
+- Se sacaron `vite.config.ts`, `index.html`, `src/main.tsx` y `src/App.tsx`, y se agregó `next.config.ts`.
+- `src/app/layout.tsx` pasó a ser el layout raíz del sitio.
+- Cada pantalla original tiene ahora su carpeta y `page.tsx` dentro de `src/app`.
+- Las vistas se movieron de `src/pages` a `src/views`, para que Next no las confunda con el Pages Router.
+- `react-router-dom` se reemplazó por `next/link` y `next/navigation`.
+- Se actualizaron `package.json`, `tsconfig.json`, `tailwind.config.js`, `.gitignore` y `eslint.config.js` para que todo funcione con Next.
 
 ## Estructura principal
 
@@ -142,17 +139,19 @@ Resultado:
 
 ## Bugs encontrados y corregidos
 
-| Bug | Causa | Solucion |
-|-----|-------|----------|
-| El tema dia/noche no persistia bien y generaba parpadeo (flash) al cargar | El toggle de tema dependia solo de estado de React sin sincronizarse con `localStorage` antes del primer render | Se implemento inicializacion del tema en el cliente con un script embebido en `layout.tsx` y manejo de estado client-side (rama `fix/theme-by-client-state`) |
-| Los titulos de pestana se seteaban a mano con `document.title` dentro de `useEffect` en cada vista | Patron heredado de la version en React + Vite, incompatible con el modelo de metadata de Next.js | Se reemplazo por `export const metadata` (o metadata por ruta) en cada `page.tsx`, y se eliminaron los `document.title` y los `useEffect` que ya no se usaban |
-| El build fallaba en produccion (`npm run build`) por errores de TypeScript en `vite.config.ts` | Quedo un archivo residual de la version en Vite que ya no tiene sus dependencias instaladas | Se elimino `vite.config.ts` del repositorio |
-| Las pantallas mostraban datos vacios o semilla por un instante antes de cargar lo guardado en `localStorage` | Los componentes leian el estado de Zustand sin esperar a que la persistencia terminara de hidratarse | Se agrego un chequeo de `hasHydrated` en `CardsPage`, `QuizPage`, `ReviewPage` y `ProgressPage`, mostrando un estado de carga hasta que los datos reales estan listos |
-| Cada pantalla usaba `h2` como titulo principal y el unico `h1` del sitio era el logo repetido en la barra de navegacion | Patron heredado de la version original, afecta la navegacion por encabezados de lectores de pantalla | Se convirtio el titulo principal de cada pantalla en `h1` y el logo paso a texto sin rol de encabezado |
+**Tema día/noche con flash al cargar.** El toggle dependía solo del estado de React, así que al recargar la página aparecía un flash antes de aplicar el tema guardado en `localStorage`. Se arregló inicializando el tema en el cliente antes del primer render (rama `fix/theme-by-client-state`).
+
+**Títulos de pestaña seteados a mano.** Quedó de la versión en Vite: cada vista hacía `document.title = "..."` dentro de un `useEffect`. Se reemplazó por `metadata` nativa de Next en cada `page.tsx`, y se sacaron los `useEffect` que ya no servían para nada.
+
+**El build de producción fallaba.** Quedó dando vueltas el `vite.config.ts` viejo, y como ya no están instaladas sus dependencias, TypeScript no lo podía tipar y rompía `npm run build`. Se borró el archivo.
+
+**Las pantallas mostraban datos vacíos por un instante.** Los componentes leían el estado de Zustand antes de que terminara de hidratarse desde `localStorage`, entonces por una fracción de segundo se veían tarjetas semilla o listas vacías en vez de lo guardado. Se agregó un chequeo de `hasHydrated` en Cards, Quiz, Repaso y Progreso para mostrar un "cargando" corto mientras tanto.
+
+**Jerarquía de encabezados rota.** El único `<h1>` de todo el sitio era el logo del navbar, repetido igual en cada pantalla — y los títulos reales de cada página (Mis Tarjetas, Progreso, etc.) estaban como `<h2>`. Para alguien navegando con lector de pantalla esto no ayuda a saber en qué pantalla está. Se corrigió: cada pantalla tiene su propio `<h1>` y el logo pasó a texto normal.
 
 ## Trabajo pendiente
 
-No quedan pendientes conocidos. Ultima verificacion: lint y build de produccion sin errores, hidratacion de Zustand controlada con `hasHydrated`, jerarquia de headings corregida (un `h1` por pantalla).
+Por ahora no queda nada pendiente que sepamos. Última vuelta de chequeo: lint y build sin errores, hidratación de Zustand controlada, y jerarquía de headings corregida.
 
 ## Flujo Git recomendado
 
