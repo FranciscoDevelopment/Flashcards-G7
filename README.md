@@ -147,12 +147,12 @@ Resultado:
 | El tema dia/noche no persistia bien y generaba parpadeo (flash) al cargar | El toggle de tema dependia solo de estado de React sin sincronizarse con `localStorage` antes del primer render | Se implemento inicializacion del tema en el cliente con un script embebido en `layout.tsx` y manejo de estado client-side (rama `fix/theme-by-client-state`) |
 | Los titulos de pestana se seteaban a mano con `document.title` dentro de `useEffect` en cada vista | Patron heredado de la version en React + Vite, incompatible con el modelo de metadata de Next.js | Se reemplazo por `export const metadata` (o metadata por ruta) en cada `page.tsx`, y se eliminaron los `document.title` y los `useEffect` que ya no se usaban |
 | El build fallaba en produccion (`npm run build`) por errores de TypeScript en `vite.config.ts` | Quedo un archivo residual de la version en Vite que ya no tiene sus dependencias instaladas | Se elimino `vite.config.ts` del repositorio |
+| Las pantallas mostraban datos vacios o semilla por un instante antes de cargar lo guardado en `localStorage` | Los componentes leian el estado de Zustand sin esperar a que la persistencia terminara de hidratarse | Se agrego un chequeo de `hasHydrated` en `CardsPage`, `QuizPage`, `ReviewPage` y `ProgressPage`, mostrando un estado de carga hasta que los datos reales estan listos |
+| Cada pantalla usaba `h2` como titulo principal y el unico `h1` del sitio era el logo repetido en la barra de navegacion | Patron heredado de la version original, afecta la navegacion por encabezados de lectores de pantalla | Se convirtio el titulo principal de cada pantalla en `h1` y el logo paso a texto sin rol de encabezado |
 
 ## Trabajo pendiente
 
-- Revisar hidratacion de los stores persistidos de Zustand.
-- Mejorar semantica de headings y labels de accesibilidad (verificar que no se rompio nada en la migracion).
-- Corregir el error de lint en `src/features/night-or-day/night-or-day.tsx` (setState dentro de un useEffect).
+No quedan pendientes conocidos. Ultima verificacion: lint y build de produccion sin errores, hidratacion de Zustand controlada con `hasHydrated`, jerarquia de headings corregida (un `h1` por pantalla).
 
 ## Flujo Git recomendado
 
